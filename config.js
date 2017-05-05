@@ -1,0 +1,19 @@
+var config = {
+	nodeEnv: process.env.NODE_ENV || 'development',
+	database: process.env.MONGODB_URI,
+	braintreeAccessToken: process.env.BRAINTREE_ACCESS_TOKEN,
+	mapboxApiKey: process.env.MAPBOX_API_TOKEN,
+	mapboxApiMapKey: process.env.MAPBOX_API_MAP_READ_TOKEN,
+	mapboxMapId: process.env.MAPBOX_MAP_ID,
+	ssl_passphrase: process.env.SSL_PASSPHRASE,
+	braintreeMerchantId: process.env.BRAINTREE_MERCHANT_ID,
+	braintreePublicKey: process.env.BRAINTREE_PUBLIC_KEY,
+	braintreePrivateKey: process.env.BRAINTREE_PRIVATE_KEY,
+	lobApiKey: process.env.LOB_API_KEY,
+	mandrillApiKey: process.env.MANDRILL_API_KEY,
+
+	//mandrill template names
+	postcardConfirmationTemplate: process.env.POSTCARD_CONFIRMATION_TEMPLATE || 'postcard_confirmation'
+};
+
+module.exports = config;

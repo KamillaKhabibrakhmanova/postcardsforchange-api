@@ -1,0 +1,48 @@
+{
+  "name": "postblue-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.15.0",
+    "braintree": "^2.0.2",
+    "cookie-parser": "^1.4.1",
+    "cors": "^2.8.1",
+    "express": "^4.13.4",
+    "express-winston": "^2.3.0",
+    "fs": "0.0.2",
+    "helmet": "^3.4.1",
+    "http": "0.0.0",
+    "lob": "^3.9.0",
+    "lodash": "^4.17.4",
+    "mandrill-api": "^1.0.45",
+    "mongoose": "^4.4.14",
+    "mongoose-unique-validator": "^1.0.3",
+    "morgan": "^1.7.0",
+    "n": "^2.1.4",
+    "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0",
+    "paypal-rest-sdk": "^1.7.1",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "serve-favicon": "^2.3.0",
+    "sinon": "^1.17.7",
+    "spdy": "^3.4.4",
+    "superagent": "^3.4.4",
+    "supertest": "^3.0.0",
+    "supertest-as-promised": "^4.0.2",
+    "winston": "^2.3.1",
+    "winston-mongodb": "^2.0.8",
+    "winston-papertrail": "^1.0.4"
+  },
+  "devDependencies": {
+    "should": "^11.2.0",
+    "sinon-as-promised": "^4.0.2"
+  }
+}
