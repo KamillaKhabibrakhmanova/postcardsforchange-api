@@ -50,7 +50,6 @@ describe('Model: Postcard', function() {
       email: 'fakerston@example.com'
     })
     .then(function (postcard) {
-      console.log('postcard', postcard)
       postcard.to.first_name.should.eql(to.first_name);
       postcard.from.first_name.should.eql(from.first_name);
       postcard.message.should.eql(description);

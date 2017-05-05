@@ -24,7 +24,12 @@ module.exports = {
 			front: postcardTemplates.front(),
 			back: postcardTemplates.back()
 		}).then(function(res){
-			logger.info
+			logger.info('Postcard successfully sent', {res});
+			return res;
+		})
+		.catch(function(err){
+			logger.error('Error sending postcard', err);
+			throw err;
 		});
 	}
 };

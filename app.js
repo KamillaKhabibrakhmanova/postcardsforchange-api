@@ -50,6 +50,7 @@ app.use('/topics', topics);
 app.use('/trumps', trumps);
 app.use('/postcards', postcards);
 app.use('/payments', payments);
+app.use('/issues', require('./routes/issues'));
 
 app.get('/', function(req, res, next){
 	res.send('Hello World!');

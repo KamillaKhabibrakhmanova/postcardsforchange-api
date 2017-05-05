@@ -1,7 +1,7 @@
 const mail = require('../../services/mail.js'),
 	config = require('../../config.js');
 
-describe('Service: Mail (integration)', function() {
+describe.skip('Service: Mail (integration)', function() {
 
   it('sends mail via Mandrill', function (done) {
     

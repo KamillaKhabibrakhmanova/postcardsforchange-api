@@ -5,7 +5,7 @@ var app = express();
 var Bluebird = require('bluebird');
 var Issue = Bluebird.promisifyAll(require('../models/issue'));
 
-app.get('/issues', function(req, res){
+app.get('/', function(req, res){
 	return Issue.find({ isActive: true })
 	.then(function(issues){
 		res.send(issues);
