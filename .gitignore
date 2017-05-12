@@ -3,3 +3,4 @@ test.sh
 certifications
 node_modules
 logs
+npm-debug.log

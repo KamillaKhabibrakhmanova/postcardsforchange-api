@@ -37,11 +37,14 @@ if (config.nodeEnv === ('production' || 'staging')) {
 }
 
 exports.requestLogger = function(type) {
-  transports.push(new (winston.transports.File)({
+  if (config.nodeEnv === 'development') {
+    transports.push(new (winston.transports.File)({
       filename: logsPath + '/' + config.nodeEnv + '_' + type + '_log.log',
       colorize: true,
       timestamp: true
-  }));
+    }));
+  }
+  
 
   return expressWinston.logger({
     transports: transports,
