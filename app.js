@@ -37,19 +37,8 @@ app.use(cookieParser());
 app.use(expressLogger.requestLogger('request'));
 app.use(expressLogger.errorLogger());
 
-var topics = require('./routes/topics');
-var postcards = require('./routes/postcards');
-var trumps = require('./routes/trumps');
-var payments = require('./routes/payments');
-var congress = require('./routes/congress');
-var senators = require('./routes/senators');
-
-app.use('/congress', congress);
-app.use('/senators', senators);
-app.use('/topics', topics);
-app.use('/trumps', trumps);
-app.use('/postcards', postcards);
-app.use('/payments', payments);
+app.use('/postcards', require('./routes/postcards'));
+app.use('/payments', require('./routes/payments'));
 app.use('/issues', require('./routes/issues'));
 
 app.get('/', function(req, res, next){
