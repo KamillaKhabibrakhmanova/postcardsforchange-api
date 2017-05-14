@@ -17,6 +17,7 @@
     "express": "^4.13.4",
     "express-winston": "^2.3.0",
     "fs": "0.0.2",
+    "geocoder": "^0.2.3",
     "helmet": "^3.4.1",
     "http": "0.0.0",
     "lob": "^3.9.0",

@@ -10,6 +10,4 @@ var IssueSchema = new mongoose.Schema({
     postcard_image: { type: 'string' }
 });
 
-//TODO: add method to find senator/reps for given issue
-
 module.exports = mongoose.model('Issue', IssueSchema);
