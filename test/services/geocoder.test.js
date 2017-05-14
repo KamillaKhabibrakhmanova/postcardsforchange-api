@@ -3,6 +3,8 @@ const Bluebird = require('bluebird');
 const should = require('should');
 
 describe('Service: Geocoder (integration)', function() {
+  this.timeout(10000);
+
   it('converts an address object to a string format', function(){
     var addressString = geocoder.toAddressString(addressData);
     addressString.should.eql('111 W 21st St, Apt 111, Huntington Station, NY, 11746');

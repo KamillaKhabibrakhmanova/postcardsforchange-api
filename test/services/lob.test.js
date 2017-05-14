@@ -3,6 +3,7 @@ var lob = require('../../services/lob.js');
 var should = require('should');
 
 describe('Service: Lob (integration)', function() {
+  this.timeout(10000);
 
   var to = {
     name: 'Kamilla',

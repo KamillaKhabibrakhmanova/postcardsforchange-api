@@ -6,7 +6,6 @@ var _ = require('lodash');
 var Schema = mongoose.Schema;
 
 var PostcardSchema = new mongoose.Schema({
-    user: [{ type: Schema.ObjectId, ref: 'User' }],
     message: String,
     price: Number,
     from: {
@@ -28,7 +27,11 @@ var PostcardSchema = new mongoose.Schema({
         zip: Number
     },
     //braintree transaction
-    transactionId : String
+    transactionId : String,
+    front: String,
+
+    user: [{ type: Schema.ObjectId, ref: 'User' }],
+    issue: [{ type: Schema.ObjectId, ref: 'Issue'}],
 });
 
 PostcardSchema.statics.sendPostcard = function(postcard){
