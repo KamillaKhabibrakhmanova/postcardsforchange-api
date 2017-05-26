@@ -4,7 +4,8 @@ const Lob = Bluebird.promisifyAll(require('lob')(config.lobApiKey));
 const postcardTemplates = require('../templates/postcardTemplates');
 const logger = require('../utils/logger').logger();
 
-let getLobFormattedAddress = (addressObject) => {
+//format address to fit lob requirements
+const getLobFormattedAddress = addressObject => {
 	return {
 		name: addressObject.name,
 		address_line1: addressObject.street_address,
@@ -15,8 +16,8 @@ let getLobFormattedAddress = (addressObject) => {
 };
 
 module.exports = {
-
-	sendPostcard: function(description, to, from) {	
+	//send postcard via Lob
+	sendPostcard: (description, to, from) => {	
 		return Lob.postcards.create({
 			description: description,
 			to: getLobFormattedAddress(to),

@@ -6,6 +6,7 @@ module.exports = {
 		return `${addressObj.street1}, ${addressObj.street2 || ''}, ${addressObj.city}, ${addressObj.state}, ${addressObj.zip}`;
 	},
 
+	//the the lat & long coordinates for an address
 	getCoordinates: function(addressObj) {
 		const address = this.toAddressString(addressObj);
 
@@ -17,4 +18,6 @@ module.exports = {
 			return res.results[0].geometry.location;
 		});
 	}
+
+	//TODO: use coordinates to look up representatives
 };

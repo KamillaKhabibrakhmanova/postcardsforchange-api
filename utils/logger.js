@@ -36,7 +36,7 @@ if (config.nodeEnv === ('production' || 'staging')) {
   }));
 }
 
-exports.requestLogger = function(type) {
+exports.requestLogger = type => {
   if (config.nodeEnv === 'development') {
     transports.push(new (winston.transports.File)({
       filename: logsPath + '/' + config.nodeEnv + '_' + type + '_log.log',
@@ -53,14 +53,14 @@ exports.requestLogger = function(type) {
   });
 };
 
-exports.errorLogger = function() {
+exports.errorLogger = () => {
   return expressWinston.errorLogger({
     transports: transports,
     level: 'error'
   });
 };
 
-exports.logger = function(){
+exports.logger = () => {
   return new (winston.Logger)({
     transports: transports
   });

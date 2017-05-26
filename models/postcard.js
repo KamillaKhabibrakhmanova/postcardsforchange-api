@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
-var lob = require('../services/lob.js');
-var braintree = require('../services/braintree.js');
-var User = require('../models/user.js');
-var _ = require('lodash');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const lob = require('../services/lob.js');
+const braintree = require('../services/braintree.js');
+const User = require('../models/user.js');
+const _ = require('lodash');
+const Schema = mongoose.Schema;
 
-var PostcardSchema = new mongoose.Schema({
+const PostcardSchema = new mongoose.Schema({
     message: String,
     price: Number,
     from: {
@@ -36,10 +36,11 @@ var PostcardSchema = new mongoose.Schema({
 
 PostcardSchema.statics.sendPostcard = function(postcard){
     if (!postcard.nonce) throw new Error('No payment method nonce provided');
-    var transaction;
-    var userId = postcard.userId;
-    var Postcard = this;
+    let transaction;
+    const userId = postcard.userId;
+    const Postcard = this;
 
+    //collect payment first
     return braintree.makeSale(1, postcard.nonce)
     .then(function(payment){
         if (!payment) throw new Error('Payment unsuccessful');
@@ -47,6 +48,7 @@ PostcardSchema.statics.sendPostcard = function(postcard){
 
         return lob.sendPostcard(postcard.message, postcard.to, postcard.from)
         .catch(function(err){
+            //if postcard not sent refund user
             return braintree.processRefund(transaction.id)
             .then(function(){
                 throw new Error(err);
@@ -56,6 +58,7 @@ PostcardSchema.statics.sendPostcard = function(postcard){
     .then(function(postcard){
         return User.findOne({ email: postcard.email });
     })
+    //create or update user info
     .then(function(user){
         if (!user) {
             return User.create(_.merge({email: postcard.email}, postcard.from));

@@ -1,33 +1,34 @@
-var Bluebird = require('bluebird');
-var config = require('../config');
-var Postcard = require('../models/postcard');
-var braintree = require('braintree');
+const Bluebird = require('bluebird');
+const config = require('../config');
+const Postcard = require('../models/postcard');
+const braintree = require('braintree');
+const logger = require('../utils/logger').logger();
 
-var gateway = braintree.connect({
+const gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
   merchantId: config.braintreeMerchantId,
   publicKey: config.braintreePublicKey,
   privateKey: config.braintreePrivateKey
 });
 
-var createSaleObject = function(amount, nonce) {
+const createSaleObject = (amount, nonce) => {
 	return {
-	  amount: amount,
+	  amount,
 	  paymentMethodNonce: nonce,
 	  orderId: "Mapped to PayPal Invoice Number",
 	  options: {
 	  	submitForSettlement: true
 	  }
-	  //descriptor: { name: "GeneralBear*Postblue" }
   };
 };
 
-var braintreeTransaction = Bluebird.promisifyAll(gateway.transaction);
+const braintreeTransaction = Bluebird.promisifyAll(gateway.transaction);
 
 module.exports = {
 
-	generateToken: function() {
-		var clientToken = Bluebird.promisifyAll(gateway.clientToken);
+	//generate token required to get a nonce in the client
+	generateToken: () => {
+		const clientToken = Bluebird.promisifyAll(gateway.clientToken);
 
 		return clientToken.generateAsync({})
 		.then(function(token){
@@ -35,8 +36,9 @@ module.exports = {
 		});
 	},
 
-	makeSale: function(amount, nonce) {
-		var saleRequest = createSaleObject(amount, nonce);
+	//process payment
+	makeSale: (amount, nonce) => {
+		const saleRequest = createSaleObject(amount, nonce);
 
 		return braintreeTransaction.saleAsync(saleRequest)
 		.then(function(result){
@@ -46,9 +48,9 @@ module.exports = {
 		});
 	},
 
-	processRefund: function(transactionId){
+	processRefund: (transactionId) => {
 		return braintreeTransaction.findAsync(transactionId)
-		.then(function(transaction){
+		.then(transaction => {
 			if (transaction.status === 'settled' || transaction.status === 'settling') {
 				return braintreeTransaction.refundAsync(transaction.id);
 			}
@@ -56,13 +58,13 @@ module.exports = {
 				return braintreeTransaction.voidAsync(transaction.id);
 			}
 		})
-		.then(function(result){
+		.then(result => {
 			if (!result.success) throw new Error(result.message);
 
 			return result;
 		})
 		.catch(function(err){
-			console.error(err);
+			logger.error(err);
 			throw new Error(err);
 		})
 	}

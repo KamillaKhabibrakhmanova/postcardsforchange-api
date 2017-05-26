@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var IssueSchema = new mongoose.Schema({
+const IssueSchema = new mongoose.Schema({
     title: { type: String, required: true },
     message: { type: String, required: true },
     isSenate: { type: Boolean, default: true },

@@ -8,6 +8,12 @@ const mandrill = require('mandrill-api/mandrill'),
 const mandrill_client = new mandrill.Mandrill(config.mandrillApiKey);
 
 const mail = {
+	/**
+	** send a template email
+	** @params {string/obj} object with email property or email string
+	** @params {string} template name
+	** @params {obj} Mandrill email id
+	**/
 	sendTemplateMessage: Bluebird.method(function(recipient, templateName, variables){
 		if (typeof recipient === 'string') {
 			recipient = {email: recipient}
@@ -39,22 +45,27 @@ const mail = {
 		logger.info(`Sending templated mail ${templateName} to ${recipient.email}`)
 
 		return this.getClient().messages.sendTemplateAsync(params)
-		.then(function (result) {
+		.then(result => {
 			if (result.length !== 1 || ['sent', 'queued'].indexOf(result[0].status) == -1) {
 				throw new Error(JSON.stringify(result));
 			}
 
 			return result[0]._id;
 		})
-		.catch(function (err) {
-			err = new Error(err.message);
-			logger.error(err);
+		.catch(err => {
+			const error = new Error(err.message);
+			logger.error(error);
 
-			throw err;
+			throw error;
 		});
 	}),
 
-	sendMessage: Bluebird.method(function(messageParams) {
+	/**
+	** send a simple email with no template
+	** @params {object} required params: {sender, recipient, subject, body}
+	**@return {string} Mandrill email id
+	**/
+	sendMessage: Bluebird.method(messageParams => {
 		if (!(messageParams.sender && messageParams.sender.email && messageParams.recipient && messageParams.recipient.email && messageParams.subject && messageParams.body)) {
 			throw new Error('Missing required parameters to send Message');
 		}
@@ -77,18 +88,25 @@ const mail = {
 				throw new Error(JSON.stringify(result));
 			}
 			return result[0]._id;
+		})
+		.catch(err => {
+			const error = new Error(err.message);
+			logger.error(error);
+
+			throw error;
 		});
 	}),
 
+	//add promises for Mandrill client
 	getClient: function() {
 		if (!config.mandrillApiKey) {
 			throw new Error('MANDRILL_API_KEY not set');
 		}
 
-		let promisifier = function (client) {
-			return function() {
-				var args = [].slice.call(arguments);
-				var self = this;
+		let promisifier = function(client) {
+			return function () {
+				let args = [].slice.call(arguments);
+				const self = this;
 				return new Promise(function(resolve, reject){
 					args.push(resolve, reject);
 					client.apply(self, args);
@@ -96,7 +114,7 @@ const mail = {
 			};
 		};
 
-		var client = new mandrill.Mandrill(config.mandrillApiKey);
+		let client = new mandrill.Mandrill(config.mandrillApiKey);
 
 		Bluebird.promisifyAll(client.templates, {promisifier: promisifier});
 		Bluebird.promisifyAll(client.messages, {promisifier: promisifier});

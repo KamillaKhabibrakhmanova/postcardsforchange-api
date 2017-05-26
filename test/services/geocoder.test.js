@@ -6,13 +6,13 @@ describe('Service: Geocoder (integration)', function() {
   this.timeout(10000);
 
   it('converts an address object to a string format', function(){
-    var addressString = geocoder.toAddressString(addressData);
+    const addressString = geocoder.toAddressString(addressData);
     addressString.should.eql('111 W 21st St, Apt 111, Huntington Station, NY, 11746');
   });
 
   it('looks up coordinates for an address', function (done) {
     return geocoder.getCoordinates(addressData)
-    .then(function (res) {
+    .then((res) => {
       res.lat.should.eql(40.83381);
       res.lng.should.eql(-73.41933);
     })

@@ -26,7 +26,7 @@ describe('Service: Lob (integration)', function() {
   it('sends a postcard', function (done) {
 
     return lob.sendPostcard(description, to, from)
-    .then(function (info) {
+    .then((info) => {
       should.exist(info);
       info.carrier.should.eql('USPS');
       info.to.address_line1.should.eql(to.street_address);

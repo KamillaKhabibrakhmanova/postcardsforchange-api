@@ -8,7 +8,7 @@ describe.skip('Service: Mail (integration)', function() {
     return mail.sendMessage({
       subject: 'Hello',
       sender: { name: 'Kamilla', email: 'xxx@example.com' },
-      recipient: {name: 'Mike', email: 'venessiel@gmail.com' },
+      recipient: {name: 'Mike', email: 'mike@gmail.com' },
       body: '<h1>Hello</h1>'
     })
     .then(done.bind(null, null), done);
