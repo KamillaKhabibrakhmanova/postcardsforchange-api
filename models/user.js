@@ -1,7 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose'),
+	{promisify} = require('util'),
 	Schema = mongoose.Schema,
+	emailExistence = require('email-existence'),
 	uniqueValidator = require('mongoose-unique-validator');
 
 

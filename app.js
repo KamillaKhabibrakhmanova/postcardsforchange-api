@@ -13,6 +13,7 @@ favicon = require('serve-favicon'),
 config = require('./config'),
 cors = require('cors'),
 expressLogger = require('./utils/logger'),
+expressValidator = require('express-validator'),
 helmet = require('helmet');
 
 app.use(cors());
@@ -31,7 +32,9 @@ mongoose.connect(config.database);
 // app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(expressValidator());
 app.use(cookieParser());
+
 
 //logging middleware
 app.use(expressLogger.requestLogger('request'));
@@ -40,6 +43,7 @@ app.use(expressLogger.errorLogger());
 app.use('/postcards', require('./routes/postcards'));
 app.use('/payments', require('./routes/payments'));
 app.use('/issues', require('./routes/issues'));
+app.use('/users', require('./routes/users'));
 
 app.get('/', function(req, res, next){
 	res.send('Hello World!');
