@@ -4,7 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start:prod": "concurrently \"npm run server\" \"npm run client:prod\"",
+    "server": "./development.sh",
+    "client": "cd client && npm start",
+    "client:prod": "cd client && npm run start:prod",
+    "heroku-postbuild": "cd client && npm run build && cd .."
   },
   "author": "",
   "license": "ISC",
@@ -45,6 +51,7 @@
     "winston-papertrail": "^1.0.4"
   },
   "devDependencies": {
+    "concurrently": "^3.4.0",
     "should": "^11.2.0",
     "sinon-as-promised": "^4.0.2"
   }

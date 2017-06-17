@@ -29,8 +29,6 @@ var db = mongoose.createConnection(uri, promise_options);
 
 mongoose.connect(config.database);
 
-app.options('*', cors());
-
 // app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -42,14 +40,18 @@ app.use(cookieParser());
 app.use(expressLogger.requestLogger('request'));
 app.use(expressLogger.errorLogger());
 
-app.use('/postcards', require('./routes/postcards'));
-app.use('/payments', require('./routes/payments'));
-app.use('/issues', require('./routes/issues'));
-app.use('/users', require('./routes/users'));
+app.use('/api/postcards', require('./routes/postcards'));
+app.use('/api/payments', require('./routes/payments'));
+app.use('/api/issues', require('./routes/issues'));
+app.use('/api/users', require('./routes/users'));
 
-app.get('/', function(req, res, next){
+app.get('/api/', function(req, res, next){
 	res.send('Hello World!');
 });
+
+if (process.env.NODE_ENV === ('production' || 'staging')) {
+  app.use(express.static('client/build'));
+}
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
