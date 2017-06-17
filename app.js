@@ -29,6 +29,8 @@ var db = mongoose.createConnection(uri, promise_options);
 
 mongoose.connect(config.database);
 
+app.options('*', cors());
+
 // app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -56,8 +58,8 @@ app.use(function(req, res, next) {
 });
 
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log('App listening on port 3000!');
+app.listen(process.env.PORT || 8080, function () {
+  console.log('App listening on port 8080!');
 });
 
 

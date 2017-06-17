@@ -22,6 +22,9 @@ app.post('/', (req, res, next) => {
             res.status(201).send(result);
         })
     })
+    .catch(function(err){
+        res.status(500).send(err);
+    })
 })
 
 module.exports = app;
