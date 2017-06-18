@@ -40,6 +40,10 @@ app.use(cookieParser());
 app.use(expressLogger.requestLogger('request'));
 app.use(expressLogger.errorLogger());
 
+if (process.env.NODE_ENV === ('production' || 'staging')) {
+  app.use(express.static('client/build'));
+}
+
 app.use('/api/postcards', require('./routes/postcards'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/issues', require('./routes/issues'));
@@ -49,9 +53,7 @@ app.get('/api/', function(req, res, next){
 	res.send('Hello World!');
 });
 
-if (process.env.NODE_ENV === ('production' || 'staging')) {
-  app.use(express.static('client/build'));
-}
+
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
