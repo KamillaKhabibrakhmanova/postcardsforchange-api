@@ -10,7 +10,6 @@
     "server": "./development.sh",
     "client": "cd client && npm start",
     "client:prod": "cd client && npm start:prod && cd..",
-    //"heroku-postbuild": "cd client && npm run build && cd .."
   },
   "engines": {
     "npm": ">=3",
