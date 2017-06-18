@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "start:prod": "concurrently \"npm run server\" \"npm run client:prod\"",
+    "start:prod": "concurrently \"node app.js\" \"npm run client:prod\"",
     "server": "./development.sh",
     "client": "cd client && npm start",
     "client:prod": "cd client && npm run start:prod",
