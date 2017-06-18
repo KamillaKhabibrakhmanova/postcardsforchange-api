@@ -41,7 +41,6 @@ app.use(expressLogger.requestLogger('request'));
 app.use(expressLogger.errorLogger());
 
 if (process.env.NODE_ENV !== 'dev') {
-  logger.info('USING BUILD FILES')
   app.use(express.static('client/build'));
 }
 
