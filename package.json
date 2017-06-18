@@ -12,6 +12,10 @@
     "client:prod": "cd client && npm run start:prod",
     "heroku-postbuild": "cd client && npm run build && cd .."
   },
+  "engines": {
+    "npm": ">=3",
+    "node": ">=8"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
