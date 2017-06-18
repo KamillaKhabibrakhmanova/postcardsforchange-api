@@ -9,7 +9,7 @@
     "start:prod": "node app.js",
     "server": "./development.sh",
     "client": "cd client && npm start",
-    "client:prod": "cd client && npm start:prod && cd..",
+    "client:prod": "cd client && npm start:prod && cd.."
   },
   "engines": {
     "npm": ">=3",
