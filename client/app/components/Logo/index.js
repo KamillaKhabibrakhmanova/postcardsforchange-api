@@ -8,9 +8,10 @@ const Jumbotron = styled.div`
   background-image: url(${LogoImg});
   background-size: contain;
   background-repeat: no-repeat;
-  width: 100%;
-  padding-top: 33.333%;
+  width: 85%;
+  padding-top: 25%;
   padding-bottom: 0%;
+  margin: auto;
   display: block;
   background-color: #ffffff;
 `;

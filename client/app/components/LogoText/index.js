@@ -18,13 +18,13 @@ const LogoStyle = styled.div`
   display: block;
 
   @media all and (max-width: 2000px) { /* screen size until 1200px */
-    font-size: 4.2rem; /* 1.5x default size */
+    font-size: 3.3rem; /* 1.5x default size */
   }
   @media all and (max-width: 1000px) { /* screen size until 1000px */
-    font-size: 3.0rem; /* 1.2x default size */
+    font-size: 2.0em; /* 1.2x default size */
   }
   @media all and (max-width: 750px) { /* screen size until 500px */
-    font-size: 2.0rem; /* 0.8x default size */
+    font-size: 1.5rem; /* 0.8x default size */
   }
 `;
 

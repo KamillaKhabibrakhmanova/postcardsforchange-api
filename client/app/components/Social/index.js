@@ -8,17 +8,17 @@ const SocialBox = styled.span`
   margin: 0 2rem;
   @media all and (max-width: 2000px) { /* screen size until 1200px */
     .social_image {
-      height: 12rem;
+      height: 11rem;
     }
   }
   @media all and (max-width: 1000px) { /* screen size until 1000px */
     .social_image {
-      height: 8rem;
+      height: 7rem;
     }
   }
   @media all and (max-width: 750px) { /* screen size until 500px */
     .social_image {
-      height: 5rem;
+      height: 4.5rem;
     }
   }
 `;
