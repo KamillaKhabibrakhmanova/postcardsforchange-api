@@ -8,10 +8,20 @@ const Text = styled.div`
   padding: 5%;
   text-align: center;
   font-size: 2rem;
-  @media all and (max-width: 1000px) { /* screen size until 1000px */
-    padding: 0;
-    margin: -2rem auto 2rem auto;
+  @media all and (max-width: 1000px) {
+    padding: 2%;
+    margin: -2rem auto 0rem auto;
     width: 100%;
+    font-size: 2rem;
+  }
+  @media all and (max-width: 600px) {
+    padding: 2%;
+    margin: -2rem auto 0rem auto;
+    width: 100%;
+    font-size: 1.7rem;
+  }
+  @media all and (max-width: 500px) {
+    font-size: 1.4rem;
   }
 `;
 

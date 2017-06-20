@@ -18,7 +18,8 @@ const SocialBox = styled.span`
   }
   @media all and (max-width: 750px) { /* screen size until 500px */
     .social_image {
-      height: 4.5rem;
+      height: 3.5rem;
+      margin: 0;
     }
   }
 `;

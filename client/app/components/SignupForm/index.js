@@ -16,7 +16,13 @@ const BlueBox = styled.div`
     width: 100%;
     padding: 10%;
     text-align: center;
+  }
+  
+  @media all and (max-width: 1000px) { /* screen size until 500px */
+    form {
+      padding: 2%;
     }
+  }
 `;
 
 const Button = styled.button`
@@ -27,6 +33,11 @@ const Button = styled.button`
   :focus {
     outline: 0 !important;
   }
+  
+  @media all and (max-width: 450px) { /* screen size until 500px */
+    width: 10rem;
+  }
+  
 `;
 
 class SignupForm extends React.Component { // eslint-disable-line react/prefer-stateless-function

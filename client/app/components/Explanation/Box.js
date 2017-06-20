@@ -17,6 +17,25 @@ const Box = styled.div`
     color: ${props => props.theme.main_blue}
     padding: 0 0.3rem;
   }
+
+  @media all and (max-width: 2000px) { /* screen size until 1200px */
+    img {
+      height: 20rem;
+    }
+  }
+  @media all and (max-width: 1000px) { /* screen size until 1000px */
+    img {
+      height: 15rem;
+    }
+  }
+  @media all and (max-width: 450px) { /* screen size until 500px */
+    img {
+      height: 11rem;
+    }
+    .message {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 class Explanation extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -36,7 +55,7 @@ class Explanation extends React.Component { // eslint-disable-line react/prefer-
 
   render() {
     return (
-      <Box className='col-sm-12 col-md-6 col-lg-4'>
+      <Box className='col-sm-12 col-md-4'>
         <Img src={this.props.component.img} alt='' />
         <p className='title'><strong><FormattedMessage {...this.messages.title} /></strong></p>
         <p className='message'>
