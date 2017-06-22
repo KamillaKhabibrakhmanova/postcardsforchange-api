@@ -1,5 +1,6 @@
 var config = {
-	nodeEnv: process.env.NODE_ENV || 'development',
+	googleApiKey: process.env.GOOGLE_API_KEY,
+	nodeEnv: process.env.NODE_ENV || 'dev',
 	database: process.env.MONGODB_URI,
 	braintreeAccessToken: process.env.BRAINTREE_ACCESS_TOKEN,
 	ssl_passphrase: process.env.SSL_PASSPHRASE,
