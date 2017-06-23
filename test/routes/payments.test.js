@@ -43,7 +43,7 @@ describe('Route: /payments', function() {
   it('generates client tokens', function (done) {
 
     return request(app)
-      .get('/payments/client-token')
+      .get('/api/payments/client-token')
       .expect(200)
       .then(function(res){
         var clientToken = res.body;

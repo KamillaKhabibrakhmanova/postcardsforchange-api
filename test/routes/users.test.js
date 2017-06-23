@@ -13,7 +13,7 @@ describe('Route: Users', function(){
 
 	it('creates new users', function(done){
 		return request(app)
-		.post('/users')
+		.post('/api/users')
         .send(userData)
 		.expect(201)
 		.then(function () {
@@ -29,7 +29,7 @@ describe('Route: Users', function(){
 
 	it('does not create users without an email', function(done){
         return request(app)
-		.post('/users')
+		.post('/api/users')
         .send({name: 'Kamilla'})
 		.expect(400)
 		.then(function (res) {

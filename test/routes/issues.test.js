@@ -27,7 +27,7 @@ describe('Route:Issue', function(){
 
 	it('gets issues', function(done){
 		return request(app)
-		.get('/issues')
+		.get('/api/issues')
 		.expect(200)
 		.then(function(res){
 			res.body.length.should.eql(1);
@@ -48,7 +48,7 @@ describe('Route:Issue', function(){
 		return Issue.create(inactiveIssueData)
 		.then(function(){
 			return request(app)
-			.get('/issues')
+			.get('/api/issues')
 			.expect(200)
 		}).then(function(res){
 			res.body.length.should.eql(1);

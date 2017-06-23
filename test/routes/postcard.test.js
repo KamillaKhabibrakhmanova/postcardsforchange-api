@@ -45,7 +45,7 @@ describe('Route: /postcards', function() {
   it('creates postcards', function (done) {
 
     return request(app)
-      .post('/postcards')
+      .post('/api/postcards')
       .send({
         nonce: 'fake-paypal-one-time-nonce',
         to: to,
