@@ -1,4 +1,5 @@
-const geocoder = Bluebird.promisifyAll(require('geocoder'));
+const { promisify } = require('util');
+const geocoder = require('geocoder');
 const logger = require('../utils/logger').logger();
 
 module.exports = {
@@ -9,8 +10,9 @@ module.exports = {
 		const address = this.toAddressString(addressObj);
 
 		logger.info('Getting coordinates for address,', {address});
+		const geocodeAsync = promisify(geocoder.geocode);
 
-		return geocoder.geocodeAsync(address)
+		return geocodeAsync(address)
 		.then(res => {
 			if (!res.results) return null;
 			return res.results[0].geometry.location;

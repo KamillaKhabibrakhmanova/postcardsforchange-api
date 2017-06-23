@@ -16,10 +16,4 @@ describe('Service: Civic (integration)', function() {
   });
 });
 
-const addressData = {
-    street1: '111 W 21st St',
-    street2: 'Apt 111',
-    city: 'Huntington Station',
-    state: 'NY',
-    zip: '11746'
-}
+const addressData = '111 W 21st St, Apt 111, Huntington Station, NY, 11746';

@@ -14,6 +14,7 @@ config = require('./config'),
 cors = require('cors'),
 expressLogger = require('./utils/logger'),
 expressValidator = require('express-validator'),
+url = require('url'),
 helmet = require('helmet');
 
 app.use(cors());
@@ -44,9 +45,10 @@ if (process.env.NODE_ENV !== 'dev') {
   app.use(express.static('client/build'));
 }
 
+app.use('/api/issues', require('./routes/issues'));
 app.use('/api/postcards', require('./routes/postcards'));
 app.use('/api/payments', require('./routes/payments'));
-app.use('/api/issues', require('./routes/issues'));
+app.use('/api/representatives', require('./routes/representatives'));
 app.use('/api/users', require('./routes/users'));
 
 app.get('/api/', function(req, res, next){

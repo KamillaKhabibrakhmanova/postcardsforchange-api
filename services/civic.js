@@ -13,15 +13,14 @@ function getNewUrl() {
 const representatives = function() {
     const url = 'https://www.googleapis.com/civicinfo/v2/representatives'
 
-    const createUrl = function(addressObj, query) {
-        const addressString = geocoder.toAddressString(addressObj)
+    const createUrl = function(address, query) {
         return buildUrl(url, {
-            queryParams: _.merge({key: googleKey, address: addressString}, query)
+            queryParams: _.merge({key: googleKey, address: address}, query)
         })
     }
 
-    const getReps = function(addressObj, query) {
-        return request.get(createUrl(addressObj, query))
+    const getReps = function(address, query) {
+        return request.get(createUrl(address, query))
         .then(function(res){
             res = JSON.parse(res);
             return res.officials;
@@ -33,8 +32,8 @@ const representatives = function() {
     }
 
     return {
-        getNational: function(addressObj, query) {
-            return getReps(addressObj, _.merge({levels: 'country'}, query))
+        getNational: function(address, query) {
+            return getReps(address, _.merge({levels: 'country'}, query))
         }
     }
 };
