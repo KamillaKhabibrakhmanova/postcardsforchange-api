@@ -8,7 +8,7 @@ const Jumbotron = styled.div`
   background-image: url(${LogoImg});
   background-size: contain;
   background-repeat: no-repeat;
-  width: 85%;
+  width: ${props => props.large ? 85 :65}%
   padding-top: 25%;
   padding-bottom: 0%;
   margin: auto;
@@ -16,16 +16,14 @@ const Jumbotron = styled.div`
   background-color: #ffffff;
 `;
 
-class Logo extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    return (
-      <div>
-        <Jumbotron>
-        <LogoText />
+function Logo(props) {
+  return (
+    <div>
+      <Jumbotron>
+        {props.large && <LogoText />}
         </Jumbotron>
       </div>
-    );
-  }
+  )
 }
 
 Logo.propTypes = {

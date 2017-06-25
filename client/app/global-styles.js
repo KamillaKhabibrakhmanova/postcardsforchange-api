@@ -31,4 +31,11 @@ injectGlobal`
   .bottom-row {
     margin-bottom: 10rem;
   }
+
+  .main {
+    background-color: #2f3b97;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+  }
 `;

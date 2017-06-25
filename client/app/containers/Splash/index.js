@@ -56,7 +56,7 @@ export class Splash extends React.Component { // eslint-disable-line react/prefe
             { name: 'description', content: 'Postcardsfor Change - an app to send postcards to your representatives about issues your care about.' },
           ]}
         />
-        <Logo />
+        <Logo large />
 
           <SocialBar>
             <Social type='instagram' />

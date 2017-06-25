@@ -17,9 +17,10 @@ import withProgressBar from 'components/ProgressBar';
 
 
 const theme = {
-  main_blue: '#2E3B97',
+  main_blue: '#2F3B97',
   main_red: '#ef463d',
-  main_turqouise: '#64c5b2'
+  main_turqouise: '#64c5b2',
+  main_white: '#ffffff'
 };
 
 const AppWrapper = styled.div`

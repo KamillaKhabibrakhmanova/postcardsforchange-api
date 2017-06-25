@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const lob = require('../services/lob.js');
 const braintree = require('../services/braintree.js');
