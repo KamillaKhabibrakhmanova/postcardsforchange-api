@@ -19,7 +19,7 @@ const Jumbotron = styled.div`
 function Logo(props) {
   return (
     <div>
-      <Jumbotron>
+      <Jumbotron large={props.large}>
         {props.large && <LogoText />}
         </Jumbotron>
       </div>
