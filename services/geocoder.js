@@ -1,4 +1,4 @@
-const Bluebird = require('Bluebird');
+const Bluebird = require('bluebird');
 const geocoder = Bluebird.promisifyAll(require('geocoder'));
 const logger = require('../utils/logger').logger();
 

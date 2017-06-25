@@ -6,7 +6,7 @@ const _ = require('lodash'),
     braintree = require('../../services/braintree'),
     lob = require('../../services/lob'),
     request = require("supertest"),
-    Bluebird = require('Bluebird');
+    Bluebird = require('bluebird');
     require('sinon-as-promised')(Bluebird);
   
 describe('Route: /postcards', function() {

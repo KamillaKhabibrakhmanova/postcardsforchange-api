@@ -5,7 +5,7 @@ const _ = require('lodash'),
     sinon = require('sinon'),
     braintree = require('../../services/braintree'),
     request = require("supertest"),
-    Bluebird = require('Bluebird');
+    Bluebird = require('bluebird');
     require('sinon-as-promised')(Bluebird);
   
 describe('Route: /payments', function() {

@@ -6,7 +6,7 @@ const _ = require('lodash'),
     civic = require('../../services/civic'),
     lob = require('../../services/lob'),
     request = require("supertest"),
-    Bluebird = require('Bluebird');
+    Bluebird = require('bluebird');
     buildUrl = require('build-url');
     require('sinon-as-promised')(Bluebird);
   
