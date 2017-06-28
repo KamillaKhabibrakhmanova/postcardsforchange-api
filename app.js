@@ -18,10 +18,9 @@ url = require('url'),
 path = require('path'),
 helmet = require('helmet');
 
-const whiteList = ["https://postcards4change-staging.herokuapp.com"];
-
 const corsOptions = {
   origin: function(origin, callback) {
+    const whiteList = ["https://postcards4change-staging.herokuapp.com"];
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
