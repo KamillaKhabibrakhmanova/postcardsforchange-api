@@ -3,12 +3,19 @@
  *
  * @return {string} URL
  */
-export default function getBaseUrl() {
-    if (process.env.NODE_ENV === 'production') {
-      return 'https://postcards4change.herokuapp.com/'
-    }
-    else if (process.env.NODE_ENV === 'staging') {
-        return 'https://postcards4chage-staging.herokuapp.com/'
-    }
-    else return 'http://localhost:8080/'
+
+let baseUrl;
+
+switch(process.env.NODE_ENV) {
+    case 'production':
+        baseUrl='https://postcards4change.herokuapp.com/';
+        break;
+    case 'staging':
+        baseUrl='https://postcards4change.herokuapp.com/';
+        break;
+    default:
+        baseUrl='http://localhost:8080/';
+
 }
+
+export const BASE_URL = baseUrl;

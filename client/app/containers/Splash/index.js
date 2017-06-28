@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import axios from 'axios';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import getBaseUrl from 'utils/constants';
+import {BASE_URL} from 'utils/constants';
 import Logo from 'components/Logo';
 import SignupForm from 'components/SignupForm';
 import Explanation from 'components/Explanation';
@@ -27,11 +27,9 @@ export class Splash extends React.Component { // eslint-disable-line react/prefe
   }
 
   onSubmitForm(e) {
-    console.log('baseUrl', getBaseUrl)
     e.preventDefault();
     const self = this;
-    const baseURL = getBaseUrl();
-    return axios.post(`/api/users`, {
+    return axios.post(`${BASE_URL}api/users`, {
       email: this.state.email
     })
     .then(function(resp) {

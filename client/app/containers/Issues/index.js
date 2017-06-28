@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import axios from 'axios';
-import getBaseUrl from 'utils/constants';
+import {BASE_URL} from 'utils/constants';
 import styled from 'styled-components';
 
 import Logo from 'components/Logo';
@@ -15,6 +15,8 @@ const HeaderBar = styled.div`
     float: right;
   }
 `;
+
+console.log('BASEURL', BASE_URL)
 
 export class Issues extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -36,9 +38,8 @@ export class Issues extends React.Component { // eslint-disable-line react/prefe
   }
 
   componentDidMount() {
-    const baseUrl = getBaseUrl();
     const self = this;
-    return axios.get(`${baseUrl}api/issues`)
+    return axios.get(`${BASE_URL}api/issues`)
     .then(function(resp) {
       //TODO don't repeat before pushing since we'll get more issues
       self.setState({
