@@ -21,7 +21,7 @@ helmet = require('helmet');
 const corsOptions = {
   origin: function(origin, callback) {
     const whiteList = ["https://postcards4change-staging.herokuapp.com"];
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whiteList.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
