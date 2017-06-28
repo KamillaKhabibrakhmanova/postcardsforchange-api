@@ -18,18 +18,19 @@ url = require('url'),
 path = require('path'),
 helmet = require('helmet');
 
-const corsOptions = {
-  origin: function(origin, callback) {
-    const whiteList = ["https://postcards4change-staging.herokuapp.com"];
-    if (whiteList.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error(`Not allowed by CORS: ${origin}`))
-    }
-  }
-}
+// const corsOptions = {
+//   //should remove this
+//   origin: function(origin, callback) {
+//     // const whiteList = ["https://postcards4change-staging.herokuapp.com", "http://localhost:3000"];
+//     if (whiteList.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error(`Not allowed by CORS: ${origin}`))
+//     }
+//   }
+// }
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 
 app.use(helmet());
 
