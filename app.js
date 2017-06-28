@@ -18,10 +18,23 @@ url = require('url'),
 path = require('path'),
 helmet = require('helmet');
 
-app.use(cors());
+const whiteList = ["https://postcards4change-staging.herokuapp.com"];
+
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+app.use(cors(corsOptions))
+
 app.use(helmet());
 
-app.use(express.static('./app'));
+// app.use(express.static('./app'));
 //app.use(favicon('./favicon.ico'));
 
 
