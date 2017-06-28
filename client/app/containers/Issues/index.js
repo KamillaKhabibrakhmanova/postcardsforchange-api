@@ -39,7 +39,7 @@ export class Issues extends React.Component { // eslint-disable-line react/prefe
 
   componentDidMount() {
     const self = this;
-    return axios.get(`${BASE_URL}api/issues`)
+    return axios.get(`/api/issues`)
     .then(function(resp) {
       //TODO don't repeat before pushing since we'll get more issues
       self.setState({
