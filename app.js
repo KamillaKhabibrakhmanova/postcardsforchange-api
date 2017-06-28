@@ -32,7 +32,7 @@ const corsOptions = {
 
 app.use(helmet());
 
-// app.use(express.static('./app'));
+app.use(express.static('./app'));
 //app.use(favicon('./favicon.ico'));
 
 
