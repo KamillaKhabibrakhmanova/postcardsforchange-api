@@ -32,14 +32,6 @@ const corsOptions = {
 
 app.use(helmet());
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-app.use(cors(corsOptions))
-
 // app.use(express.static('./app'));
 //app.use(favicon('./favicon.ico'));
 
@@ -60,6 +52,14 @@ app.use(cookieParser());
 //logging middleware
 app.use(expressLogger.requestLogger('request'));
 app.use(expressLogger.errorLogger());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use(cors(corsOptions))
 
 app.use('/api/issues', require('./routes/issues'));
 app.use('/api/postcards', require('./routes/postcards'));
