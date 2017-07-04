@@ -4,27 +4,28 @@ import Helmet from 'react-helmet';
 import axios from 'axios';
 import {BASE_URL} from 'utils/constants';
 import styled from 'styled-components';
+import { fetchIssues } from 'actions/index';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectIssues } from 'containers/App/selectors';
 
 import Logo from 'components/Logo';
-import Social from 'components/Social';
+import MainHeader from 'components/MainHeader';
 import H1 from 'components/H1';
 import IssueCard from './IssueCard';
 
-const HeaderBar = styled.div`
-  .social {
-    float: right;
-  }
-`;
-
 console.log('BASEURL', BASE_URL)
 
-export class Issues extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class Issues extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
 
     this.state = {
-      issues: []
+      issues:[]
     }
+  }
+
+  componentDidMount() {
+    this.props.fetchIssues();
   }
 
   repeatIssues(data) {
@@ -37,17 +38,6 @@ export class Issues extends React.Component { // eslint-disable-line react/prefe
     return result;
   }
 
-  componentDidMount() {
-    const self = this;
-    return axios.get(`/api/issues`)
-    .then(function(resp) {
-      //TODO don't repeat before pushing since we'll get more issues
-      self.setState({
-        issues: self.repeatIssues(resp.data[0])
-      })
-    })
-  }
-
   render() {
     return (
       <div>
@@ -57,18 +47,11 @@ export class Issues extends React.Component { // eslint-disable-line react/prefe
             { name: 'description', content: 'Description of Issues' },
           ]}
         />
-        <HeaderBar>
-          <div className='social'>
-            <Social type='instagram' small />
-            <Social type='twitter' small/>
-            <Social type='facebook' small />
-          </div>
-          <Logo />
-        </HeaderBar>
+        <MainHeader />
         <div className='main'>
           <H1>Select an issue that matters to you:</H1>
           <div className='row'>
-            {this.state.issues.map(issue => <IssueCard issue={issue} key={issue.id}/>)}
+            {this.props.issues.map(issue => <IssueCard issue={issue} key={issue._id}/>)}
           </div>
         </div>
       </div>
@@ -76,15 +59,11 @@ export class Issues extends React.Component { // eslint-disable-line react/prefe
   }
 }
 
-Issues.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
+  console.log('state', state.global)
   return {
-    dispatch,
-  };
+    issues: state.global.issues
+  }
 }
 
-export default connect(null, mapDispatchToProps)(Issues);
+export default connect(mapStateToProps, {fetchIssues})(Issues);

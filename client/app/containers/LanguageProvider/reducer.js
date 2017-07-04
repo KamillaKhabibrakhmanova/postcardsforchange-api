@@ -13,15 +13,15 @@ import {
   DEFAULT_LOCALE,
 } from '../App/constants';
 
-const initialState = fromJS({
+const initialState = {
   locale: DEFAULT_LOCALE,
-});
+};
 
 function languageProviderReducer(state = initialState, action) {
+  console.log('state',state)
   switch (action.type) {
     case CHANGE_LOCALE:
-      return state
-        .set('locale', action.locale);
+      return Object.assign({}, state, {locale: action.locale})
     default:
       return state;
   }

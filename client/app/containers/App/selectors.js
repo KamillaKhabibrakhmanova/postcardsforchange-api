@@ -4,41 +4,49 @@
 
 import { createSelector } from 'reselect';
 
-const selectGlobal = (state) => state.get('global');
+const selectGlobal = (state) => state.global;
 
 const makeSelectCurrentUser = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.get('currentUser')
+  (globalState) => globalState['currentUser']
 );
 
 const makeSelectLoading = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.get('loading')
+  (globalState) => globalState['loading']
 );
 
 const makeSelectError = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.get('error')
+  (globalState) => globalState['error']
 );
 
 const makeSelectRepos = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'repositories'])
+  (globalState) => globalState.userData.repositories
 );
+
+const makeSelectIssues = () =>
+  createSelector(
+    selectGlobal,
+    (globalState) =>{
+      console.log('globalState', globalState)
+      globalState['issues']
+    } 
+  );
 
 const makeSelectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
 
   return (state) => {
-    const routingState = state.get('route'); // or state.route
+    const routingState = state.route; // or state.route
 
-    if (!routingState.equals(prevRoutingState)) {
+    if (routingState !== prevRoutingState) {
       prevRoutingState = routingState;
-      prevRoutingStateJS = routingState.toJS();
     }
 
-    return prevRoutingStateJS;
+    return prevRoutingState;
   };
 };
 
@@ -48,5 +56,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,
+  makeSelectIssues,
   makeSelectLocationState,
 };

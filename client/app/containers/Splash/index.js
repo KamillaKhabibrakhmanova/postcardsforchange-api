@@ -3,6 +3,8 @@ import axios from 'axios';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import {BASE_URL} from 'utils/constants';
+import { fetchIssues } from './actions';
+
 import Logo from 'components/Logo';
 import SignupForm from 'components/SignupForm';
 import Explanation from 'components/Explanation';

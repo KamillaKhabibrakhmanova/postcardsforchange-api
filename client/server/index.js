@@ -14,7 +14,7 @@ const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
-//app.use('/api', proxy({target: 'http://localhost:8080/api', changeOrigin: true}));
+app.use('/api', proxy({target: 'http://localhost:8080/', changeOrigin: true}));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
@@ -22,9 +22,10 @@ setup(app, {
   publicPath: '/',
 });
 
-if (isDev) {
-  app.use('/api/users', proxy({target: 'http://localhost:8080', changeOrigin: true}));
-}
+// if (isDev) {
+//   app.use('/api/issues', proxy({target: 'http://localhost:8080', changeOrigin: true}));
+//   app.use('/api/users', proxy({target: 'http://localhost:8080', changeOrigin: true}));
+// }
 
 // get the intended host and port number, use localhost and port 3000 if not provided
 const customHost = argv.host || process.env.HOST;
