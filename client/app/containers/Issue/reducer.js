@@ -1,20 +1,13 @@
-/*
- *
- * Issue reducer
- *
- */
-
-import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  FETCH_ISSUE,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = {};
 
 function issueReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case FETCH_ISSUE:
+      return Object.assign({}, state, {issue: action.payload.data})
     default:
       return state;
   }

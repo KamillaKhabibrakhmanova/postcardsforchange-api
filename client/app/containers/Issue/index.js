@@ -1,17 +1,23 @@
-/*
- *
- * Issue
- *
- */
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { createStructuredSelector } from 'reselect';
-import makeSelectIssue from './selectors';
+import {fetchIssue} from './actions';
+
+import Img from 'components/Img';
+import MainHeader from 'components/MainHeader';
 
 export class Issue extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentWillMount() {
+    this.props.fetchIssue(this.props.params.id)
+  }
+  
   render() {
+    const issue = this.props.issue;
+
+    if (!issue) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div>
         <Helmet
@@ -20,18 +26,38 @@ export class Issue extends React.PureComponent { // eslint-disable-line react/pr
             { name: 'description', content: 'Description of Issue' },
           ]}
         />
+        <MainHeader />
+        <div className='main'>
+          <div className='row'>
+            <h2>{issue.title}</h2><br />
+          </div>
+          <div className='row'>
+            <div className='col-sm-12 col-md-6'>
+              <Img src={issue.postcard_image} alt={issue.title} />
+            </div>
+            <div className='col-sm-12 col-md-6'>
+              <h3>Message on back: </h3>
+              <p> {issue.message} </p>
+            </div>
+          </div>
+           <div className='row'>
+            <div className='col-sm-12'>
+              <h2>Ready to send?</h2>
+              <p>Enter your address below to find your representatives:</p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-Issue.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+function mapStateToProps(state) {
+  console.log('state', state)
+  return {
+    issue: state.global.issue
+  }
 };
-
-const mapStateToProps = createStructuredSelector({
-  Issue: makeSelectIssue(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -39,4 +65,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Issue);
+export default connect(mapStateToProps, {fetchIssue})(Issue);

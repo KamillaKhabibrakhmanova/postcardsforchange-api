@@ -1,15 +1,13 @@
-/*
- *
- * Issue actions
- *
- */
+import axios from 'axios';
 
-import {
-  DEFAULT_ACTION,
-} from './constants';
+export const FETCH_ISSUE = 'FETCH_ISSUE';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
+export function fetchIssue(id) {
+	const request = axios.get(`/api/issues/${id}`)
+
+	return {
+		type: FETCH_ISSUE,
+		payload: request
+	};
 }
+

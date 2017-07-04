@@ -1,6 +1,7 @@
 import React from 'react';
 import Img from '../../components/Img';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 
 const IssueBox = styled.div`
   background-colour: #ffffff;
@@ -37,10 +38,10 @@ function IssueCard(props) {
   return (
     <div className='col-sm-12 col-md-6 col-lg-4'>
         <IssueBox>
-        {/*<Link to={"issues/" + issue.id}>*/}
+        <Link to={"/issues/" + props.issue._id}>
             <Img src={props.issue.postcard_image} alt={props.issue.title} className='social_image' />
             <p>{props.issue.title}</p>
-        {/*</Link>*/}
+        </Link>
         </IssueBox>
     </div>
   );

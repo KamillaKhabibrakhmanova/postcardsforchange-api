@@ -29,7 +29,7 @@ function routeReducer(state = routeInitialState, action) {
   switch (action.type) {
     /* istanbul ignore next */
     case LOCATION_CHANGE:
-      return Object.assign(state, {}, locationBeforeTransitions: action.payload);
+      return Object.assign(state, {}, {locationBeforeTransitions: action.payload});
     default:
       return state;
   }
@@ -43,6 +43,6 @@ export default function createReducer(asyncReducers) {
     route: routeReducer,
     language: languageProviderReducer,
     global: globalReducer,
-    // ...asyncReducers,
+    ...asyncReducers,
   });
 }

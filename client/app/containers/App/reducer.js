@@ -11,7 +11,8 @@
  */
 
 import {
-  FETCH_ISSUES
+  FETCH_ISSUES,
+  FETCH_ISSUE
 } from '../../actions/index';
 
 // The initial state of the App
@@ -28,12 +29,10 @@ const initialState = {
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_ISSUES:
-      console.log('FETCH', action.payload)
-      console.log(Object.assign({}, state, {issues: action.payload.data}))
       return Object.assign({}, state, {issues: action.payload.data})
-      console.log('state', state)
+    case FETCH_ISSUE:
+      return Object.assign({}, state, {issue: action.payload.data})
     default:
-      console.log('DEFAULT')
       return state;
   }
 }
