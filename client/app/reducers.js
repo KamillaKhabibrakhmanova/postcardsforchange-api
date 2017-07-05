@@ -5,6 +5,7 @@
 
 import { combineReducers } from 'redux';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import { createForms } from 'react-redux-form';
 
 import globalReducer from 'containers/App/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
@@ -43,6 +44,9 @@ export default function createReducer(asyncReducers) {
     route: routeReducer,
     language: languageProviderReducer,
     global: globalReducer,
+    ...createForms({
+      address: {}
+    }),
     ...asyncReducers,
   });
 }

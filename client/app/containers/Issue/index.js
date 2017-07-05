@@ -5,6 +5,7 @@ import {fetchIssue} from './actions';
 
 import Img from 'components/Img';
 import MainHeader from 'components/MainHeader';
+import AddressForm from './addressForm';
 
 export class Issue extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
@@ -44,6 +45,7 @@ export class Issue extends React.PureComponent { // eslint-disable-line react/pr
             <div className='col-sm-12'>
               <h2>Ready to send?</h2>
               <p>Enter your address below to find your representatives:</p>
+              <AddressForm />
             </div>
           </div>
         </div>
@@ -53,7 +55,6 @@ export class Issue extends React.PureComponent { // eslint-disable-line react/pr
 }
 
 function mapStateToProps(state) {
-  console.log('state', state)
   return {
     issue: state.global.issue
   }

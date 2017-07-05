@@ -13,8 +13,6 @@ import MainHeader from 'components/MainHeader';
 import H1 from 'components/H1';
 import IssueCard from './IssueCard';
 
-console.log('BASEURL', BASE_URL)
-
 export class Issues extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -60,7 +58,6 @@ export class Issues extends React.PureComponent { // eslint-disable-line react/p
 }
 
 function mapStateToProps(state) {
-  console.log('state', state.global)
   return {
     issues: state.global.issues
   }

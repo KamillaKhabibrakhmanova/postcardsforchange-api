@@ -12,7 +12,8 @@
 
 import {
   FETCH_ISSUES,
-  FETCH_ISSUE
+  FETCH_ISSUE,
+  FETCH_REPRESENTATIVES
 } from '../../actions/index';
 
 // The initial state of the App
@@ -32,6 +33,12 @@ function appReducer(state = initialState, action) {
       return Object.assign({}, state, {issues: action.payload.data})
     case FETCH_ISSUE:
       return Object.assign({}, state, {issue: action.payload.data})
+    case FETCH_REPRESENTATIVES:
+      return Object.assign({}, state, {
+        user: action.payload.data.user,
+        address: action.payload.data.address,
+        representatives: action.payload.data.representatives
+      })
     default:
       return state;
   }
