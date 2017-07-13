@@ -20,12 +20,6 @@ injectGlobal`
     background-color: #ffffff;
     min-height: 100%;
     min-width: 100%;
-
-    input, select {
-      background-color: #ffffff;
-      margin: 7px;
-      color: black;
-    }
   }
 
   p,
@@ -42,8 +36,10 @@ injectGlobal`
     color: #ffffff;
     text-align: center;
     padding: 1rem;
-    input {
-
+    input, select {
+      background-color: #ffffff;
+      margin: 7px;
+      color: black;
     }
   }
 `;
