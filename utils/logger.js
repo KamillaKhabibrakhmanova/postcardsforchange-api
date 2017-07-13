@@ -30,10 +30,10 @@ if (config.nodeEnv === ('production' || 'staging')) {
     colorize: true
   }));
 
-  transports.push( new winston.transports.MongoDB({
-    level: 'debug',
-    dbUri: config.database
-  }));
+  // transports.push( new winston.transports.MongoDB({
+  //   level: 'debug',
+  //   dbUri: config.database
+  // }));
 }
 
 exports.requestLogger = type => {
