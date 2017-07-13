@@ -13,7 +13,8 @@
 import {
   FETCH_ISSUES,
   FETCH_ISSUE,
-  FETCH_REPRESENTATIVES
+  FETCH_REPRESENTATIVES,
+  FETCH_BRAINTREE_TOKEN
 } from '../../actions/index';
 
 // The initial state of the App
@@ -39,6 +40,8 @@ function appReducer(state = initialState, action) {
         address: action.payload.data.address,
         representatives: action.payload.data.representatives
       })
+    case FETCH_BRAINTREE_TOKEN:
+      return Object.assign({}, state, {braintreeToken: action.payload.data.clientToken})
     default:
       return state;
   }

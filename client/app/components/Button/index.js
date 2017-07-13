@@ -1,46 +1,33 @@
 /**
- *
- * Button.react.js
- *
- * A common button, if you pass it a prop "route" it'll render a link to a react-router route
- * otherwise it'll render a link with an onclick
- */
+*
+* Button
+*
+*/
 
-import React, { PropTypes, Children } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
-import A from './A';
-import StyledButton from './StyledButton';
-import Wrapper from './Wrapper';
 
-function Button(props) {
-  // Render an anchor tag
-  let button = (
-    <A href={props.href} onClick={props.onClick}>
-      {Children.toArray(props.children)}
-    </A>
-  );
+const Button = styled.button`
+  -webkit-border-radius: 30;
+  -moz-border-radius: 30;
+  border-radius: 30px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  background: #3498db;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
 
-  // If the Button has a handleRoute prop, we want to render a button
-  if (props.handleRoute) {
-    button = (
-      <StyledButton onClick={props.handleRoute}>
-        {Children.toArray(props.children)}
-      </StyledButton>
-    );
+ :hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
   }
-
-  return (
-    <Wrapper>
-      {button}
-    </Wrapper>
-  );
-}
-
-Button.propTypes = {
-  handleRoute: PropTypes.func,
-  href: PropTypes.string,
-  onClick: PropTypes.func,
-  children: PropTypes.node.isRequired,
-};
+`;
 
 export default Button;

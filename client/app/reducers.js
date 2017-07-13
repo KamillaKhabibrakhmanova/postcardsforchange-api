@@ -45,7 +45,8 @@ export default function createReducer(asyncReducers) {
     language: languageProviderReducer,
     global: globalReducer,
     ...createForms({
-      address: {}
+      address: {},
+      representatives: {}
     }),
     ...asyncReducers,
   });

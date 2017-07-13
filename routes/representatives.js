@@ -12,6 +12,7 @@ app.get('/', function(req, res, next){
 
 	return civic.getNationalRepresentatives(req.query.address)
 	.then(result=> {
+		console.log('result', result)
 		res.send(result);
 	})
 	.catch(err => next(err))

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Control, Form, actions } from 'react-redux-form';
 import styled from 'styled-components';
 import {fetchRepresentatives} from './actions';
+import { browserHistory } from 'react-router';
 
 import MainHeader from 'components/MainHeader';
 import { STATES } from './constants';
@@ -37,16 +38,15 @@ const FormBox = styled.div`
 
 export class AddressForm extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   handleSubmit(address) {
-   console.log('address', address);
+   const self = this;
    Promise.resolve(this.props.fetchRepresentatives(address))
    .then(function(data){
-       console.log('data', data)
-       //this.context.router.push('/issues/....)
+       console.log('data', data);
+       browserHistory.push(`/issues/${self.props.issue._id}/representatives`)
    }) 
   }
   
   render() {
-      console.log('props', this.props)
     const address = {};
     const states = STATES
 

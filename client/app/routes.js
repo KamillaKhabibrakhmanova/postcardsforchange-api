@@ -70,6 +70,14 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/issues/:id/representatives',
+      name: 'representatives',
+      getComponent(location, cb) {
+        import('containers/Representatives')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
