@@ -21,7 +21,11 @@ helmet = require('helmet');
 const corsOptions = {
   //should remove this
   origin: function(origin, callback) {
-    const whiteList = ["https://postcards4change-staging.herokuapp.com", "http://localhost:3000"];
+    const whiteList = [
+      "https://postcards4change-staging.herokuapp.com",
+       "http://localhost:3000",
+       "http://postcards4change.herokuapp.com"
+      ];
     if (whiteList.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
