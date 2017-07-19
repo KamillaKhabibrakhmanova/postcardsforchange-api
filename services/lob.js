@@ -1,14 +1,17 @@
 const config = require('../config');
 const Bluebird = require('bluebird');
+const _ = require('lodash');
 const Lob = Bluebird.promisifyAll(require('lob')(config.lobApiKey));
 const postcardTemplates = require('../templates/postcardTemplates');
+const Issue = require('../models/issue');
 const logger = require('../utils/logger').logger();
 
 //format address to fit lob requirements
 const getLobFormattedAddress = addressObject => {
 	return {
 		name: addressObject.name,
-		address_line1: addressObject.street_address,
+		address_line1: addressObject.line1,
+		address_line2: addressObject.line2,
 		address_city: addressObject.city,
 		address_state: addressObject.state,
 		address_zip: addressObject.zip
@@ -16,19 +19,32 @@ const getLobFormattedAddress = addressObject => {
 };
 
 module.exports = {
-	//send postcard via Lob
-	sendPostcard: (description, to, from) => {	
+
+	//** sendIssuePostcard: send issue card via lob
+	//@params {obj} Issue instance
+	//@params {obj} representative from google civic service
+	//@params {from} address object with sender name and address: {name, line1, line2, city, state, zip}
+	//@return {obj} lob postcard object
+	sendIssuePostcard: (issue, representative, from) => {
+		if (!issue|| !representative || !from) {
+			throw new Error('Missing required parameder');
+		}
+		
+		const representativeAddress = getLobFormattedAddress(_.merge({name: representative.name}, representative.address[0]));
+		const fromAddress = getLobFormattedAddress(from);
+
 		return Lob.postcards.create({
-			description: description,
-			to: getLobFormattedAddress(to),
-			from: getLobFormattedAddress(from),
-			front: postcardTemplates.front(),
-			back: postcardTemplates.back()
-		}).then(function(res){
+			to: representativeAddress,
+			from: fromAddress,
+			description: issue.title,
+			message: issue.message,
+			front: issue.postcard_image
+		})
+		.then(res => {
 			logger.info('Postcard successfully sent', {res});
 			return res;
 		})
-		.catch(function(err){
+		.catch(err => {
 			logger.error('Error sending postcard', err);
 			throw err;
 		});
