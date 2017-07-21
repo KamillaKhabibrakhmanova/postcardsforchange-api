@@ -7,7 +7,6 @@ const _ = require('lodash'),
     lob = require('../../services/lob'),
     request = require("supertest"),
     Bluebird = require('bluebird');
-    require('sinon-as-promised')(Bluebird);
   
 describe('Route: /postcards', function() {
 
@@ -33,7 +32,7 @@ describe('Route: /postcards', function() {
   var payment_id = '12345';
 
   beforeEach(function(){
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(braintree, 'makeSale').resolves({id: payment_id});
     sandbox.stub(lob, 'sendPostcard').resolves({ to: to, from: from, message: description });
   });

@@ -6,7 +6,6 @@ const _ = require('lodash'),
     braintree = require('../../services/braintree'),
     request = require("supertest"),
     Bluebird = require('bluebird');
-    require('sinon-as-promised')(Bluebird);
   
 describe('Route: /payments', function() {
 
@@ -32,7 +31,7 @@ describe('Route: /payments', function() {
   var payment_id = '12345';
 
   beforeEach(function(){
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(braintree, 'generateToken').resolves({success: true, clientToken: 'fakeToken'});
   });
 

@@ -8,7 +8,6 @@ const _ = require('lodash'),
     request = require("supertest"),
     Bluebird = require('bluebird');
     buildUrl = require('build-url');
-    require('sinon-as-promised')(Bluebird);
   
 describe('Route: /representatives', function() {
 
@@ -16,7 +15,7 @@ describe('Route: /representatives', function() {
   var addressQuery = '285 Fulton St, New York, NY 10007'
   
   beforeEach(function(){
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(civic, 'getNationalRepresentatives').resolves([{id:'5'}]);
   });
 

@@ -1,39 +1,25 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const Bluebird = require('bluebird');
 const lob = require('../services/lob.js');
 const braintree = require('../services/braintree.js');
 const User = require('../models/user.js');
+const Issue = require('../models/issue.js');
+const logger = require('../utils/logger').logger();
 const _ = require('lodash');
 const Schema = mongoose.Schema;
 
 const PostcardSchema = new mongoose.Schema({
-    message: String,
     price: Number,
-    from: {
-        first_name: String,
-        last_name: String,
-        name: String,
-        street_address: String,
-        city: String,
-        state: String,
-        zip: Number
-    },
-    to: {
-        first_name: String,
-        last_name: String,
-        name: String,
-        street_address: String,
-        city: String,
-        state: String,
-        zip: Number
-    },
     //braintree transaction
     transactionId : String,
+    //lobId
+    lobId: String,
     front: String,
 
-    user: [{ type: Schema.ObjectId, ref: 'User' }],
-    issue: [{ type: Schema.ObjectId, ref: 'Issue'}],
+    user: { type: Schema.ObjectId, ref: 'User' },
+    issue: { type: Schema.ObjectId, ref: 'Issue'},
 });
 
 PostcardSchema.statics.sendPostcard = function(postcard){
@@ -79,5 +65,70 @@ PostcardSchema.statics.sendPostcard = function(postcard){
         });
     });
 };
+
+PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, representatives) {
+    if (!nonce) throw new Error('No payment method nonce provided');
+
+    const Postcard = this;
+    const representativeCount = representatives.length;
+    const postcardErrors = [];
+    const from = _.merge({name: user.firstName + user.lastName}, user.address);
+    const res = {postcards: []};
+
+    let issue = await Issue.findById(issueId);
+    let transaction;
+    try {
+        transaction = await braintree.makeSale(representativeCount, nonce);
+        if (!transaction.id) throw new Error('Error making payment')
+    } catch(e) {
+        throw new Error(e);
+    }
+    
+    return Bluebird.map(representatives, function(representative){
+        return lob.sendIssuePostcard(issue, representative, from)
+        .then(function(card){
+            res.postcards.push(card);
+        })
+        .catch(function(err){
+            logger.error('Error sending postcard',  {err, representative});
+            postcardErrors.push(representative);
+        })
+    }).then(function(){
+        //process a refund if any postcards didn't send
+        if (postcardErrors.length) {
+            res.errorMessage = `Failed to send ${postcardErrors.length} postcards`;
+            res.unsent = postcardErrors;
+
+            return braintree.processRefund(transaction.id, `${postcardErrors.length}.00`)
+        } else return;
+    }).then(function(){
+        return User.findOne({ email: user.email });
+    })
+    //create or update user info
+    .then(function(found){
+        if (!found) {
+            return User.create(user);
+        } else {
+            return found.update(user);
+        }
+    }).then(function(updated){
+        return Bluebird.map(res.postcards, function(postcard) {
+            return Postcard.create({
+                lobId: postcard.id,
+                transactionId: transaction.id,
+                user: updated._id,
+                issue: issue._id,
+                price: 1
+            })
+        })
+    }).then(function(createdPostcards){
+        res.postcards = createdPostcards;
+        return res;
+    })
+    .catch(function(err){
+        logger.error(err);
+        throw new Error(err);
+    })
+}
 
 module.exports = mongoose.model('Postcard', PostcardSchema);

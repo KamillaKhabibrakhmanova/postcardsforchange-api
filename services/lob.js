@@ -45,8 +45,8 @@ module.exports = {
 			return res;
 		})
 		.catch(err => {
-			logger.error('Error sending postcard', err);
-			throw err;
+			logger.error('Error sending postcards', err);
+			throw new Error(err);
 		});
 	}
 };
