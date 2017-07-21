@@ -5,36 +5,30 @@ const _ = require('lodash'),
     sinon = require('sinon'),
     braintree = require('../../services/braintree'),
     lob = require('../../services/lob'),
+    Issue = require('../../models/issue'),
     request = require("supertest"),
     Bluebird = require('bluebird');
   
 describe('Route: /postcards', function() {
 
-  var sandbox;
-  var to = {
-    name: 'Kamilla',
-    street_address: '101 E 81st St',
-    city: 'New York City',
-    state: 'NY',
-    zip: '10010'
-  };
+  let sandbox, issue;
 
-  var from = {
-    name: 'Mike',
-    street_address: '102 E 92nd St',
-    city: 'New York City',
-    state: 'NY',
-    zip: '10000'
-  };
+  const payment_id = '12345';
 
-  var description = 'Kamilla Is Awesome';
-
-  var payment_id = '12345';
-
-  beforeEach(function(){
+  beforeEach(function(done){
     sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(braintree, 'makeSale').resolves({id: payment_id});
-    sandbox.stub(lob, 'sendPostcard').resolves({ to: to, from: from, message: description });
+    sandbox.stub(braintree, 'processRefund').resolves({});
+    lobStub = sandbox.stub(lob, 'sendIssuePostcard');
+
+    return Issue.create({
+      title: 'Fake title',
+      message: 'Hi! Vacation is going great.',
+      isActive: true,
+    }).then(function(created){
+      issue = created;
+    })
+    .then(done.bind(null, null), done);
   });
 
   afterEach(function() {
@@ -42,24 +36,97 @@ describe('Route: /postcards', function() {
   });
 
   it('creates postcards', function (done) {
+    lobStub.resolves({id: 'lobId'})
 
     return request(app)
       .post('/api/postcards')
       .send({
         nonce: 'fake-paypal-one-time-nonce',
-        to: to,
-        from: from,
-        message: 'Hey',
-        email: 'fakey_faker@example.com'
+        issueId: issue._id,
+        representatives,
+        user
       })
       .expect(201)
       .then(function(res){
-        var postcard = res.body;
-        postcard.to.name.should.eql(to.name);
-        postcard.from.name.should.eql(from.name)
-        should.exist(postcard._id);
+        console.log('res', res.body)
+        res.body.postcards.length.should.eql(1);
+        res.body.postcards[0].lobId.should.eql('lobId');
       })
       .then(done.bind(null, null), done);     
   });
 
+  it('should return a 500 status code and unsent array if no postcards are sent', function(done){
+    lobStub.rejects(new Error('Error sending postcard'));
+
+    return request(app)
+    .post('/api/postcards')
+    .send({
+      nonce: 'fake-paypal-one-time-nonce',
+      issueId: issue._id,
+      representatives,
+      user
+    })
+    .expect(500)
+    .then(function(res){
+      const result = res.body;
+      result.errorMessage = 'Failed to send 1 postcards';
+      result.postcards.length.should.eql(0);
+      result.unsent.length.should.eql(1);
+      result.unsent[0].should.deepEqual(representatives[0]);
+    })
+    .then(done.bind(null, null), done);
+
+  })
+
 });
+
+const user = {
+  firstName: 'Mickey',
+  lastName: 'Mouse',
+  email: 'mickey@example.com',
+  address: {
+    line1: '143 Magic Lane',
+    city: 'Disneyland',
+    state: 'CA',
+    zip: '10010'
+  }
+}
+
+const representatives = [{
+   "name": "Donald J. Trump",
+   "address": [
+    {
+     "line1": "The White House",
+     "line2": "1600 Pennsylvania Avenue NW",
+     "city": "Washington",
+     "state": "DC",
+     "zip": "20500"
+    }
+   ],
+   "party": "Republican",
+   "phones": [
+    "(202) 456-1111"
+   ],
+   "urls": [
+    "http://www.whitehouse.gov/"
+   ],
+   "photoUrl": "https://www.whitehouse.gov/sites/whitehouse.gov/files/images/45/PE%20Color.jpg",
+   "channels": [
+    {
+     "type": "GooglePlus",
+     "id": "+whitehouse"
+    },
+    {
+     "type": "Facebook",
+     "id": "whitehouse"
+    },
+    {
+     "type": "Twitter",
+     "id": "potus"
+    },
+    {
+     "type": "YouTube",
+     "id": "whitehouse"
+    }
+   ]
+  }]
