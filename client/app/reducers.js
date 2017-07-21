@@ -45,8 +45,8 @@ export default function createReducer(asyncReducers) {
     language: languageProviderReducer,
     global: globalReducer,
     ...createForms({
-      address: {},
-      representatives: {}
+      address: { isSubscribed: true },
+      selectedReps: {}
     }),
     ...asyncReducers,
   });

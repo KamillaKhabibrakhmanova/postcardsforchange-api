@@ -48,7 +48,6 @@ describe('Route: /postcards', function() {
       })
       .expect(201)
       .then(function(res){
-        console.log('res', res.body)
         res.body.postcards.length.should.eql(1);
         res.body.postcards[0].lobId.should.eql('lobId');
       })

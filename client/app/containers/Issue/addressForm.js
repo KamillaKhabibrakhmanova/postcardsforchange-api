@@ -5,49 +5,30 @@ import styled from 'styled-components';
 import {fetchRepresentatives} from './actions';
 import { browserHistory } from 'react-router';
 
-import MainHeader from 'components/MainHeader';
+import Button from 'components/Button';
 import { STATES } from './constants';
 
 const FormBox = styled.div`
   form {
       display: inline-block;
   }
-
-  button {
-  -webkit-border-radius: 30;
-  -moz-border-radius: 30;
-  border-radius: 30px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 15px;
-  background: #3498db;
-  padding: 5px 10px 5px 10px;
-  text-decoration: none;
-}
-
-.button:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
 }
 `;
 
 export class AddressForm extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  
   handleSubmit(address) {
    const self = this;
    Promise.resolve(this.props.fetchRepresentatives(address))
    .then(function(data){
-       console.log('data', data);
        browserHistory.push(`/issues/${self.props.issue._id}/representatives`)
    }) 
   }
   
   render() {
-    const address = {};
+    const address = {
+        isSubscribed: true
+    };
     const states = STATES
 
     return (
@@ -68,6 +49,10 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
             <td><Control.text model="address.email" type="email" /></td>
             </tr>
             <tr>
+            <td><Control.checkbox model="address.isSubscribed" /></td>
+            <td><label htmlFor="address.isSubscribed" id="address.isSubscribed">Subscribe to email list?</label></td>
+            </tr>
+            <tr>
                 <td><label htmlFor="address.street1" id="address.street1">Street Line 1:</label></td>
             <td><Control.text model="address.street1" /></td>
             </tr>
@@ -80,7 +65,7 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
             <td><Control.text model="address.city" /></td>
             </tr>
             <tr>
-                <td><label htmlFor="address.state" id="address.state">State: </label></td>
+                <td><label htmlFor="address.state" id="address.state">State:</label></td>
             <td><Control.select model="address.state" id="address.state">
                 {Object.keys(states).map(state => <option value={state} key={state}>{states[state]}</option>)}
             </Control.select></td>
@@ -89,7 +74,7 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
                 <td><label htmlFor="address.zip" id="address.zip">Zip:</label></td>
             <td><Control.text model="address.zip" /></td>
             </tr>
-            <tr><td></td><td><button type="submit">Submit</button></td></tr>
+            <tr><td></td><td><Button type="submit">Submit</Button></td></tr>
        </tbody> </table>
       </Form>
       </FormBox>
@@ -99,6 +84,7 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
 }
 
 function mapStateToProps(state) {
+    console.log('STATE', state)
   return {
     issue: state.global.issue
   }

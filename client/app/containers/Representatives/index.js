@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Control, Form, actions } from 'react-redux-form';
+import axios from 'axios';
 
 import {fetchBraintreeToken} from './actions';
 import MainHeader from 'components/MainHeader';
@@ -62,17 +63,82 @@ const RepCardBox = styled.div`
 
 export class Representatives extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      braintreeToken: null
+    }
+  }
   handleSubmit(nonce) {
     console.log('nonce', nonce)
   }
 
-  // componentDidMount() {
-  //   this.props.fetchRepresentatives();
-  // }
+  componentDidMount() {
+    this.props.fetchBraintreeToken();
+  }
 
-  componenWillMount() {
-    console.log('WILL MOUNT')
-    return Promise.resolve(this.props.fetchBraintreeToken())
+  componentDidMount() {
+    console.log('mounted')
+    const self = this;
+    return axios.get(`/api/payments/client-token`)
+    .then(function(res){
+      console.log('res', res)
+      return Promise.resolve(braintree.client.create({
+        authorization: res.data.clientToken
+      }))
+    })
+    .then(function(data){
+      return self.clientDidCreate(data);
+    })
+  }
+
+  clientDidCreate(client) {
+    console.log('client', client)
+    return Promise.resolve(braintree.paypalCheckout.create({
+      client: client
+    }))
+    .then(function(paypalCheckoutInstance) {
+      return paypalButton.render({
+        env: 'sandbox',
+        
+        locale: 'en_US',
+
+        payment: function() {
+          return paypalCheckoutInstance.createPayment({
+            flow: 'vault'
+          })
+        },
+
+        onAuthorize: function(data, actions) {
+          return paypalCheckoutInstance.tokenizePayment(data).then(function (payload){
+            console.log('payload', payload)
+          })
+        }
+      }, "#paypal-button")
+    })
+    // , function (createError, paypalCheckoutInstance){
+    //   if (createErr) {
+    //     console.error('Error: ', createErr);
+    //   }
+
+    //   paypalButton.render({
+    //     env: 'sandbox',
+        
+    //     locale: 'en_US',
+
+    //     payment: function() {
+    //       return paypalCheckoutInstance.createPayment({
+    //         flow: 'vault'
+    //       })
+    //     },
+
+    //     onAuthorize: function(data, actions) {
+    //       return paypalCheckoutInstance.tokenizePayment(data).then(function (payload){
+    //         console.log('payload', payload)
+    //       })
+    //     }
+    //   }, "#paypal-button")
+    // })
   }
 
   createRepCards() {
@@ -101,15 +167,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     })
   }
 
-  createDropIn() {
-    console.log('props', this.props);
-    const self = this;
-    Promise.resolve(self.props.fetchBraintreeToken())
-    .then(() => {
-      return <DropIn braintree={braintree} clientToken={self.props.braintreeToken} />
-    })
-  }
-
   render() {
     return (
       <div>
@@ -131,10 +188,19 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               </div>
               <div className='col-md-4 col-sm-0'></div>
             </div>
-            <Form model="representatives" onSubmit={(representatives) => this.handleSubmit(representatives.selected)}>
+            <Form model="selectedReps" onSubmit={(selectedReps) => this.handleSubmit(selectedReps.selected)}>
               <ul>
-               <DropIn braintree={braintree} clientToken={this.props.braintreeToken} /> 
+               {this.createRepCards()}
               </ul>
+              <ul>
+                {this.props.selectedReps.selected &&
+                  <span>Total cost: ${this.props.selectedReps.selected.length}.00</span>
+                }
+              </ul>
+              { this.state.braintreeToken &&
+                <div><h1>{this.state.braintreeToken}</h1><DropIn braintree={braintree} clientToken={this.state.braintreeToken} /></div>
+              }
+              <div id="#paypal-button"></div>
               <Button type='submit'>Pay with Paypal</Button>
             </Form>
           </div>
@@ -158,6 +224,7 @@ function mapStateToProps(state) {
     // address: state.global.address,
     issue: state.global.issue,
     braintreeToken: state.global.braintreeToken,
+    selectedReps: state.selectedReps,
     // representatives: state.global.representatives
     representatives: [
   {

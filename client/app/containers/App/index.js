@@ -20,7 +20,9 @@ const theme = {
   main_blue: '#2F3B97',
   main_red: '#ef463d',
   main_turqouise: '#64c5b2',
-  main_white: '#ffffff'
+  main_white: '#ffffff',
+  republican_red: '#e91d0e',
+  democrat_blue: '#232066'
 };
 
 const AppWrapper = styled.div`
