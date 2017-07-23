@@ -32,14 +32,6 @@ const RepForm = styled.div`
     overflow: hidden;
   }
 
-  input[type="checkbox"], label {
-    float: left;
-    line-height: 1.6em;
-    height: 8 rem;
-    padding: 0px;
-    font-size: inherit;
-  }
-
   input {
     top: 5rem;
   }
@@ -174,7 +166,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
 
     return (
       <div className={`col-md-3 col-sm-12 rep_content ${representative.party.toLowerCase()}`} key={representative.name}>
-        <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} />
+        <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} className="big_checkbox" />
         <label htmlFor={`rep_${index}`} class="btn">
         <RepCardBox>
           <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />

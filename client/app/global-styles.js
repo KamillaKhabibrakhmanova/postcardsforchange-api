@@ -27,6 +27,33 @@ injectGlobal`
     line-height: 1.5em;
   }
 
+  .big_checkbox {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    height: 3.2rem;
+    width: 3.2rem;
+    margin: 0 auto;
+    float: left;
+  }
+
+  .big_checkbox:checked {
+    background-color: #e9ecee;
+    border: 1px solid #adb8c0;
+    color: #5990b9;
+  }
+
+  .big_checkbox:checked:after {
+    content: '✔';
+    position: absolute;
+    top: 0px;
+    font-size: 28px;
+    left: 6px;
+  }
+
   .bottom-row {
     margin-bottom: 10rem;
   }
