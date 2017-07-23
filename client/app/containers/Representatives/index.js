@@ -51,13 +51,12 @@ const RepForm = styled.div`
   }
 
   .rep-box {
-    margin-bottom: 2rem;
-    margin-right: 2rem;
     a {
       color: #ffffff;
     }
 
     .rep_content {
+      margin-bottom: 2rem;
       margin-right: 2rem;
     }
   }

@@ -15,6 +15,16 @@ const Jumbotron = styled.div`
   margin-bottom: ${props => props.large ? 'auto' : '-6rem'};
   display: block;
   background-color: #ffffff;
+
+  @media all and (max-width: 2000px) { /* screen size until 1200px */
+    margin-bottom: ${props => props.large ? 'auto' : '-6rem'};
+  }
+  @media all and (max-width: 1000px) { /* screen size until 1000px */
+    margin-bottom: ${props => props.large ? 'auto' : '-4rem'};
+  }
+  @media all and (max-width: 750px) { /* screen size until 500px */
+    margin-bottom: ${props => props.large ? 'auto' : '-2rem'};
+  }
 `;
 
 function Logo(props) {
