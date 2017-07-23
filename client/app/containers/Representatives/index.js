@@ -58,6 +58,11 @@ const RepForm = styled.div`
     font-weight: 300;
   }
 
+  .paypal-btn {
+    font-size: 20px;
+    margin-left: 5rem;
+  }
+
   .democratic {
     background-color:  ${props => props.theme.democrat_blue};
   }
@@ -222,14 +227,14 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               </ul>
               <ul>
                 {this.props.selectedReps.selected &&
-                  <span>Total cost: ${this.props.selectedReps.selected.length}.00</span>
+                  <p>Total cost: ${this.props.selectedReps.selected.length}.00</p>
                 }
               </ul>
               { this.state.braintreeToken &&
                 <div><h1>{this.state.braintreeToken}</h1><DropIn braintree={braintree} clientToken={this.state.braintreeToken} /></div>
               }
               <div id="#paypal-button"></div>
-              <Button type='submit'>Pay with Paypal</Button>
+              <Button type='submit' className='paypal-btn'>Pay with Paypal</Button>
             </Form>
           </div>
         </RepForm>
