@@ -212,7 +212,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               <div className='col-md-4 col-sm-12'>
                 <h2>Select your representatives:</h2>
                 <p>Select the representatives you want your postcard to be sent to.</p>
-                <p>The cost per representatives is $1.</p>
+                <p>The cost per representative is $1.</p>
               </div>
               <div className='col-md-4 col-sm-0'></div>
             </div>
@@ -337,7 +337,7 @@ function mapStateToProps(state) {
      "zip": "20510"
     }
    ],
-   "party": "Democratic",
+   "party": "Independent",
    "phones": [
     "(202) 224-6542"
    ],
