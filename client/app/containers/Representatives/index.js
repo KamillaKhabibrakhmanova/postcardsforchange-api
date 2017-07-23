@@ -49,15 +49,34 @@ const RepForm = styled.div`
     margin-top: -2rem;
     width: 100%;
   }
+
+  .rep-box {
+    margin-bottom: 2rem;
+    a {
+      color: #ffffff;
+    }
+  }
+
+  .democratic {
+    background-color:  ${props => props.theme.democrat_blue};
+  }
+
+  .republican {
+    background-color: ${props => props.theme.republican_red};
+  }
+
+  .independent {
+    background-color: ${props => props.theme.independent_teal};
+  }
 `;
 
 const RepCardBox = styled.div`
-
   .circle-img {
     overflow: hidden;
     display:inline;
     height: 6rem;
     margin-bottom: 1.5rem;
+    border-radius: 50%;
   }
 `;
 
@@ -93,7 +112,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
   }
 
   clientDidCreate(client) {
-    console.log('client', client)
     return Promise.resolve(braintree.paypalCheckout.create({
       client: client
     }))
@@ -147,18 +165,16 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
       return (
         <div key={representative.name} className='rep-box row'>
           <div className='col-md-4 col-sm-0'></div>
-            <div className='col-md-4 col-sm-12 rep-border'>
+            <div className={`col-md-4 col-sm-12 ${representative.party.toLowerCase()}`}>
             <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} />
+            <label htmlFor={`rep_${index}`} class="btn">
             <RepCardBox>
-              <label htmlFor={`rep_${index}`}>
-           
               <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />
               <span className='rep-info'>
-                <p><a href={representative.urls[0]}>{`${representative.name},`}</a></p>
+                <p><a href={representative.urls[0]}>{`${representative.name}, ${representative.party[0]}`}</a></p>
                 <p>{`${address.line1}, ${address.city}, ${address.state}, ${address.zip}`}</p>
               </span>
-              </label>
-            </RepCardBox>
+            </RepCardBox></label>
             </li>
           </div>
           <div className='col-md-4 col-sm-0'></div>

@@ -12,6 +12,7 @@ const Jumbotron = styled.div`
   padding-top: 25%;
   padding-bottom: 0%;
   margin: auto;
+  margin-bottom: ${props => props.large ? 'auto' : '-6rem'};
   display: block;
   background-color: #ffffff;
 `;

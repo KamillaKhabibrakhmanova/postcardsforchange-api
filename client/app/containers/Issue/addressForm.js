@@ -9,8 +9,15 @@ import Button from 'components/Button';
 import { STATES } from './constants';
 
 const FormBox = styled.div`
+  color: #f0f0f0;
   form {
       display: inline-block;
+  }
+
+  .email_subscribe {
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 1rem;
   }
 }
 `;
@@ -49,8 +56,10 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
             <td><Control.text model="address.email" type="email" /></td>
             </tr>
             <tr>
-            <td><Control.checkbox model="address.isSubscribed" /></td>
-            <td><label htmlFor="address.isSubscribed" id="address.isSubscribed">Subscribe to email list?</label></td>
+            <td></td>
+            <td>
+                <Control.checkbox model="address.isSubscribed" />
+                <label htmlFor="address.isSubscribed" id="address.isSubscribed" className="email_subscribe">Subscribe to email list?</label></td>
             </tr>
             <tr>
                 <td><label htmlFor="address.street1" id="address.street1">Street Line 1:</label></td>

@@ -32,7 +32,7 @@ injectGlobal`
   }
 
   .main {
-    background-color: #2f3b97;
+    background-color: #406ba0;
     color: #ffffff;
     text-align: center;
     padding: 1rem;
