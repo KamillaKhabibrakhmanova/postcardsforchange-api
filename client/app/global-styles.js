@@ -42,4 +42,8 @@ injectGlobal`
       color: black;
     }
   }
+
+  .issue_card {
+    width: 90%;
+  }
 `;

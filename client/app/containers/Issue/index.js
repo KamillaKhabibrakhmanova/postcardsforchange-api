@@ -34,7 +34,7 @@ export class Issue extends React.PureComponent { // eslint-disable-line react/pr
           </div>
           <div className='row'>
             <div className='col-sm-12 col-md-6'>
-              <Img src={issue.postcard_image} alt={issue.title} />
+              <Img src={issue.postcard_image} alt={issue.title} className='issue_card'/>
             </div>
             <div className='col-sm-12 col-md-6'>
               <h3>Message on back: </h3>
