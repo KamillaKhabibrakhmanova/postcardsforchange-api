@@ -52,9 +52,19 @@ const RepForm = styled.div`
 
   .rep-box {
     margin-bottom: 2rem;
+    margin-right: 2rem;
     a {
       color: #ffffff;
     }
+
+    .rep_content {
+      margin-right: 2rem;
+    }
+  }
+
+  .rep_address {
+    font-size: 1.2rem;
+    font-weight: 300;
   }
 
   .democratic {
@@ -159,25 +169,36 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     // })
   }
 
+  createRepCard(representative, index) {
+    if (!representative) return;
+    const address = representative.address[0];
+
+    return (
+      <div className={`col-md-3 col-sm-12 rep_content ${representative.party.toLowerCase()}`} key={representative.name}>
+        <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} />
+        <label htmlFor={`rep_${index}`} class="btn">
+        <RepCardBox>
+          <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />
+          <span className='rep-info'>
+            <p><a href={representative.urls[0]}>{`${representative.name}, ${representative.party[0]}`}</a></p>
+            <p className='rep_address'>{`${address.line1}, ${address.city}, ${address.state}, ${address.zip}`}</p>
+          </span>
+        </RepCardBox></label>
+        </li>
+      </div>
+    )
+  }
+
   createRepCards() {
     return this.props.representatives.map((representative, index) => {
-      const address = representative.address[0];
+      if (index%2 !== 0) return;
+
       return (
-        <div key={representative.name} className='rep-box row'>
-          <div className='col-md-4 col-sm-0'></div>
-            <div className={`col-md-4 col-sm-12 ${representative.party.toLowerCase()}`}>
-            <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} />
-            <label htmlFor={`rep_${index}`} class="btn">
-            <RepCardBox>
-              <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />
-              <span className='rep-info'>
-                <p><a href={representative.urls[0]}>{`${representative.name}, ${representative.party[0]}`}</a></p>
-                <p>{`${address.line1}, ${address.city}, ${address.state}, ${address.zip}`}</p>
-              </span>
-            </RepCardBox></label>
-            </li>
-          </div>
-          <div className='col-md-4 col-sm-0'></div>
+        <div className='rep-box row'>
+          <div className='col-sm-0 col-md-3'></div>
+            {this.createRepCard(representative, index)}
+            {this.createRepCard(this.props.representatives[index+1], index+1)}
+          <div className='col-sm-0 col-md-3'></div>
         </div>
       )
     })
