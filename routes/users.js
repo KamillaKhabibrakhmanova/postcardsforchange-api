@@ -6,6 +6,7 @@ var app = express();
 var util = require('util');
 var User = require('../models/user');
 var request = require('request-promise');
+const logger = require('../utils/logger').logger();
 var Bluebird = require('bluebird')
 
 app.post('/', (req, res, next) => {
@@ -23,8 +24,9 @@ app.post('/', (req, res, next) => {
         })
     })
     .catch(function(err){
+        logger.error(err);
         res.status(500).send(err);
     })
-})
+});
 
 module.exports = app;
