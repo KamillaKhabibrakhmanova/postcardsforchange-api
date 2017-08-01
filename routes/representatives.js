@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var Bluebird = require('bluebird');
 var civic = require('../services/civic');
+const logger = require('../utils/logger').logger();
 var url = require('url')
 
 //get reps
@@ -15,7 +16,11 @@ app.get('/', function(req, res, next){
 		console.log('result', result)
 		res.send(result);
 	})
-	.catch(err => next(err))
+	.catch(err =>{
+		console.error(err)
+		logger.error(err);
+		next(err);
+	});
 });
 
 
