@@ -22,22 +22,6 @@ describe('Model:Postcard', function() {
       zip: '10010'
     }
   }
-    
-  var to = {
-    first_name: 'Kamilla',
-    address_line1: '101 E 81st St',
-    address_city: 'New York City',
-    address_state: 'NY',
-    address_zip: '10010'
-  };
-
-  var from = {
-    name: 'Mickey Mouse',
-    line1: '143 Magic Lane',
-    city: 'Disneyland',
-    state: 'CA',
-    zip: '10010'
-  };
 
   var description = 'Kamilla Is Awesome';
 

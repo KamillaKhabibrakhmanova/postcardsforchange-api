@@ -113,7 +113,6 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         }
     }).then(function(updated){
         if (!res.postcards) return;
-        console.log('postcards', res.postcards);
         return Bluebird.map(res.postcards, function(postcard) {
             return Postcard.create({
                 lobId: postcard.id,

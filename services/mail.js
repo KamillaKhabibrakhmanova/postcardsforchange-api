@@ -1,16 +1,9 @@
-const sendinblue = require('sendinblue-api'),
+const sparkpost = require('sparkpost'),
 	Bluebird = require('bluebird'),
 	_ = require('lodash'),
 	config = require('../config.js'),
 	logger = require('../utils/logger').logger();
 
-
-const params = {
-	apiKey: config.sendInBlueApiKey,
-	timeout: 5000
-}
-
-const sendinOject = Bluebird.promisifyAll(new sendinblue(params))
 
 const mail = {
 	/**
@@ -19,117 +12,71 @@ const mail = {
 	** @params {string} template id
 	** @params {obj} template variables
 	**/
-	sendTemplateMessage: Bluebird.method(function(recipient, templateId, variables){
+	sendTemplateMessage: function(recipient, templateId, variables){
 
-		if (!(recipient && templateId && variables)) {
+		if (!(recipient.name && recipient.email && templateId)) {
 			throw new Error('Missing required parameter to send.');
 		}
 
-		let params = {
-			template_name: templateName,
-			template_content: [],
-			message: {
-				merge: true,
-				merge_language: 'handlebars',
-				global_merge_vars: templateContent,
-				to: [ recipient ]
+		logger.info(`Sending templated mail ${templateId} to ${recipient.email}`);
+
+		const messageParams = {
+			recipients: [{ address: recipient }],
+			content: { template_id: templateId },
+			substitution_data: variables
+		}
+
+		const options = {num_rcpt_errors: 3};
+
+		if (config.nodeEnv === 'test') {
+			messageParams.content.from = { name: 'test', email: 'localpart@sparkpostbox.com' };
+			options.sandbox = true;
+			messageParams.content = {
+				from: { name: 'test', email: 'localpart@sparkpostbox.com' },
+				subject: 'Big Christmas savings!',
+				reply_to: 'Christmas Sales <sales@flintstone.com>',
+				text: 'Hi',
+				html: '<p>Hi</p>'
+			}
+		}
+
+		console.log('messageParams', messageParams)
+
+		const client = this.getClient();
+
+		return client.transmissions.send({
+			options: {
+			sandbox: true
 			},
-			async: false
-		};
-
-		logger.info(`Sending templated mail ${templateName} to ${recipient.email}`)
-
-		return this.getClient().messages.sendTemplateAsync(params)
+			content: {
+			from: 'contact@postcardsforchange.net',
+			subject: 'Hello, World!',
+			html:'<html><body><p>Testing SparkPost - the world\'s most awesomest email service!</p></body></html>'
+			},
+			recipients: [
+			{address: 'john.doe@email.com.sink.sparkpostmail.com'}
+			]
+		})
 		.then(result => {
-			if (result.length !== 1 || ['sent', 'queued'].indexOf(result[0].status) == -1) {
-				throw new Error(JSON.stringify(result));
-			}
+			console.log('result', result)
 
 			return result[0]._id;
 		})
 		.catch(err => {
 			const error = new Error(err.message);
-			logger.error(error);
+			logger.error(err);
 
 			throw error;
 		});
-	}),
+	},
 
-	/**
-	** send a simple email with no template
-	** @params {object} required params: {sender, recipient, subject, body}
-	**@return {string} Mandrill email id
-	**/
-	sendMessage: Bluebird.method(messageParams => {
-		if (!(messageParams.sender && messageParams.sender.email && messageParams.recipient && messageParams.recipient.email && messageParams.subject && messageParams.body)) {
-			throw new Error('Missing required parameters to send Message');
-		}
-
-		return this.getClient().messages.sendAsync({
-			message: {
-				text: messageParams.body,
-				subject: messageParams.subject,
-				from_email: messageParams.sender.email,
-				from_name: messageParams.sender.name,
-				to: [{
-					email: messageParams.recipient.email,
-					name: messageParams.recipient.name
-				}]
-			},
-			async: false
-		})
-		.then(function(result){
-			if (result.length !== 1 || ['sent', 'queued'].indexOf(result[0].status == -1)) {
-				throw new Error(JSON.stringify(result));
-			}
-			return result[0]._id;
-		})
-		.catch(err => {
-			const error = new Error(err.message);
-			logger.error(error);
-
-			throw error;
-		});
-	}),
-
-	//add promises for Mandrill client
+	//initiate Sparkpost client
 	getClient: function() {
-		if (!config.mandrillApiKey) {
-			throw new Error('MANDRILL_API_KEY not set');
+		if (!config.sparkpostApiKey) {
+			throw new Error('Sendinblue API key not set');
 		}
 
-		return function promisified() {
-			var args = [].slice.call(arguments);
-
-			var self = this;
-
-			return new Bluebird(function (resolve, reject){
-				var emitter = originalMethod.apply(self, args);
-
-				emitter
-				.on('sucesss', function(data, response) {
-					resolve([data, response])
-				})
-			})
-		}
-
-		let promisifier = function(client) {
-			return function () {
-				let args = [].slice.call(arguments);
-				const self = this;
-				return new Promise(function(resolve, reject){
-					args.push(resolve, reject);
-					client.apply(self, args);
-				});
-			};
-		};
-
-		let client = new Mailin("https://api.sendinblue.com/v2.0", "your access key")
-
-		Bluebird.promisifyAll(client.templates, {promisifier: promisifier});
-		Bluebird.promisifyAll(client.messages, {promisifier: promisifier});
-
-		return client;
+		return new sparkpost(config.sparkpostApiKey);
 	}
 };
 
