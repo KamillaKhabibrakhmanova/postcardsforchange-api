@@ -11,7 +11,7 @@ var config = {
 	sparkpostApiKey: process.env.SPARKPOST_API_KEY,
 
 	//mandrill template names
-	postcardConfirmationTemplate: process.env.POSTCARD_CONFIRMATION_TEMPLATE || 'postcard_confirmation'
+	postcardConfirmationTemplate: process.env.POSTCARD_CONFIRMATION_TEMPLATE || 'postcards-send-confirmation'
 };
 
 module.exports = config;

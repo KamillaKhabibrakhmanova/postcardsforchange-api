@@ -3,7 +3,7 @@ const mail = require('../../services/mail.js'),
 
 describe('Service: Mail (integration)', function() {
   const recipient = {
-    email: 'venessiel@gmail.com',
+    address: 'venessiel@gmail.com',
     name: 'KK'
   };
 
@@ -11,9 +11,10 @@ describe('Service: Mail (integration)', function() {
 
   it('sends mail via Sparkpost', function (done) {
     
-    return mail.sendTemplateMessage(recipient, test_template, {name: 'Kamilla'})
+    mail.sendTemplateMessage(recipient, test_template, {name: 'Kamilla'})
     .then(res => {
       console.log('res', res)
+      res.total_accepted_recipients.should.eql(1);
     })
     .then(done.bind(null, null), done);
   });

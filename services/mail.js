@@ -14,11 +14,11 @@ const mail = {
 	**/
 	sendTemplateMessage: function(recipient, templateId, variables){
 
-		if (!(recipient.name && recipient.email && templateId)) {
+		if (!(recipient.name && recipient.address && templateId)) {
 			throw new Error('Missing required parameter to send.');
 		}
 
-		logger.info(`Sending templated mail ${templateId} to ${recipient.email}`);
+		logger.info(`Sending templated mail ${templateId} to ${recipient.address}`);
 
 		const messageParams = {
 			recipients: [{ address: recipient }],
@@ -29,15 +29,7 @@ const mail = {
 		const options = {num_rcpt_errors: 3};
 
 		if (config.nodeEnv === 'test') {
-			messageParams.content.from = { name: 'test', email: 'localpart@sparkpostbox.com' };
-			options.sandbox = true;
-			messageParams.content = {
-				from: { name: 'test', email: 'localpart@sparkpostbox.com' },
-				subject: 'Big Christmas savings!',
-				reply_to: 'Christmas Sales <sales@flintstone.com>',
-				text: 'Hi',
-				html: '<p>Hi</p>'
-			}
+			messageParams.recipients[0].address = 'john.doe@email.com.sink.sparkpostmail.com';
 		}
 
 		console.log('messageParams', messageParams)
@@ -45,22 +37,15 @@ const mail = {
 		const client = this.getClient();
 
 		return client.transmissions.send({
-			options: {
-			sandbox: true
-			},
 			content: {
-			from: 'contact@postcardsforchange.net',
-			subject: 'Hello, World!',
-			html:'<html><body><p>Testing SparkPost - the world\'s most awesomest email service!</p></body></html>'
+				template_id: templateId
 			},
-			recipients: [
-			{address: 'john.doe@email.com.sink.sparkpostmail.com'}
-			]
+			recipients: [ recipient ]
 		})
 		.then(result => {
 			console.log('result', result)
 
-			return result[0]._id;
+			return result.results;
 		})
 		.catch(err => {
 			const error = new Error(err.message);
