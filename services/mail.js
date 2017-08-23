@@ -32,18 +32,10 @@ const mail = {
 			messageParams.recipients[0].address = 'john.doe@email.com.sink.sparkpostmail.com';
 		}
 
-		console.log('messageParams', messageParams)
-
 		const client = this.getClient();
 
-		return client.transmissions.send({
-			content: {
-				template_id: templateId
-			},
-			recipients: [ recipient ]
-		})
+		return client.transmissions.send(messageParams)
 		.then(result => {
-			console.log('result', result)
 
 			return result.results;
 		})

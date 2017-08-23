@@ -3,10 +3,12 @@
 const mongoose = require('mongoose');
 const Bluebird = require('bluebird');
 const lob = require('../services/lob.js');
+const mail = require('../services/mail');
 const braintree = require('../services/braintree.js');
 const User = require('../models/user.js');
 const Issue = require('../models/issue.js');
 const logger = require('../utils/logger').logger();
+const config = require('../config');
 const _ = require('lodash');
 const Schema = mongoose.Schema;
 
@@ -72,9 +74,11 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
     const Postcard = this;
     const representativeCount = representatives.length;
     const postcardErrors = [];
-    const from = _.merge({name: user.firstName + user.lastName}, user.address);
+    const fullName = user.firstName + ' ' + user.lastName;
+    const from = _.merge({ name: fullName }, user.address);
     const res = {postcards: []};
 
+    //charge full amount for postcards
     let issue = await Issue.findById(issueId);
     let transaction;
     try {
@@ -84,6 +88,7 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         throw new Error(e);
     }
     
+    //send a separate postcard for each representative
     return Bluebird.map(representatives, function(representative){
         return lob.sendIssuePostcard(issue, representative, from)
         .then(function(card){
@@ -102,6 +107,20 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
             return braintree.processRefund(transaction.id, `${postcardErrors.length}.00`)
         } else return;
     }).then(function(){
+        //send email confirmaton - no need to wait for this to be resolved
+        if (res.postcards.length) {
+            const name = user.firstName + user.lastName;
+            mail.sendTemplateMessage({ name: fullName, address: user.email }, config.postcardConfirmationTemplate, {
+                name: user.firstName + user.lastName,
+                image_src: issue.postcard_image,
+                amount: res.postcards.length.toString() + '.00',
+                delivery_date: res.postcards[0]["expected_delivery_date"]
+            })
+            .catch(err => {
+                logger.error('Error sending confirmatiion message', {error: err, user: user})
+            })
+        }
+       
         return User.findOne({ email: user.email });
     })
     //create or update user info
@@ -112,6 +131,7 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
             return found.update(user);
         }
     }).then(function(updated){
+
         if (!res.postcards) return;
         return Bluebird.map(res.postcards, function(postcard) {
             return Postcard.create({

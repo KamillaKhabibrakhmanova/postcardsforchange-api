@@ -9,7 +9,7 @@ const IssueSchema = new mongoose.Schema({
     isSenate: { type: Boolean, default: true },
     isHouse: { type: Boolean, default: true },
     isActive: { type: Boolean, default: false },
-    postcard_image: { type: 'string' }
+    postcardImage: { type: 'string' }
 });
 
 module.exports = mongoose.model('Issue', IssueSchema);

@@ -9,8 +9,8 @@ const mongoose = require('mongoose'),
 
 const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
-    first_name: String,
-    last_name: String,
+    firstName: String,
+    lastName: String,
     address: {
 	    zip: String,
 	   	state: String,

@@ -38,7 +38,7 @@ module.exports = {
 			from: fromAddress,
 			description: issue.title,
 			message: issue.message,
-			front: issue.postcard_image
+			front: issue.postcardImage
 		})
 		.then(res => {
 			logger.info('Postcard successfully sent', {res});

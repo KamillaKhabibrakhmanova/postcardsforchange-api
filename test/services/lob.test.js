@@ -22,7 +22,7 @@ describe('Service: Lob (integration)', function() {
       title: 'Fake title',
       message: 'Hey hey please pass this bill',
       isActive: true,
-      postcard_image: 'https://s3.amazonaws.com/postcards4change/healthcare+postcards-05.jpg'
+      postcardImage: 'https://s3.amazonaws.com/postcards4change/healthcare+postcards-05.jpg'
     })
     .then(function(issue){
       return lob.sendIssuePostcard(issue, representative, from)

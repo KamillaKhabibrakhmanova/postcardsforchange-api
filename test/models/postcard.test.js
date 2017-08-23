@@ -2,6 +2,7 @@ var Postcard = require('../../models/postcard.js');
 var User = require('../../models/user.js');
 var Issue = require('../../models/issue.js');
 var braintree = require('../../services/braintree');
+var mail = require('../../services/mail');
 var lob = require('../../services/lob');
 var should = require('should');
 var sinon = require('sinon');
