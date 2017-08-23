@@ -48,11 +48,13 @@ module.exports = {
 		});
 	},
 
-	processRefund: (transactionId) => {
-		return braintreeTransaction.findAsync(transactionId, amount)
+	processRefund: (transactionId, amount) => {
+		return braintreeTransaction.findAsync(transactionId)
 		.then(transaction => {
+			if (!amount) amount = transaction.amount;
+
 			if (transaction.status === 'settled' || transaction.status === 'settling') {
-				return braintreeTransaction.refundAsync(transaction.id), amount;
+				return braintreeTransaction.refundAsync(transaction.id, amount);
 			}
 			else {
 				return braintreeTransaction.voidAsync(transaction.id, amount);

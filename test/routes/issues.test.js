@@ -8,14 +8,14 @@ const Issue = require('../../models/issue'),
 const issueData = {
   title: 'No Ban',
   message: 'I am writing to express my opposition to the wall',
-  postcard_image: 'http://www.fakeimage.com',
+  postcardImage: 'http://www.fakeimage.com',
   isActive: true
 }
 
 const inactiveIssueData = {
   title: 'No Ban',
   message: 'I am writing to express my opposition to the wall',
-  postcard_image: 'http://www.fakeimage.com'
+  postcardImage: 'http://www.fakeimage.com'
 }
 
 describe('Route:Issue', function(){
@@ -36,7 +36,7 @@ describe('Route:Issue', function(){
 			console.log('issue', issue);
 			issue.title.should.eql(issueData.title);
 			issue.message.should.eql(issueData.message);
-			issue.postcard_image.should.eql(issueData.postcard_image);
+			issue.postcardImage.should.eql(issueData.postcardImage);
 			issue.isSenate.should.eql(true);
 			issue.isActive.should.eql(true);
 			issue.isHouse.should.eql(true);

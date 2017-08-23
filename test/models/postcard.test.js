@@ -2,6 +2,7 @@ var Postcard = require('../../models/postcard.js');
 var User = require('../../models/user.js');
 var Issue = require('../../models/issue.js');
 var braintree = require('../../services/braintree');
+var mail = require('../../services/mail');
 var lob = require('../../services/lob');
 var should = require('should');
 var sinon = require('sinon');
@@ -22,22 +23,6 @@ describe('Model:Postcard', function() {
       zip: '10010'
     }
   }
-    
-  var to = {
-    first_name: 'Kamilla',
-    address_line1: '101 E 81st St',
-    address_city: 'New York City',
-    address_state: 'NY',
-    address_zip: '10010'
-  };
-
-  var from = {
-    name: 'Mickey Mouse',
-    line1: '143 Magic Lane',
-    city: 'Disneyland',
-    state: 'CA',
-    zip: '10010'
-  };
 
   var description = 'Kamilla Is Awesome';
 
@@ -48,6 +33,7 @@ describe('Model:Postcard', function() {
     sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(braintree, 'makeSale').resolves({id: payment_id});
     sandbox.stub(braintree, 'processRefund').resolves({});
+    sandbox.stub(mail, 'sendTemplateMessage').resolves({});
     lobStub = sandbox.stub(lob, 'sendIssuePostcard');
 
     return Issue.create({
@@ -141,7 +127,7 @@ describe('Model:Postcard', function() {
     lobStub.resolves({id: 'lobId'});
 
 
-    return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
+    return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-nonce', user, representatives)
     .then(function () {
       return User.findOne({
         email: 'mickey@example.com'
@@ -151,6 +137,18 @@ describe('Model:Postcard', function() {
     })
     .then(done.bind(null, null), done);
   });
+
+  it('sends a confirmation email after sending postcards', function (done) {
+    lobStub.resolves({id: 'lobId'});
+
+    return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-nonce', user, representatives)
+    .then(function() {
+      mail.sendTemplateMessage.callCount.should.eql(1);
+      mail.sendTemplateMessage.args[0][1].should.eql('postcards-send-confirmation');
+      mail.sendTemplateMessage.args[0][0].address.should.eql(user.email);
+    })
+    .then(done.bind(null, null), done);
+  })
 
   it('updates a user after sending a postcards', function (done) {
     lobStub.resolves({id: 'lobId'});

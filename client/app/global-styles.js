@@ -63,6 +63,7 @@ injectGlobal`
     color: #ffffff;
     text-align: center;
     padding: 1rem;
+    min-height: 50rem;
     input, select {
       background-color: #ffffff;
       margin: 7px;

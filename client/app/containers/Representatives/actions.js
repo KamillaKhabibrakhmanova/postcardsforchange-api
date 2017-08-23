@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import {
-  FETCH_BRAINTREE_TOKEN
+  FETCH_BRAINTREE_TOKEN,
+  SEND_POSTCARDS
 } from '../../actions/index';
 
 export function fetchBraintreeToken() {
@@ -13,4 +14,14 @@ export function fetchBraintreeToken() {
             payload: data
 	    };
     })	
+}
+
+export function sendPostcards(nonce, issueId, representatives, user) {
+    return axios.post('api/postcards', {nonce, issueId, representatives, user})
+    .then(data => {
+        return {
+            type: SEND_POSTCARDS,
+            payload: data
+        }
+    })
 }

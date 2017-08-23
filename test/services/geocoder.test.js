@@ -2,7 +2,8 @@ const geocoder = require('../../services/geocoder');
 const Bluebird = require('bluebird');
 const should = require('should');
 
-describe('Service: Geocoder (integration)', function() {
+//do not need geocoder right now
+describe.skip('Service: Geocoder (integration)', function() {
   this.timeout(10000);
 
   it('converts an address object to a string format', function(){

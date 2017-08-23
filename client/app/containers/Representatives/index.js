@@ -10,8 +10,8 @@ import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 import RepCard from './repCard';
 import Img from 'components/Img';
-
-const DropIn = require('braintree-react').DropIn;
+import LoadingIndicator from 'components/LoadingIndicator';
+ 
 const braintree = require('braintree-web');
 
 const RepForm = styled.div`
@@ -91,23 +91,15 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
   constructor(props) {
     super(props);
     this.state = {
-      braintreeToken: null
+      braintreeToken: null,
+      loading: true
     }
   }
-  handleSubmit(nonce) {
-    console.log('nonce', nonce)
-  }
 
   componentDidMount() {
-    this.props.fetchBraintreeToken();
-  }
-
-  componentDidMount() {
-    console.log('mounted')
     const self = this;
     return axios.get(`/api/payments/client-token`)
     .then(function(res){
-      console.log('res', res)
       return Promise.resolve(braintree.client.create({
         authorization: res.data.clientToken
       }))
@@ -118,13 +110,15 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
   }
 
   clientDidCreate(client) {
+    const self = this;
+
+    console.log('client', client)
     return Promise.resolve(braintree.paypalCheckout.create({
       client: client
     }))
     .then(function(paypalCheckoutInstance) {
-      return paypalButton.render({
+      return paypal.Button.render({
         env: 'sandbox',
-        
         locale: 'en_US',
 
         payment: function() {
@@ -136,33 +130,15 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
         onAuthorize: function(data, actions) {
           return paypalCheckoutInstance.tokenizePayment(data).then(function (payload){
             console.log('payload', payload)
+            self.setState({loading: true})
           })
+        },
+
+        onError: function(err){
+          console.error('checkout.js error', err);
         }
       }, "#paypal-button")
     })
-    // , function (createError, paypalCheckoutInstance){
-    //   if (createErr) {
-    //     console.error('Error: ', createErr);
-    //   }
-
-    //   paypalButton.render({
-    //     env: 'sandbox',
-        
-    //     locale: 'en_US',
-
-    //     payment: function() {
-    //       return paypalCheckoutInstance.createPayment({
-    //         flow: 'vault'
-    //       })
-    //     },
-
-    //     onAuthorize: function(data, actions) {
-    //       return paypalCheckoutInstance.tokenizePayment(data).then(function (payload){
-    //         console.log('payload', payload)
-    //       })
-    //     }
-    //   }, "#paypal-button")
-    // })
   }
 
   createRepCard(representative, index) {
@@ -172,7 +148,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     return (
       <div className={`col-md-3 col-sm-12 rep_content ${representative.party.toLowerCase()}`} key={representative.name}>
         <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} className="big_checkbox" />
-        <label htmlFor={`rep_${index}`} class="btn">
+        <label htmlFor={`rep_${index}`} className="btn">
         <RepCardBox>
           <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />
           <span className='rep-info'>
@@ -190,7 +166,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
       if (index%2 !== 0) return;
 
       return (
-        <div className='rep-box row'>
+        <div className='rep-box row' key={index}>
           <div className='col-sm-0 col-md-3'></div>
             {this.createRepCard(representative, index)}
             {this.createRepCard(this.props.representatives[index+1], index+1)}
@@ -206,13 +182,15 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
         <Helmet
           title="Representatives"
           meta={[
-            { name: 'description', content: 'Description of Representatives' },
+            { name: 'description', content: 'Representatives' },
           ]}
         />
         <MainHeader />
         <RepForm>
           <div className='main'>
+            {!this.state.loading && <div>
             <div className='row'>
+              
               <div className='col-md-4 col-sm-0'></div>
               <div className='col-md-4 col-sm-12'>
                 <h2>Select your representatives:</h2>
@@ -230,12 +208,9 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
                   <p>Total cost: ${this.props.selectedReps.selected.length}.00</p>
                 }
               </ul>
-              { this.state.braintreeToken &&
-                <div><h1>{this.state.braintreeToken}</h1><DropIn braintree={braintree} clientToken={this.state.braintreeToken} /></div>
-              }
               <div id="#paypal-button"></div>
-              <Button type='submit' className='paypal-btn'>Pay with Paypal</Button>
-            </Form>
+            </Form></div>}
+            {this.state.loading && <div><LoadingIndicator /><p><h1>Hang tight! We're sending your postcards....</h1></p></div>}
           </div>
         </RepForm>
       </div>
