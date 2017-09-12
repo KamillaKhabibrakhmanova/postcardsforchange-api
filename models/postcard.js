@@ -74,23 +74,22 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
     const Postcard = this;
     const representativeCount = representatives.length;
     const postcardErrors = [];
-    const fullName = user.firstName + ' ' + user.lastName;
-    const from = _.merge({ name: fullName }, user.address);
+    user.name = user.firstName + ' ' + user.lastName;
     const res = {postcards: []};
 
     //charge full amount for postcards
     let issue = await Issue.findById(issueId);
     let transaction;
-    try {
-        transaction = await braintree.makeSale(representativeCount, nonce);
-        if (!transaction.id) throw new Error('Error making payment')
-    } catch(e) {
-        throw new Error(e);
-    }
+    // try {
+    //     transaction = await braintree.makeSale(representativeCount, nonce);
+    //     if (!transaction.id) throw new Error('Error making payment')
+    // } catch(e) {
+    //     throw new Error(e);
+    // }
     
     //send a separate postcard for each representative
     return Bluebird.map(representatives, function(representative){
-        return lob.sendIssuePostcard(issue, representative, from)
+        return lob.sendIssuePostcard(issue, representative, user)
         .then(function(card){
             res.postcards.push(card);
         })
@@ -109,10 +108,10 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
     }).then(function(){
         //send email confirmaton - no need to wait for this to be resolved
         if (res.postcards.length) {
-            const name = user.firstName + user.lastName;
-            mail.sendTemplateMessage({ name: fullName, address: user.email }, config.postcardConfirmationTemplate, {
-                name: user.firstName + user.lastName,
-                image_src: issue.postcard_image,
+            const name = user.firstName + ' ' + user.lastName;
+            mail.sendTemplateMessage({ name: name, address: user.email }, config.postcardConfirmationTemplate, {
+                name: name,
+                image_src: issue.postcardImage,
                 amount: res.postcards.length.toString() + '.00',
                 delivery_date: res.postcards[0]["expected_delivery_date"]
             })
@@ -136,7 +135,7 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         return Bluebird.map(res.postcards, function(postcard) {
             return Postcard.create({
                 lobId: postcard.id,
-                transactionId: transaction.id,
+                // transactionId: transaction.id,
                 user: updated._id,
                 issue: issue._id,
                 price: 1
@@ -144,6 +143,7 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         })
     }).then(function(createdPostcards){
         res.postcards = createdPostcards || null;
+        console.log('RES', res)
         return res;
     });
 }

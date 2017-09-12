@@ -33,6 +33,7 @@ const mail = {
 		}
 
 		const client = this.getClient();
+		console.log('messageParams', messageParams)
 
 		return client.transmissions.send(messageParams)
 		.then(result => {
@@ -50,7 +51,7 @@ const mail = {
 	//initiate Sparkpost client
 	getClient: function() {
 		if (!config.sparkpostApiKey) {
-			throw new Error('Sendinblue API key not set');
+			throw new Error('Sparkpost API key not set');
 		}
 
 		return new sparkpost(config.sparkpostApiKey);

@@ -92,7 +92,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     super(props);
     this.state = {
       braintreeToken: null,
-      loading: true
+      loading: false
     }
   }
 
@@ -129,8 +129,19 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
 
         onAuthorize: function(data, actions) {
           return paypalCheckoutInstance.tokenizePayment(data).then(function (payload){
-            console.log('payload', payload)
+            
             self.setState({loading: true})
+
+            return axios.post('/api/postcards', {
+              nonce: payload.nonce,
+              issueId: self.props.routeParams.id,
+              representatives: self.props.selectedReps.selected,
+              user: self.props.user
+            })
+            .then(function(res){
+              console.log('res', res);
+              self.setState({ loading: false });
+            })
           })
         },
 
@@ -228,7 +239,7 @@ function mapStateToProps(state) {
       street1: '26 Bluebird Dr.',
       zip: '11791'
     },
-    user: state.global.user,
+    user: state.address,
     // address: state.global.address,
     issue: state.global.issue,
     braintreeToken: state.global.braintreeToken,

@@ -13,7 +13,7 @@ export function fetchIssue(id) {
 }
 
 export function fetchRepresentatives(data) {
-  const addressString = `${data.street1}, ${data.street2 ? data.street2 + ', ' : ''}${data.city}, ${data.state}, ${data.zip}`;
+  const addressString = `${data.line1}, ${data.sline2 ? data.street2 + ', ' : ''}${data.city}, ${data.state}, ${data.zip}`;
   
   const user = {
     firstName: data.firstName,
@@ -22,8 +22,8 @@ export function fetchRepresentatives(data) {
   }
 
   const address = {
-    street1: data.street1,
-    street2: data.street2,
+    street1: data.line1,
+    street2: data.line2,
     city: data.city,
     state: data.state,
     zip: data.zip

@@ -62,12 +62,12 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
                 <label htmlFor="address.isSubscribed" id="address.isSubscribed" className="email_subscribe">Subscribe to email list?</label></td>
             </tr>
             <tr>
-                <td><label htmlFor="address.street1" id="address.street1">Street Line 1:</label></td>
-            <td><Control.text model="address.street1" /></td>
+                <td><label htmlFor="address.line1" id="address.line1">Street Line 1:</label></td>
+            <td><Control.text model="address.line1" /></td>
             </tr>
             <tr>
-                <td><label htmlFor="address.street2" id="address.street2">Street Line 2:</label></td>
-            <td><Control.text model="address.street2" /></td>
+                <td><label htmlFor="address.line2" id="address.line2">Street Line 2:</label></td>
+            <td><Control.text model="address.line2" /></td>
             </tr>
             <tr>
                 <td><label htmlFor="address.city" id="address.city">City:</label></td>
