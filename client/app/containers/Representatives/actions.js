@@ -8,7 +8,6 @@ import {
 export function fetchBraintreeToken() {
 	return axios.get(`/api/payments/client-token`)
     .then(data => {
-        console.log('data', data)
         return {
             type: FETCH_BRAINTREE_TOKEN,
             payload: data
@@ -16,8 +15,8 @@ export function fetchBraintreeToken() {
     })	
 }
 
-export function sendPostcards(nonce, issueId, representatives, user) {
-    return axios.post('api/postcards', {nonce, issueId, representatives, user})
+export function sendPostcards(body) {
+    return axios.post('/api/postcards', body)
     .then(data => {
         return {
             type: SEND_POSTCARDS,

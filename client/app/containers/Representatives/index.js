@@ -4,8 +4,9 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Control, Form, actions } from 'react-redux-form';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
-import {fetchBraintreeToken} from './actions';
+import {fetchBraintreeToken, sendPostcards} from './actions';
 import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 import RepCard from './repCard';
@@ -132,7 +133,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
             
             self.setState({loading: true})
 
-            return axios.post('/api/postcards', {
+            return self.props.sendPostcards({
               nonce: payload.nonce,
               issueId: self.props.routeParams.id,
               representatives: self.props.selectedReps.selected,
@@ -141,6 +142,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
             .then(function(res){
               console.log('res', res);
               self.setState({ loading: false });
+              browserHistory.push(`/confirmation`)
             })
           })
         },
@@ -221,7 +223,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               </ul>
               <div id="#paypal-button"></div>
             </Form></div>}
-            {this.state.loading && <div><LoadingIndicator /><p><h1>Hang tight! We're sending your postcards....</h1></p></div>}
+            {this.state.loading && <div><LoadingIndicator /><p><strong>Hang tight! We're sending your postcards....</strong></p></div>}
           </div>
         </RepForm>
       </div>
@@ -420,4 +422,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {fetchBraintreeToken})(Representatives);
+export default connect(mapStateToProps, {fetchBraintreeToken, sendPostcards})(Representatives);

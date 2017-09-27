@@ -43,6 +43,8 @@ function appReducer(state = initialState, action) {
       })
     case FETCH_BRAINTREE_TOKEN:
       return Object.assign({}, state, {braintreeToken: action.payload.data.clientToken})
+    case SEND_POSTCARDS:
+      return Object.assign({}, state, {postcardResults: action.payload.data})
     default:
       return state;
   }

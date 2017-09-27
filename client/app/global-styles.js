@@ -69,6 +69,9 @@ injectGlobal`
       margin: 7px;
       color: black;
     }
+    a {
+      color: #62c5b1
+    }
   }
 
   .issue_card {

@@ -1,16 +1,16 @@
 import {
-  FETCH_ISSUE,
-} from './constants';
+  SEND_POSTCARDS
+} from '../../actions/index';
 
 const initialState = {};
 
-function issueReducer(state = initialState, action) {
+function postcardReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_ISSUE:
-      return Object.assign({}, state, {issue: action.payload.data})
+    case SEND_POSTCARDS:
+      return Object.assign({}, state, {postcardResults: action.payload.data})
     default:
       return state;
   }
 }
 
-export default issueReducer;
+export default postcardReducer;
