@@ -31,7 +31,7 @@ export class Confirmation extends React.PureComponent { // eslint-disable-line r
               <p>You will not be charged for these postcards.</p></span>}         
           </div>
           <div className='row'>
-            <p>Want to send more?<Link to={"/issues/" + props.issue._id}>Check out our other issues></Link></p>   
+            <p>Want to send more? <Link to={"/issues/" + props.issue._id}>Check out our other issues</Link></p>   
           </div>
       </div>
     )
