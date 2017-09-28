@@ -29,8 +29,12 @@ module.exports = {
 		if (!issue|| !representative || !from) {
 			throw new Error('Missing required parameder');
 		}
+
+		if (!representative.name) {
+			representative = JSON.parse(representative);
+		}
 		
-		const representativeAddress = getLobFormattedAddress(_.merge({name: representative.name}, representative.address[0]));
+		const representativeAddress = getLobFormattedAddress(_.merge({name: representative.name}, representative["address"][0]));
 		const fromAddress = getLobFormattedAddress(from);
 
 		return Lob.postcards.create({
@@ -38,7 +42,7 @@ module.exports = {
 			from: fromAddress,
 			description: issue.title,
 			message: issue.message,
-			front: issue.postcard_image
+			front: issue.postcardImage || issue['postcard_image'] 
 		})
 		.then(res => {
 			logger.info('Postcard successfully sent', {res});

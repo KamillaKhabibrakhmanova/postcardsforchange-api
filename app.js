@@ -48,8 +48,8 @@ var db = mongoose.createConnection(uri, promise_options);
 mongoose.connect(config.database);
 
 // app.use(logger('dev'));
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 app.use(cookieParser());
 
@@ -62,6 +62,7 @@ app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'authorization, content-type');
+  res.setHeader('Content-Type', 'application/json');
   next();
 });
 

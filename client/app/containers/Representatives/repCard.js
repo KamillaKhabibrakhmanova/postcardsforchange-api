@@ -32,7 +32,6 @@ export class RepCard extends React.Component {
   render() {
 
     const rep = this.props.representative;
-    console.log('rep', rep)
     const address = rep.address[0];
 
     return (

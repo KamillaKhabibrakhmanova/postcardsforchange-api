@@ -14,7 +14,8 @@ import {
   FETCH_ISSUES,
   FETCH_ISSUE,
   FETCH_REPRESENTATIVES,
-  FETCH_BRAINTREE_TOKEN
+  FETCH_BRAINTREE_TOKEN,
+  SEND_POSTCARDS
 } from '../../actions/index';
 
 // The initial state of the App
@@ -42,6 +43,8 @@ function appReducer(state = initialState, action) {
       })
     case FETCH_BRAINTREE_TOKEN:
       return Object.assign({}, state, {braintreeToken: action.payload.data.clientToken})
+    case SEND_POSTCARDS:
+      return Object.assign({}, state, {postcardResults: action.payload.data})
     default:
       return state;
   }

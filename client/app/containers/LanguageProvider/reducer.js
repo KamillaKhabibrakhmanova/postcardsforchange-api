@@ -18,7 +18,6 @@ const initialState = {
 };
 
 function languageProviderReducer(state = initialState, action) {
-  console.log('state',state)
   switch (action.type) {
     case CHANGE_LOCALE:
       return Object.assign({}, state, {locale: action.locale})

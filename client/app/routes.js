@@ -78,6 +78,14 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/confirmation',
+      name: 'confirmation',
+      getComponent(location, cb) {
+        import('containers/Confirmation')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

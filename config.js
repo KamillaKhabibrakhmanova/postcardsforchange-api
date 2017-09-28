@@ -8,10 +8,10 @@ var config = {
 	braintreePublicKey: process.env.BRAINTREE_PUBLIC_KEY,
 	braintreePrivateKey: process.env.BRAINTREE_PRIVATE_KEY,
 	lobApiKey: process.env.LOB_API_KEY,
-	mandrillApiKey: process.env.MANDRILL_API_KEY,
+	sparkpostApiKey: process.env.SPARKPOST_API_KEY,
 
 	//mandrill template names
-	postcardConfirmationTemplate: process.env.POSTCARD_CONFIRMATION_TEMPLATE || 'postcard_confirmation'
+	postcardConfirmationTemplate: process.env.POSTCARD_CONFIRMATION_TEMPLATE || 'postcards-send-confirmation'
 };
 
 module.exports = config;

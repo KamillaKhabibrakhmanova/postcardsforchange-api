@@ -1,24 +1,20 @@
 const mail = require('../../services/mail.js'),
 	config = require('../../config.js');
 
-describe.skip('Service: Mail (integration)', function() {
+describe('Service: Mail (integration)', function() {
+  const recipient = {
+    address: 'venessiel@gmail.com',
+    name: 'KK'
+  };
 
-  it('sends mail via Mandrill', function (done) {
-    
-    return mail.sendMessage({
-      subject: 'Hello',
-      sender: { name: 'Kamilla', email: 'xxx@example.com' },
-      recipient: {name: 'Mike', email: 'mike@gmail.com' },
-      body: '<h1>Hello</h1>'
-    })
-    .then(done.bind(null, null), done);
-  });
+  const test_template = 'my-first-email';
 
-  it('sends mail via Mandrill', function (done) {
+  it('sends mail via Sparkpost', function (done) {
     
-    return mail.sendTemplateMessage('venessiel@gmail.com', config.postcardConfirmationTemplate, {
-    	postcardFrontUrl: 'sample.jpg',
-    	postcardBackUrl: 'sample.jpg'
+    mail.sendTemplateMessage(recipient, test_template, {name: 'Kamilla'})
+    .then(res => {
+      console.log('res', res)
+      res.total_accepted_recipients.should.eql(1);
     })
     .then(done.bind(null, null), done);
   });
