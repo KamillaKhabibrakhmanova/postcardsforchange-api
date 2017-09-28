@@ -93,7 +93,6 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
 }
 
 function mapStateToProps(state) {
-    console.log('STATE', state)
   return {
     issue: state.global.issue
   }

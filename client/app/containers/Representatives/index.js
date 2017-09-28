@@ -113,7 +113,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
   clientDidCreate(client) {
     const self = this;
 
-    console.log('client', client)
     return Promise.resolve(braintree.paypalCheckout.create({
       client: client
     }))
@@ -140,7 +139,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               user: self.props.user
             })
             .then(function(res){
-              console.log('res', res);
               self.setState({ loading: false });
               browserHistory.push(`/confirmation`)
             })
@@ -232,7 +230,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
 }
 
 function mapStateToProps(state) {
-  console.log('state10', state)
   return {
     user: state.address,
     address: state.global.address,

@@ -30,7 +30,6 @@ const makeSelectIssues = () =>
   createSelector(
     selectGlobal,
     (globalState) =>{
-      console.log('globalState', globalState)
       globalState['issues']
     } 
   );
