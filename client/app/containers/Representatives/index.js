@@ -189,8 +189,8 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
 
   render() {
     return (
-      <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
       <div>
+      <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
         <Helmet
           title="Representatives"
           meta={[
