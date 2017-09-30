@@ -62,7 +62,7 @@ app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'authorization, content-type');
-  res.setHeader('Content-Type', 'text/html, application/json');
+  // res.setHeader('Content-Type', 'application/json');
   next();
 });
 
@@ -83,7 +83,6 @@ if (process.env.NODE_ENV !== 'dev') {
     express.static(path.resolve(process.cwd(), 'client/build'))
   );
   app.get('*', (req, res) => {
-    res.setHeader('Content-Type', 'text/html')
     res.sendFile(path.resolve(path.resolve(process.cwd(), 'client/build'), 'index.html'))
   })
 }
