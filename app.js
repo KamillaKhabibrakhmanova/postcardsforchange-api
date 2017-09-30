@@ -62,11 +62,11 @@ app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'authorization, content-type');
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'text/html');
   next();
 });
 
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
 app.use('/api/issues', require('./routes/issues'));
 app.use('/api/postcards', require('./routes/postcards'));
