@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Control, Form, actions } from 'react-redux-form';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import Script from 'react-load-script'
 
 import {fetchBraintreeToken, sendPostcards} from './actions';
 import MainHeader from 'components/MainHeader';
@@ -190,7 +191,9 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
   render() {
     return (
       <div>
-      <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
+        <Script
+          url="https://www.paypalobjects.com/api/checkout.js"
+        />
         <Helmet
           title="Representatives"
           meta={[
