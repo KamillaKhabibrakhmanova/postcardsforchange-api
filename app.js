@@ -82,7 +82,10 @@ if (process.env.NODE_ENV !== 'dev') {
   app.use('/', 
     express.static(path.resolve(process.cwd(), 'client/build'))
   );
-  app.get('*', (req, res) => res.sendFile(path.resolve(path.resolve(process.cwd(), 'client/build'), 'index.html')))
+  app.get('*', (req, res) => {
+    res.setHeader('Content-Type', 'text/html')
+    res.sendFile(path.resolve(path.resolve(process.cwd(), 'client/build'), 'index.html'))
+  })
 }
 
 app.use(function(req, res, next) {
