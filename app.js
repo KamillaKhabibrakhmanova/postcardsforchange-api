@@ -66,7 +66,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 
 app.use('/api/issues', require('./routes/issues'));
 app.use('/api/postcards', require('./routes/postcards'));
