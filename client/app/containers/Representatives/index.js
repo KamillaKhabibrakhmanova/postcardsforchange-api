@@ -250,8 +250,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    fetchBraintreeToken,
-    sendPostcards,
+    sendPostcards: async data => {
+      const result = await sendPostcards(data);
+      dispatch(result)
+    },
     dispatch
   }
 }
