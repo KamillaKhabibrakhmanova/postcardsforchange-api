@@ -111,6 +111,10 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     })
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(actions.reset('selectedReps.selected'));
+  }
+
   clientDidCreate(client) {
     const self = this;
 
@@ -244,4 +248,12 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {fetchBraintreeToken, sendPostcards})(Representatives);
+function mapDispatchToProps(dispatch, props) {
+  return {
+    fetchBraintreeToken,
+    sendPostcards,
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Representatives);
