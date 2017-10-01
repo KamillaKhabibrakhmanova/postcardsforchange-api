@@ -109,7 +109,14 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         //send email confirmaton - no need to wait for this to be resolved
         if (res.postcards.length) {
             const name = user.firstName + ' ' + user.lastName;
-            mail.sendTemplateMessage({ name: name, address: user.email }, config.postcardConfirmationTemplate, {
+            const recipient = { name: name, address: user.email };
+            const params = {
+                name: name,
+                image_src: issue.postcardImage,
+                amount: res.postcards.length.toString() + '.00',
+                delivery_date: res.postcards[0]["expected_delivery_date"]
+            }
+            mail.sendTemplateMessage(recipient, config.postcardConfirmationTemplate, {
                 name: name,
                 image_src: issue.postcardImage,
                 amount: res.postcards.length.toString() + '.00',
@@ -143,7 +150,6 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         })
     }).then(function(createdPostcards){
         res.postcards = createdPostcards || null;
-        console.log('RES', res)
         return res;
     });
 }
