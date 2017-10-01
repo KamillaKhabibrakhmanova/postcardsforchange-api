@@ -21,7 +21,7 @@ const mail = {
 		logger.info(`Sending templated mail ${templateId} to ${recipient.address}`);
 
 		const messageParams = {
-			recipients: [{ address: recipient }],
+			recipients: [recipient],
 			content: { template_id: templateId },
 			substitution_data: variables
 		}
@@ -33,7 +33,6 @@ const mail = {
 		}
 
 		const client = this.getClient();
-		console.log('messageParams', messageParams)
 
 		return client.transmissions.send(messageParams)
 		.then(result => {
