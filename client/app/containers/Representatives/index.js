@@ -145,6 +145,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
             })
             .then(function(res){
               self.setState({ loading: false });
+              self.props.dispatch(actions.reset('selectedReps.selected'));
               browserHistory.push(`/confirmation`)
             })
           })
