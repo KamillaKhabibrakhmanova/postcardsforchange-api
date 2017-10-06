@@ -9,7 +9,7 @@ const _ = require('lodash'),
     request = require("supertest"),
     Bluebird = require('bluebird');
   
-describe('Route: /postcards', function() {
+describe.skip('Route: /postcards', function() {
 
   let sandbox, issue;
 

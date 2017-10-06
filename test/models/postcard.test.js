@@ -8,7 +8,7 @@ var should = require('should');
 var sinon = require('sinon');
 var Bluebird = require('bluebird')
 
-describe('Model:Postcard', function() {
+describe.skip('Model:Postcard', function() {
 
   let sandbox, issue;
 
