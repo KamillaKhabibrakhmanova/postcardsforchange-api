@@ -9,7 +9,7 @@ const userData = {
   email: 'contact@postcardsforchange.net'
 }
 
-describe('Route: Users', function(){
+describe.skip('Route: Users', function(){
 
 	it('creates new users', function(done){
 		return request(app)

@@ -9,7 +9,7 @@ const _ = require('lodash'),
     Bluebird = require('bluebird');
     buildUrl = require('build-url');
   
-describe('Route: /representatives', function() {
+describe.skip('Route: /representatives', function() {
 
   var sandbox;
   var addressQuery = '285 Fulton St, New York, NY 10007'
