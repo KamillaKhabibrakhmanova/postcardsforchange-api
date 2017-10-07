@@ -4,6 +4,8 @@ node_js:
 - 8.1.4
 services:
 - mongodb
+before-install:
+  -npm install -g npm
 deploy:
   matrix:
   - provider: heroku
