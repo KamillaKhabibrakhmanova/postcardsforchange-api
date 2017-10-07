@@ -2,7 +2,7 @@ var  civic = require('../../services/civic.js');
 var Bluebird = require('bluebird');
 var should = require('should');
 
-describe('Service: Civic (integration)', function() {
+describe.skip('Service: Civic (integration)', function() {
 
   it('gets representatives', function (done) {
 

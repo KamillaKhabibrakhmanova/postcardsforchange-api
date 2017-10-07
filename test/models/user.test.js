@@ -2,7 +2,7 @@ var User = require('../../models/user.js');
 var should = require('should');
 var Bluebird = require('bluebird')
 
-describe('Model: User', function() {
+describe.skip('Model: User', function() {
 
   it('creates a user with an email', function (done) {
 

@@ -18,7 +18,7 @@ const inactiveIssueData = {
   postcardImage: 'http://www.fakeimage.com'
 }
 
-describe('Route:Issue', function(){
+describe.skip('Route:Issue', function(){
 
 	beforeEach(function(done){
 		return Issue.create(issueData)

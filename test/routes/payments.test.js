@@ -7,7 +7,7 @@ const _ = require('lodash'),
     request = require("supertest"),
     Bluebird = require('bluebird');
   
-describe('Route: /payments', function() {
+describe.skip('Route: /payments', function() {
 
   var sandbox;
   var to = {

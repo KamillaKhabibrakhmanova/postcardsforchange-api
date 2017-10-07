@@ -2,7 +2,7 @@ var braintree = require('../../services/braintree.js');
 var Bluebird = require('bluebird');
 var should = require('should');
 
-describe('Service: Braintree (integration)', function() {
+describe.skip('Service: Braintree (integration)', function() {
   this.timeout(15000);
 
   it('generates a client token', function (done) {

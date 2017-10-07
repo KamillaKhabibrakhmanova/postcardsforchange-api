@@ -4,7 +4,7 @@ var Bluebird = require('bluebird');
 
 var should = require('should');
 
-describe('Service: Lob (integration)', function() {
+describe.skip('Service: Lob (integration)', function() {
   this.timeout(5000);
 
   var from = {
