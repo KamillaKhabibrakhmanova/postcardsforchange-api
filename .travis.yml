@@ -9,9 +9,10 @@ before-install:
 deploy:
   matrix:
   - provider: heroku
+  strategy: git
   api_key:
     secure: kATBWsb5mOKE+r8rJGjtTQ1cCU9ZH9MSXxHIWcFggcezSJ1oqLeyLVIYfadFzCUOEBouB6QAqnYq+CnVmyhPtpDzXztHyAavo58wqqqSzSIEN43ZlzgZVurEjmyAlLT0pkx2LdRw6KK8yZjbRDGy/DxE5+VXzFaRtayp31xq222urZTpCZvOV5+ynbEqSYma4Ac/3pw6Q3GPdQYzfIxm+11vBmx326wYx2g79qX6f2JsftQxAggcOXqtX6N+vd7T41EVzCmIM45G4qEk1NdnEz2Oj07Q9jtB1mzCE12FnLF7SCGQSHbmPJRh+b4L5Mg9XssbU22fZ2brfrF97nVGJPr2itBe27oOC2aACx0SuxooJVSr0OsQEv+8v/S71mYRTIfbTqQwawgwQ5iNcwiYdNVMgdiVsC1NMeZ2ayVmFS29gUoAPoQpri4w/MI0JVrFuLVM9FEDm5CPFr/vJx/fl3ssm36lJCjGrD+spIaZWTXaoT5Zcon2n9IktYXPSrKR9V9uQZx48obSCmEwl/d1HRSduSEspw+FE5FBBHfGN1Zk/pRS8Fw6syxbPZmnMmbA4ATOtjGdkD8zZhjSFYKRoY4C9PnuHmK3Gf3aZfuw6eEGOrb9lLAoo1GtmIk5hd7F6+GA1wcKHErlSjhbauPTw95M2vgaA1wnGoka27ejGLc=
   app:
     develop: postcards4change-staging
-    master: postcards4change-production
+    master: postcards4change
 
