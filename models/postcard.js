@@ -80,12 +80,12 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
     //charge full amount for postcards
     let issue = await Issue.findById(issueId);
     let transaction;
-    // try {
-    //     transaction = await braintree.makeSale(representativeCount, nonce);
-    //     if (!transaction.id) throw new Error('Error making payment')
-    // } catch(e) {
-    //     throw new Error(e);
-    // }
+    try {
+        transaction = await braintree.makeSale(representativeCount, nonce);
+        if (!transaction.id) throw new Error('Error making payment')
+    } catch(e) {
+        throw new Error(e);
+    }
     
     //send a separate postcard for each representative
     return Bluebird.map(representatives, function(representative){
@@ -142,7 +142,7 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         return Bluebird.map(res.postcards, function(postcard) {
             return Postcard.create({
                 lobId: postcard.id,
-                // transactionId: transaction.id,
+                transactionId: transaction.id,
                 user: updated._id,
                 issue: issue._id,
                 price: 1

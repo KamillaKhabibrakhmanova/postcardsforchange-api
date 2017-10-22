@@ -8,7 +8,8 @@ var should = require('should');
 var sinon = require('sinon');
 var Bluebird = require('bluebird')
 
-describe.skip('Model:Postcard', function() {
+describe('Model:Postcard', function() {
+  console.log('test')
 
   let sandbox, issue;
 
@@ -50,7 +51,8 @@ describe.skip('Model:Postcard', function() {
     sandbox.restore();
   });
 
-  it('sends multiple postcards', function (done) {
+  it('sends multiple postcards', function () {
+    console.log('HERE')
     lobStub.resolves({ id: 'lobId' });
 
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
@@ -62,10 +64,9 @@ describe.skip('Model:Postcard', function() {
       postcard.lobId.should.eql('lobId');
       postcard.price.should.eql(1)
     })
-    .then(done.bind(null, null), done);
   })
 
-  it('only records sent postcards', function (done) {
+  it('only records sent postcards', function () {
     lobStub
     .onFirstCall().rejects(new Error('Failed to send'))
     .onSecondCall().rejects(new Error('Failed to send'))
@@ -75,11 +76,10 @@ describe.skip('Model:Postcard', function() {
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
     .then(function(res){
       res.postcards.length.should.eql(3);
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
-  it('records unsent postcards', function (done) {
+  it('records unsent postcards', function () {
     lobStub
     .onFirstCall().rejects(new Error('Failed to send'))
     .resolves({id: 'lobId'})
@@ -91,11 +91,10 @@ describe.skip('Model:Postcard', function() {
       res.unsent.length.should.eql(1);
 
       res.unsent[0].should.deepEqual(representatives[0]);
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
-  it('processes a refund if postcards are not send', function (done) {
+  it('processes a refund if postcards are not send', function () {
     lobStub
     .onFirstCall().rejects(new Error('Failed to send'))
     .onSecondCall().rejects(new Error('Failed to send'))
@@ -107,11 +106,10 @@ describe.skip('Model:Postcard', function() {
       braintree.processRefund.callCount.should.eql(1);
       braintree.processRefund.args[0][0].should.eql(payment_id);
       braintree.processRefund.args[0][1].should.eql('2.00');
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
-  it('collects a payment when sending postcards', function(done){
+  it('collects a payment when sending postcards', function(){
     lobStub.resolves({id: 'lobId'});
 
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
@@ -119,11 +117,10 @@ describe.skip('Model:Postcard', function() {
       braintree.makeSale.callCount.should.eql(1);
       braintree.makeSale.args[0][0].should.eql(5);
       braintree.makeSale.args[0][1].should.eql('fake-paypal-onetime-none')
-    })
-    .then(done.bind(null, null), done);
+    });
   })
 
-  it('creates a user after sending a postcard', function (done) {
+  it('creates a user after sending a postcard', function () {
     lobStub.resolves({id: 'lobId'});
 
 
@@ -134,11 +131,10 @@ describe.skip('Model:Postcard', function() {
       })
     }).then(function(user){
       user.firstName.should.eql('Mickey');
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
-  it('sends a confirmation email after sending postcards', function (done) {
+  it('sends a confirmation email after sending postcards', function () {
     lobStub.resolves({id: 'lobId'});
 
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-nonce', user, representatives)
@@ -146,11 +142,10 @@ describe.skip('Model:Postcard', function() {
       mail.sendTemplateMessage.callCount.should.eql(1);
       mail.sendTemplateMessage.args[0][1].should.eql('postcards-send-confirmation');
       mail.sendTemplateMessage.args[0][0].address.should.eql(user.email);
-    })
-    .then(done.bind(null, null), done);
+    });
   })
 
-  it('updates a user after sending a postcards', function (done) {
+  it('updates a user after sending a postcards', function () {
     lobStub.resolves({id: 'lobId'});
 
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
@@ -168,11 +163,10 @@ describe.skip('Model:Postcard', function() {
       })
     }).then(function(user){
       user.firstName.should.eql('Sally');
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
-  it('creates postcards after sending them', function(done){
+  it('creates postcards after sending them', function(){
     lobStub.resolves({id: 'lobId'});
 
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
@@ -184,8 +178,7 @@ describe.skip('Model:Postcard', function() {
       postcards[0].lobId.should.eql('lobId');
       postcards[0].price.should.eql(1);
       postcards[0].transactionId.should.eql(payment_id);
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
 });
