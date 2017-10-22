@@ -6,6 +6,7 @@ services:
 - mongodb
 before-install:
   -npm install -g npm
+script: mocha test --recursive
 deploy:
   provider: heroku
   strategy: git
