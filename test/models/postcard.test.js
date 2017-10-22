@@ -9,7 +9,6 @@ var sinon = require('sinon');
 var Bluebird = require('bluebird')
 
 describe('Model:Postcard', function() {
-  console.log('test')
 
   let sandbox, issue;
 
@@ -30,7 +29,7 @@ describe('Model:Postcard', function() {
   var payment_id = '12345';
   let lobStub;
 
-  beforeEach(function(done){
+  beforeEach(function(){
     sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(braintree, 'makeSale').resolves({id: payment_id});
     sandbox.stub(braintree, 'processRefund').resolves({});
@@ -44,7 +43,6 @@ describe('Model:Postcard', function() {
     }).then(function(created){
       issue = created;
     })
-    .then(done.bind(null, null), done);
   });
 
   afterEach(function() {
