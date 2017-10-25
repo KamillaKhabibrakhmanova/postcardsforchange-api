@@ -20,9 +20,8 @@ const inactiveIssueData = {
 
 describe('Route:Issue', function(){
 
-	beforeEach(function(done){
+	beforeEach(function(){
 		return Issue.create(issueData)
-		.then(done.bind(null, null), done);
 	});
 
 	it('gets issues', function(){
