@@ -10,21 +10,6 @@ const userData = {
 }
 
 describe('Route: Users', function(){
-
-	it('creates new users', function(){
-		return request(app)
-		.post('/api/users')
-        .send(userData)
-		.expect(201)
-		.then(function () {
-			return User.find({})
-		})
-        .then(function (res) {
-            res.length.should.eql(1);
-            res[0].email.should.eql(userData.email)
-        });
-	});
-
 	it('does not create users without an email', function(){
         return request(app)
 		.post('/api/users')
@@ -38,5 +23,18 @@ describe('Route: Users', function(){
         });
 	});
 
+	it('creates new users', function(){
+		return request(app)
+		.post('/api/users')
+        .send(userData)
+		.expect(201)
+		.then(function () {
+			return User.find({})
+		})
+        .then(function (res) {
+            res.length.should.eql(1);
+            res[0].email.should.eql(userData.email)
+        });
+	});	
 })
 
