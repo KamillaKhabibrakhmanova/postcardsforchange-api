@@ -19,15 +19,16 @@ describe('Service: Braintree (integration)', function() {
     return braintree.makeSale(50, 'kamz').should.be.rejected();
   });
 
-  it('generates a sale', function () {
+  it('generates a sale', function (done) {
 
-    return braintree.makeSale(50, 'fake-paypal-one-time-nonce')
+    braintree.makeSale(50, 'fake-paypal-one-time-nonce')
     .then(function(res){
       res.amount.should.eql('50.00');
       should.exist(res.creditCard);
       should.exist(res.statusHistory);
       should.exist(res.paypal);
-    });
+    })
+    .then(done.bind(null, null), done)
   });
 
   it('refunds a sale', function () {
