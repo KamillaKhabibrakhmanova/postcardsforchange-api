@@ -50,7 +50,6 @@ describe('Model:Postcard', function() {
   });
 
   it('sends multiple postcards', function () {
-    console.log('HERE')
     lobStub.resolves({ id: 'lobId' });
 
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-none', user, representatives)
