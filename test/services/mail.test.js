@@ -9,14 +9,12 @@ describe('Service: Mail (integration)', function() {
 
   const test_template = 'my-first-email';
 
-  it('sends mail via Sparkpost', function (done) {
+  it('sends mail via Sparkpost', function () {
     
     mail.sendTemplateMessage(recipient, test_template, {name: 'Kamilla'})
     .then(res => {
-      console.log('res', res)
       res.total_accepted_recipients.should.eql(1);
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
 });

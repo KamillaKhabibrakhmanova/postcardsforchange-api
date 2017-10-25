@@ -4,7 +4,7 @@ var Bluebird = require('bluebird');
 
 var should = require('should');
 
-describe.skip('Service: Lob (integration)', function() {
+describe('Service: Lob (integration)', function() {
   this.timeout(5000);
 
   var from = {
@@ -17,7 +17,7 @@ describe.skip('Service: Lob (integration)', function() {
 
   var description = 'Kamilla Is Awesome';
 
-  it('sends issuepostcards', function(done){
+  it('sends issue postcards', function(){
     return Issue.create({
       title: 'Fake title',
       message: 'Hey hey please pass this bill',
@@ -37,8 +37,7 @@ describe.skip('Service: Lob (integration)', function() {
       info.from.address_state.should.eql(from.state);
       info.to.address_zip.should.eql(representative.address[0].zip);
       info.from.address_zip.should.eql(from.zip);
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
 });

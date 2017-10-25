@@ -9,9 +9,9 @@ const userData = {
   email: 'contact@postcardsforchange.net'
 }
 
-describe.skip('Route: Users', function(){
+describe('Route: Users', function(){
 
-	it('creates new users', function(done){
+	it('creates new users', function(){
 		return request(app)
 		.post('/api/users')
         .send(userData)
@@ -20,14 +20,12 @@ describe.skip('Route: Users', function(){
 			return User.find({})
 		})
         .then(function (res) {
-			console.log('res', res)
             res.length.should.eql(1);
             res[0].email.should.eql(userData.email)
-        })
-		.then(done.bind(null, null), done);
+        });
 	});
 
-	it('does not create users without an email', function(done){
+	it('does not create users without an email', function(){
         return request(app)
 		.post('/api/users')
         .send({name: 'Kamilla'})
@@ -37,8 +35,7 @@ describe.skip('Route: Users', function(){
 		})
         .then(function (res) {
             res.length.should.eql(0);
-        })
-		.then(done.bind(null, null), done);
+        });
 	});
 
 })

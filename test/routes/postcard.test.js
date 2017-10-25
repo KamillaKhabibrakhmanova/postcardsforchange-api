@@ -9,13 +9,13 @@ const _ = require('lodash'),
     request = require("supertest"),
     Bluebird = require('bluebird');
   
-describe.skip('Route: /postcards', function() {
+describe('Route: /postcards', function() {
 
   let sandbox, issue;
 
   const payment_id = '12345';
 
-  beforeEach(function(done){
+  beforeEach(function(){
     sandbox = sinon.sandbox.create().usingPromise(Bluebird);
     sandbox.stub(braintree, 'makeSale').resolves({id: payment_id});
     sandbox.stub(braintree, 'processRefund').resolves({});
@@ -27,15 +27,14 @@ describe.skip('Route: /postcards', function() {
       isActive: true,
     }).then(function(created){
       issue = created;
-    })
-    .then(done.bind(null, null), done);
+    });
   });
 
   afterEach(function() {
     sandbox.restore();
   });
 
-  it('creates postcards', function (done) {
+  it('creates postcards', function () {
     lobStub.resolves({id: 'lobId'})
 
     return request(app)
@@ -50,11 +49,10 @@ describe.skip('Route: /postcards', function() {
       .then(function(res){
         res.body.postcards.length.should.eql(1);
         res.body.postcards[0].lobId.should.eql('lobId');
-      })
-      .then(done.bind(null, null), done);     
+      });   
   });
 
-  it('should return a 500 status code and unsent array if no postcards are sent', function(done){
+  it('should return a 500 status code and unsent array if no postcards are sent', function(){
     lobStub.rejects(new Error('Error sending postcard'));
 
     return request(app)
@@ -72,11 +70,8 @@ describe.skip('Route: /postcards', function() {
       result.postcards.length.should.eql(0);
       result.unsent.length.should.eql(1);
       result.unsent[0].should.deepEqual(representatives[0]);
-    })
-    .then(done.bind(null, null), done);
-
+    });
   })
-
 });
 
 const user = {

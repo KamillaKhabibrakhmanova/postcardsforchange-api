@@ -7,7 +7,7 @@ const _ = require('lodash'),
     request = require("supertest"),
     Bluebird = require('bluebird');
   
-describe.skip('Route: /payments', function() {
+describe('Route: /payments', function() {
 
   var sandbox;
   var to = {
@@ -39,7 +39,7 @@ describe.skip('Route: /payments', function() {
     sandbox.restore();
   });
 
-  it('generates client tokens', function (done) {
+  it('generates client tokens', function () {
 
     return request(app)
       .get('/api/payments/client-token')
@@ -47,8 +47,7 @@ describe.skip('Route: /payments', function() {
       .then(function(res){
         var clientToken = res.body;
         clientToken.clientToken.should.eql('fakeToken');
-      })
-      .then(done.bind(null, null), done);     
+      });   
   });
 
 });
