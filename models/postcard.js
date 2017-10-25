@@ -78,11 +78,13 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
     const res = {postcards: []};
 
     //charge full amount for postcards
-    let issue = await Issue.findById(issueId);
-    let transaction;
+   
+    let transaction, issue;
     try {
         transaction = await braintree.makeSale(representativeCount, nonce);
+        issue = await Issue.findById(issueId);
         if (!transaction.id) throw new Error('Error making payment')
+        if (!issue._id) throw new Error('Error finding Issue')
     } catch(e) {
         throw new Error(e);
     }
