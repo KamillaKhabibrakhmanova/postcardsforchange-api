@@ -2,26 +2,27 @@
 
 var express = require('express');
 var config = require('../config.js');
-var app = express();
-var util = require('util');
-var User = require('../models/user');
-var request = require('request-promise');
+const app = express();
+const util = require('util');
+const User = require('../models/user');
+const request = require('request-promise');
+const { check, validationResult } = require('express-validator/check');
 const logger = require('../utils/logger').logger();
-var Bluebird = require('bluebird')
 
-app.post('/', (req, res, next) => {
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+app.post('/', [
+    check('email')
+    .exists()
+    .isEmail().withMessage('Must be an email')
+], (req, res, next) => {
+    
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.mapped() });
+    }
 
-    req.getValidationResult()
+    return User.create(req.body)
     .then(result => {
-        if (!result.isEmpty()) {
-            return res.status(400).send('Validation error' + util.inspect(result.array()));
-        }
-
-        return User.create(req.body)
-        .then(result => {
-            res.status(201).send(result);
-        })
+        res.status(201).send(result);
     })
     .catch(function(err){
         logger.error(err);
