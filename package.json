@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha test",
+    "test": "mocha test --recursive",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "start:prod": "node app.js",
     "server": "./development.sh",
