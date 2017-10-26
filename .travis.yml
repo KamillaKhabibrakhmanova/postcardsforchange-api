@@ -6,6 +6,8 @@ services:
 - mongodb
 before-install:
   -npm install -g npm
+before-deploy:
+  ssh-agent -k
 deploy:
   provider: heroku
   api_key:
