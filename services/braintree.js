@@ -40,6 +40,7 @@ module.exports = {
 
 		return gateway.transaction.sale(saleRequest)
 		.then(function(result){
+			console.log('result', result)
 			if (!result.success) throw new Error(result.message);
 
 			return result.transaction;
