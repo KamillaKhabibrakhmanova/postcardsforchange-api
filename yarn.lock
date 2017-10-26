@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@braintree/wrap-promise@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@braintree/wrap-promise/-/wrap-promise-1.1.1.tgz#d22c76855e6d4b4012610060421fae1a37ec90b0"
+
 "@types/express-serve-static-core@*":
   version "4.0.48"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.0.48.tgz#b4fa06b0fce282e582b4535ff7fac85cc90173e9"
@@ -186,11 +190,7 @@ bluebird@2.10.2:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.10.2.tgz#024a5517295308857f14f91f1106fc3b555f446b"
 
-bluebird@^3.0.6, bluebird@^3.3.1, bluebird@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
-
-bluebird@^3.5.1:
+bluebird@^3.0.6, bluebird@^3.3.1, bluebird@^3.5.0, bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -230,16 +230,16 @@ braces@^1.8.2:
     preserve "^0.2.0"
     repeat-element "^1.1.2"
 
-braintree@^2.0.2:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/braintree/-/braintree-2.1.1.tgz#c8ecfad3914f1c42ed66e614455fe72f19d60b89"
+braintree@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/braintree/-/braintree-2.3.0.tgz#2e6ccf2b0a20fb5db947937b9349b5c58e5343e3"
   dependencies:
+    "@braintree/wrap-promise" "1.1.1"
     dateformat "1.0.1-1.2.3"
     depd "~1.1.0"
     readable-stream "1.1.10"
     semver "5.1.0"
     underscore "1.8.3"
-    wrap-promise braintree/wrap-promise#1.1.0
     xml2js "0.1.13"
 
 browser-stdout@1.3.0:
@@ -2782,10 +2782,6 @@ wrap-ansi@^2.0.0:
   dependencies:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
-
-wrap-promise@braintree/wrap-promise#1.1.0:
-  version "1.1.0"
-  resolved "https://codeload.github.com/braintree/wrap-promise/tar.gz/daa66452aa0d6fe9559be68e34e880ec52e8bf1f"
 
 wrappy@1:
   version "1.0.2"
