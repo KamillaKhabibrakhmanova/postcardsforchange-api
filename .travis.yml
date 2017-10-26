@@ -6,8 +6,6 @@ services:
 - mongodb
 before-install:
   -npm install -g npm
-before-deploy:
-  ssh-agent -k
 deploy:
   provider: heroku
   api_key:
@@ -15,4 +13,6 @@ deploy:
   app:
     develop: postcards4change-staging
     master: postcards4change
+after-deploy:
+  ssh-agent -k
 
