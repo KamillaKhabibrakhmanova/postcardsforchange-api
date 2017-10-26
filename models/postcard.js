@@ -76,29 +76,35 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
     const postcardErrors = [];
     user.name = user.firstName + ' ' + user.lastName;
     const res = {postcards: []};
+    let issue, transaction;
 
     //charge full amount for postcards
    
-    let transaction, issue;
-    try {
-        transaction = await braintree.makeSale(representativeCount, nonce);
-        issue = await Issue.findById(issueId);
-        if (!transaction.id) throw new Error('Error making payment')
-        if (!issue._id) throw new Error('Error finding Issue')
-    } catch(e) {
-        throw new Error(e);
-    }
-    
-    //send a separate postcard for each representative
-    return Bluebird.map(representatives, function(representative){
-        return lob.sendIssuePostcard(issue, representative, user)
-        .then(function(card){
-            res.postcards.push(card);
-        })
-        .catch(function(err){
-            logger.error('Error sending postcard',  {err, representative});
-            postcardErrors.push(representative);
-        })
+    return Bluebird.bind({})
+    .then(function(){
+        return Bluebird.join(
+            braintree.makeSale(representativeCount, nonce),
+            Issue.findById(issueId)
+        )
+    })
+    .spread(function(res1, res2){
+        if (!res1.id) throw new Error('Error making payment')
+        if (!res2._id) throw new Error('Error finding Issue')
+        
+        transaction = res1;
+        issue = res2;
+
+        //send a separate postcard for each representative
+        return Bluebird.map(representatives, function(representative){
+            return lob.sendIssuePostcard(issue, representative, user)
+            .then(function(card){
+                res.postcards.push(card);
+            })
+            .catch(function(err){
+                logger.error('Error sending postcard',  {err, representative});
+                postcardErrors.push(representative);
+            })
+        });
     }).then(function(){
         //process a refund if any postcards didn't send
         if (postcardErrors.length) {
