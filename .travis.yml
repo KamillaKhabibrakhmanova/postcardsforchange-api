@@ -5,9 +5,9 @@ node_js:
 services:
 - mongodb
 before-install:
-  -npm install -g npm
+  - npm install -g npm
 script:
-  -npm run test
+  - npm run test
 deploy:
   provider: heroku
   strategy: git
