@@ -42,7 +42,7 @@ export class RepCard extends React.Component {
             
           <Img className='circle-img' src={rep.photoUrl} alt={rep.name} />
           <div className='rep-info'>
-            <p><a href={rep.urls[0]}>{`${rep.name},`}</a></p>
+            <p>{`${rep.name},`}</p>
             <p>{`${address.line1}, ${address.city}, ${address.state}, ${address.zip}`}</p>
           </div>
         </label>
