@@ -11,7 +11,7 @@ const _ = require('lodash'),
   
 describe('Route: /postcards', function() {
 
-  let sandbox, issue;
+  let sandbox, issue, lobStub;
 
   const payment_id = '12345';
 
