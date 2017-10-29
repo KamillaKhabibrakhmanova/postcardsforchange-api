@@ -51,6 +51,7 @@
     "superagent": "^3.4.4",
     "supertest": "^3.0.0",
     "supertest-as-promised": "^4.0.2",
+    "uuid": "^3.1.0",
     "winston": "^2.3.1",
     "winston-mongodb": "^2.0.8",
     "winston-papertrail": "^1.0.4"

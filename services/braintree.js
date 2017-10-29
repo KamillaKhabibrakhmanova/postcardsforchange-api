@@ -3,6 +3,7 @@ const config = require('../config');
 const Postcard = require('../models/postcard');
 const braintree = require('braintree');
 const logger = require('../utils/logger').logger();
+const uuid = require('uuid/v4');
 
 const gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -15,7 +16,7 @@ const createSaleObject = (amount, nonce) => {
 	return {
 	  amount,
 	  paymentMethodNonce: nonce,
-	  orderId: "Mapped to PayPal Invoice Number",
+	  orderId: uuid(),
 	  options: {
 	  	submitForSettlement: true
 	  }
