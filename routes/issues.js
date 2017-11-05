@@ -17,7 +17,6 @@ app.get('/:id', function(req, res){
 app.get('/', function(req, res){
 	return Issue.find({ isActive: true })
 	.then(function(issues){
-		console.log('header', res.header);
 		res.send(issues);
 	});
 });

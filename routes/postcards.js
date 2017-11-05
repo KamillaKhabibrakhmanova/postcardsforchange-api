@@ -6,7 +6,6 @@ const logger = require('../utils/logger').logger();
 //process payment and send a postcard
 app.post('/', (req, res) => {
     const body = req.body;
-    console.log('body', body)
     
     if (!body.nonce) throw new Error('No payment nonce provided by client');
     if (!body.issueId) throw new Error('No issue provided');
@@ -15,7 +14,6 @@ app.post('/', (req, res) => {
 
     return Postcard.sendPostcards(body.issueId, body.nonce, body.user, body.representatives)
     .then(result =>{
-        console.log('result', result)
         if (result.postcards && result.postcards.length) {
             return res.status(201).send(result);
         }

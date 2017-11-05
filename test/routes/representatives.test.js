@@ -23,7 +23,7 @@ describe('Route: /representatives', function() {
     sandbox.restore();
   });
 
-  it('gets national representatives', function (done) {
+  it('gets national representatives', function () {
     const url = buildUrl('/api/representatives', {
         queryParams: { address: addressQuery }
     })
@@ -33,16 +33,14 @@ describe('Route: /representatives', function() {
       .then(function(res){
           res.body.length.should.eql(1);
           res.body[0].id.should.eql('5')
-      })
-      .then(done.bind(null, null), done);     
+      });    
   });
 
-  it('throws an error if no address provided', function (done) {
+  it('throws an error if no address provided', function () {
 
     return request(app)
       .get('/api/representatives')
-      .expect(400)
-      .then(done.bind(null, null), done);     
+      .expect(400);   
   });
 
 });

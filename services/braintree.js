@@ -3,6 +3,7 @@ const config = require('../config');
 const Postcard = require('../models/postcard');
 const braintree = require('braintree');
 const logger = require('../utils/logger').logger();
+const uuid = require('uuid/v4');
 
 const gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -15,22 +16,20 @@ const createSaleObject = (amount, nonce) => {
 	return {
 	  amount,
 	  paymentMethodNonce: nonce,
-	  orderId: "Mapped to PayPal Invoice Number",
+	  orderId: uuid(),
 	  options: {
 	  	submitForSettlement: true
 	  }
   };
 };
 
-const braintreeTransaction = Bluebird.promisifyAll(gateway.transaction);
-
 module.exports = {
 
 	//generate token required to get a nonce in the client
 	generateToken: () => {
-		const clientToken = Bluebird.promisifyAll(gateway.clientToken);
+		const clientToken = gateway.clientToken;
 
-		return clientToken.generateAsync({})
+		return clientToken.generate({})
 		.then(function(token){
 			return token;
 		});
@@ -40,8 +39,9 @@ module.exports = {
 	makeSale: (amount, nonce) => {
 		const saleRequest = createSaleObject(amount, nonce);
 
-		return braintreeTransaction.saleAsync(saleRequest)
+		return gateway.transaction.sale(saleRequest)
 		.then(function(result){
+			console.log('result', result)
 			if (!result.success) throw new Error(result.message);
 
 			return result.transaction;
@@ -49,15 +49,15 @@ module.exports = {
 	},
 
 	processRefund: (transactionId, amount) => {
-		return braintreeTransaction.findAsync(transactionId)
+		return gateway.transaction.find(transactionId)
 		.then(transaction => {
 			if (!amount) amount = transaction.amount;
 
 			if (transaction.status === 'settled' || transaction.status === 'settling') {
-				return braintreeTransaction.refundAsync(transaction.id, amount);
+				return gateway.transaction.refund(transaction.id, amount);
 			}
 			else {
-				return braintreeTransaction.voidAsync(transaction.id, amount);
+				return gateway.transaction.void(transaction.id, amount);
 			}
 		})
 		.then(result => {
