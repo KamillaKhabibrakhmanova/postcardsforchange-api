@@ -11,72 +11,11 @@ import {fetchBraintreeToken, sendPostcards} from './actions';
 import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 import RepCard from './repCard';
+import RepForm from './RepForm';
 import Img from 'components/Img';
 import LoadingIndicator from 'components/LoadingIndicator';
  
 const braintree = require('braintree-web');
-
-const RepForm = styled.div`
-
-  .rep-border {
-    border: 2px solid red;
-    margin-bottom: 2rem;
-  }
-
-  text-align: left;
-
-  p {
-    line-height: 1.5rem;
-    font-size: 1.5rem;
-  }
-
-  li {
-    overflow: hidden;
-  }
-
-  input {
-    top: 5rem;
-  }
-
-  label {
-    margin: 0 auto;
-    margin-top: -2rem;
-    width: 100%;
-  }
-
-  .rep-box {
-    a {
-      color: #ffffff;
-    }
-
-    .rep_content {
-      margin-bottom: 2rem;
-      margin-right: 2rem;
-    }
-  }
-
-  .rep_address {
-    font-size: 1.2rem;
-    font-weight: 300;
-  }
-
-  .paypal-btn {
-    font-size: 20px;
-    margin-left: 5rem;
-  }
-
-  .democratic {
-    background-color:  ${props => props.theme.democrat_blue};
-  }
-
-  .republican {
-    background-color: ${props => props.theme.republican_red};
-  }
-
-  .independent {
-    background-color: ${props => props.theme.independent_teal};
-  }
-`;
 
 const RepCardBox = styled.div`
   .circle-img {
@@ -169,7 +108,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
         <RepCardBox>
           <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />
           <span className='rep-info'>
-            <p><a href={representative.urls[0]}>{`${representative.name}, ${representative.party[0]}`}</a></p>
+            <p>{`${representative.name}, ${representative.party[0]}`}</p>
             <p className='rep_address'>{`${address.line1}, ${address.city}, ${address.state}, ${address.zip}`}</p>
           </span>
         </RepCardBox></label>
