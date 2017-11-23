@@ -39,7 +39,7 @@ function IssueCard(props) {
     <div className='col-sm-12 col-md-6 col-lg-4'>
         <IssueBox>
         <Link to={"/issues/" + props.issue._id}>
-            <Img src={props.issue.postcard_image} alt={props.issue.title} className='social_image' />
+            <Img src={props.issue.webImage} alt={props.issue.title} className='social_image' />
             <p>{props.issue.title}</p>
         </Link>
         </IssueBox>

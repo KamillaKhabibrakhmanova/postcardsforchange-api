@@ -120,16 +120,11 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
             const recipient = { name: name, address: user.email };
             const params = {
                 name: name,
-                image_src: issue.postcardImage,
+                image_src: issue.webImage,
                 amount: res.postcards.length.toString() + '.00',
                 delivery_date: res.postcards[0]["expected_delivery_date"]
             }
-            mail.sendTemplateMessage(recipient, config.postcardConfirmationTemplate, {
-                name: name,
-                image_src: issue.postcardImage,
-                amount: res.postcards.length.toString() + '.00',
-                delivery_date: res.postcards[0]["expected_delivery_date"]
-            })
+            mail.sendTemplateMessage(recipient, config.postcardConfirmationTemplate, params)
             .catch(err => {
                 logger.error('Error sending confirmatiion message', {error: err, user: user})
             })
