@@ -8,6 +8,7 @@ import { browserHistory } from 'react-router';
 import Script from 'react-load-script'
 
 import {fetchBraintreeToken, sendPostcards} from './actions';
+import {ENVIRONMENT} from 'utils/constants';
 import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
 import RepForm from './RepForm';
@@ -61,7 +62,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     }))
     .then(function(paypalCheckoutInstance) {
       return paypal.Button.render({
-        env: 'sandbox',
+        env: ENVIRONMENT === 'production' ? 'production' : 'sandbox',
         locale: 'en_US',
 
         payment: function() {
