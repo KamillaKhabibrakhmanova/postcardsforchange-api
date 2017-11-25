@@ -10,7 +10,6 @@ import Script from 'react-load-script'
 import {fetchBraintreeToken, sendPostcards} from './actions';
 import MainHeader from 'components/MainHeader';
 import Button from 'components/Button';
-import RepCard from './repCard';
 import RepForm from './RepForm';
 import Img from 'components/Img';
 import LoadingIndicator from 'components/LoadingIndicator';
@@ -104,7 +103,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
     return (
       <div className={`col-md-3 col-sm-12 rep_content ${representative.party.toLowerCase()}`} key={representative.name}>
         <li><Control.checkbox model='.selected[]' value={JSON.stringify(representative)} id={`rep_${index}`} className="big_checkbox" />
-        <label htmlFor={`rep_${index}`} className="btn">
+        <label htmlFor={`rep_${index}`}>
         <RepCardBox>
           <img className='circle-img' src={representative.photoUrl || 'http://bioguide.congress.gov/bioguide/photo/S/S000148.jpg'} alt={representative.name} />
           <span className='rep-info'>
