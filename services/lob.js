@@ -37,13 +37,17 @@ module.exports = {
 		const representativeAddress = getLobFormattedAddress(_.merge({name: representative.name}, representative["address"][0]));
 		const fromAddress = getLobFormattedAddress(from);
 
-		return Lob.postcards.create({
+		const params = {
 			to: representativeAddress,
 			from: fromAddress,
 			description: issue.title,
 			message: issue.message,
 			front: issue.postcardImage || issue['postcard_image'] 
-		})
+		};
+
+		logger.info('Sending postcard', params);
+
+		return Lob.postcards.create(params)
 		.then(res => {
 			logger.info('Postcard successfully sent', {res});
 			return res;
