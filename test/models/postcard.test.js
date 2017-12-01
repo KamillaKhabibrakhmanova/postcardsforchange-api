@@ -120,7 +120,6 @@ describe('Model:Postcard', function() {
   it('creates a user after sending a postcard', function () {
     lobStub.resolves({id: 'lobId'});
 
-
     return Postcard.sendPostcards(issue._id, 'fake-paypal-onetime-nonce', user, representatives)
     .then(function () {
       return User.findOne({
