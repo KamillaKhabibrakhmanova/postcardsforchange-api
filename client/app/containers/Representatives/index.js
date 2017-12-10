@@ -86,7 +86,7 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               self.setState({ loading: false });
               browserHistory.push(`/confirmation`)
             })
-            .catch(functon(err){
+            .catch(function(err){
               console.log('Err', err)
               browserHistory.push(`/confirmation`);
             })
