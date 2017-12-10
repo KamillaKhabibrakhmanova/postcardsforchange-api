@@ -84,8 +84,11 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
             })
             .then(function(res){
               self.setState({ loading: false });
-              self.props.dispatch(actions.reset('selectedReps.selected'));
               browserHistory.push(`/confirmation`)
+            })
+            .catch(functon(err){
+              console.log('Err', err)
+              browserHistory.push(`/confirmation`);
             })
           })
         },
@@ -191,8 +194,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch, props) {
   return {
     sendPostcards: async data => {
-      const result = await sendPostcards(data);
-      dispatch(result)
+        const result = await sendPostcards(data);
+        dispatch(result)
     },
     dispatch
   }
