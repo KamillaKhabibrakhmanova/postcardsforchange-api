@@ -6,9 +6,9 @@
 
 let baseUrl;
 let environment;
+console.log("NODE_ENV", process.env.NODE_ENV)
 
 switch(process.env.NODE_ENV) {
-    console.log("NODE_ENV", process.env.NODE_ENV)
     case 'production':
         baseUrl='https://postcards4change.herokuapp.com/';
         environment = 'production';
