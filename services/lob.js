@@ -42,7 +42,6 @@ module.exports = {
 			to: representativeAddress,
 			from: fromAddress,
 			description: issue.title,
-			message: issue.message,
 			back: `<p> ${issue.message} </p>`,
 			front: issue.postcardImage || issue['postcard_image'] 
 		};
