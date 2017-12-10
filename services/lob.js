@@ -26,7 +26,7 @@ module.exports = {
 	//@params {from} address object with sender name and address: {name, line1, line2, city, state, zip}
 	//@return {obj} lob postcard object
 	sendIssuePostcard: (issue, representative, from) => {
-		
+
 		if (!issue|| !representative || !from) {
 			throw new Error('Missing required parameder');
 		}
@@ -43,6 +43,7 @@ module.exports = {
 			from: fromAddress,
 			description: issue.title,
 			message: issue.message,
+			back: `<p> ${issue.message} </p>`,
 			front: issue.postcardImage || issue['postcard_image'] 
 		};
 
