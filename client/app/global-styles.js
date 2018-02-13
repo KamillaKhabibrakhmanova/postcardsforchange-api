@@ -17,7 +17,7 @@ injectGlobal`
   }
 
   #app {
-    background-color: #ffffff;
+    background-color: #406ba0;
     min-height: 100%;
     min-width: 100%;
   }
