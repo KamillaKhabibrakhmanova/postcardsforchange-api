@@ -10,6 +10,8 @@ const userData = {
 }
 
 describe('Route: Users', function(){
+	this.timeout(5000);
+	
 	it('does not create users without an email', function(){
         return request(app)
 		.post('/api/users')
