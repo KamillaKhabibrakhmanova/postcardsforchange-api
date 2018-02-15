@@ -3,7 +3,7 @@ var Bluebird = require('bluebird');
 var should = require('should');
 
 describe('Service: Braintree (integration)', function() {
-  this.timeout(15000);
+  this.timeout(20000);
 
   it('generates a client token', function () {
 

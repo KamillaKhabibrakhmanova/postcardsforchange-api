@@ -5,7 +5,7 @@ var Bluebird = require('bluebird');
 var should = require('should');
 
 describe('Service: Lob (integration)', function() {
-  this.timeout(5000);
+  this.timeout(20000);
 
   var from = {
     name: 'Mickey Mouse',
@@ -46,8 +46,8 @@ const representative = {
    "name": "Donald J. Trump",
    "address": [
     {
-     "line1": "The White House",
-     "line2": "1600 Pennsylvania Avenue NW",
+     "line1": "THE WHITE HOUSE",
+    //  "line2": "1600 Pennsylvania Avenue NW",
      "city": "Washington",
      "state": "DC",
      "zip": "20500"
