@@ -1,7 +1,14 @@
 import { injectGlobal } from 'styled-components';
+import Brandon from './Brandon.otf';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
+
+  @font-face {
+    font-family: 'Brandon';
+    src: url(${Brandon});
+  }
+
   html,
   body {
     height: 100%;
@@ -20,6 +27,10 @@ injectGlobal`
     background-color: #406ba0;
     min-height: 100%;
     min-width: 100%;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Brandon', 'Helvetica Neue', Helvetica, Arial, sans-serif
   }
 
   p,
