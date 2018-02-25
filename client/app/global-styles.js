@@ -61,7 +61,7 @@ injectGlobal`
     content: '✔';
     position: absolute;
     top: 0px;
-    font-size: 28px;
+    font-size: 24px;
     left: 6px;
   }
 
