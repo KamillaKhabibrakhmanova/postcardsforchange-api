@@ -26,6 +26,8 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
   
   handleSubmit(address) {
    const self = this;
+
+   console.log()
    Promise.resolve(this.props.fetchRepresentatives(address))
    .then(function(data){
        browserHistory.push(`/issues/${self.props.issue._id}/representatives`)

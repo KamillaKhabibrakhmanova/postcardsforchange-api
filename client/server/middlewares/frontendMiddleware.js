@@ -60,7 +60,7 @@ const addProdMiddlewares = (app, options) => {
  * Front-end middleware
  */
 module.exports = (app, options) => {
-  const isProd = process.env.NODE_ENV === 'production';
+  const isProd = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
 
   if (isProd) {
     addProdMiddlewares(app, options);

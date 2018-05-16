@@ -26,6 +26,7 @@ module.exports = {
 	//@params {from} address object with sender name and address: {name, line1, line2, city, state, zip}
 	//@return {obj} lob postcard object
 	sendIssuePostcard: (issue, representative, from) => {
+
 		if (!issue|| !representative || !from) {
 			throw new Error('Missing required parameder');
 		}
@@ -37,19 +38,23 @@ module.exports = {
 		const representativeAddress = getLobFormattedAddress(_.merge({name: representative.name}, representative["address"][0]));
 		const fromAddress = getLobFormattedAddress(from);
 
-		return Lob.postcards.create({
+		const params = {
 			to: representativeAddress,
 			from: fromAddress,
 			description: issue.title,
-			message: issue.message,
+			back: `<p> ${issue.message} </p>`,
 			front: issue.postcardImage || issue['postcard_image'] 
-		})
+		};
+
+		logger.info('Sending postcard', params);
+
+		return Lob.postcards.create(params)
 		.then(res => {
 			logger.info('Postcard successfully sent', {res});
 			return res;
 		})
 		.catch(err => {
-			logger.error('Error sending postcards', err);
+			logger.error('Error sending postcard', err);
 			throw new Error(err);
 		});
 	}

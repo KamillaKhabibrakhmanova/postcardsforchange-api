@@ -38,6 +38,7 @@ PostcardSchema.statics.sendPostcard = function(postcard){
 
         return lob.sendPostcard(postcard.message, postcard.to, postcard.from)
         .catch(function(err){
+            logger.warn('Error sending postcard, refunding user', postcard, transaction);
             //if postcard not sent refund user
             return braintree.processRefund(transaction.id)
             .then(function(){
@@ -88,8 +89,8 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
         )
     })
     .spread(function(res1, res2){
-        if (!res1.id) throw new Error('Error making payment')
-        if (!res2._id) throw new Error('Error finding Issue')
+        if (!(res1 && res1.id)) throw new Error('Error making payment')
+        if (!res2) throw new Error('Error finding Issue')
         
         transaction = res1;
         issue = res2;

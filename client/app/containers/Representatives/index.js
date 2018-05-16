@@ -39,8 +39,10 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
 
   componentDidMount() {
     const self = this;
+    console.log('GETTING CLIENT TOKEN')
     return axios.get(`/api/payments/client-token`)
     .then(function(res){
+      console.log('GOT CLIENT TOKEN', res);
       return Promise.resolve(braintree.client.create({
         authorization: res.data.clientToken
       }))
@@ -56,11 +58,13 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
 
   clientDidCreate(client) {
     const self = this;
+    console.log('client', client)
 
     return Promise.resolve(braintree.paypalCheckout.create({
       client: client
     }))
     .then(function(paypalCheckoutInstance) {
+      console.log('paypalheckoutinstance', paypalCheckoutInstance)
       return paypal.Button.render({
         env: ENVIRONMENT === 'production' ? 'production' : 'sandbox',
         locale: 'en_US',
@@ -84,8 +88,11 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
             })
             .then(function(res){
               self.setState({ loading: false });
-              self.props.dispatch(actions.reset('selectedReps.selected'));
               browserHistory.push(`/confirmation`)
+            })
+            .catch(function(err){
+              console.log('Err', err)
+              browserHistory.push(`/confirmation`);
             })
           })
         },
@@ -191,8 +198,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch, props) {
   return {
     sendPostcards: async data => {
-      const result = await sendPostcards(data);
-      dispatch(result)
+        const result = await sendPostcards(data);
+        dispatch(result)
     },
     dispatch
   }

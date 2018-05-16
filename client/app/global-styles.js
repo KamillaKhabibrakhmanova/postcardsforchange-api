@@ -1,7 +1,14 @@
 import { injectGlobal } from 'styled-components';
+import Brandon from './Brandon.otf';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
+
+  @font-face {
+    font-family: 'Brandon';
+    src: url(${Brandon});
+  }
+
   html,
   body {
     height: 100%;
@@ -17,9 +24,13 @@ injectGlobal`
   }
 
   #app {
-    background-color: #ffffff;
+    background-color: #406ba0;
     min-height: 100%;
     min-width: 100%;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Brandon', 'Helvetica Neue', Helvetica, Arial, sans-serif
   }
 
   p,
@@ -50,7 +61,7 @@ injectGlobal`
     content: '✔';
     position: absolute;
     top: 0px;
-    font-size: 28px;
+    font-size: 24px;
     left: 6px;
   }
 

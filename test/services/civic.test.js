@@ -3,6 +3,7 @@ var Bluebird = require('bluebird');
 var should = require('should');
 
 describe('Service: Civic (integration)', function() {
+  this.timeout(10000);
 
   it('gets representatives', function () {
 

@@ -49,6 +49,7 @@ module.exports = {
 	},
 
 	processRefund: (transactionId, amount) => {
+		logger.info('Processing refund', transactionId, amount);
 		return gateway.transaction.find(transactionId)
 		.then(transaction => {
 			if (!amount) amount = transaction.amount;

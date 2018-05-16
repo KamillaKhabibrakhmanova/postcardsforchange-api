@@ -19,6 +19,12 @@ const RepCardBox = styled.div`
     float:left;
   }
 
+  @media all and (max-width: 750px) { /* screen size until 1200px */
+    .circle-img {
+      height: 5rem;
+    }
+  }
+
   .rep-info {
     display: inline;
     line-height: 0.1rem;
@@ -26,8 +32,7 @@ const RepCardBox = styled.div`
   }
 `;
 
-export class RepCard extends React.Component {
-
+export class RepCard extends React.PureComponent {
 
   render() {
 

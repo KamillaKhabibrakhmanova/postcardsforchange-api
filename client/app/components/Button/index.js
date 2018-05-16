@@ -11,11 +11,11 @@ import styled from 'styled-components';
 const Button = styled.button`
   -webkit-border-radius: 30;
   -moz-border-radius: 30;
-  border-radius: 30px;
+  border-radius: 0;
   font-family: Arial;
   color: #ffffff;
-  font-size: 15px;
-  background: #3498db;
+  font-size: 18px;
+  background: #FF0026;
   padding: 5px 10px 5px 10px;
   text-decoration: none;
 
