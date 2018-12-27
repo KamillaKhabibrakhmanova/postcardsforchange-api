@@ -12,6 +12,14 @@ import Logo from 'components/Logo';
 import MainHeader from 'components/MainHeader';
 import H1 from 'components/H1';
 import IssueCard from './IssueCard';
+import Social from 'components/Social';
+import Explanation from 'components/Explanation';
+
+const SocialBar = styled.div`
+  text-align: center;
+  margin-top: 0rem;
+`;
+
 
 export class Issues extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -46,8 +54,9 @@ export class Issues extends React.PureComponent { // eslint-disable-line react/p
           ]}
         />
         <MainHeader />
+        <Explanation />
         <div className='main'>
-          <H1>Select an issue that matters to you:</H1>
+          <h2>Select an issue that matters to you:</h2>
           <div className='row'>
             {this.props.issues.map(issue => <IssueCard issue={issue} key={issue._id}/>)}
           </div>

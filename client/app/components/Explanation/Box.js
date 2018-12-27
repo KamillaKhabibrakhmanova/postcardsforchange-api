@@ -10,6 +10,7 @@ const Box = styled.div`
   background-color: #ffffff;
   text-align: center;
   font-size: 1.9rem;
+  padding-bottom: 1rem;
   .title {
     color: ${props => props.theme.main_red}
   }

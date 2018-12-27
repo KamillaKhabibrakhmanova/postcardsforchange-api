@@ -65,10 +65,6 @@ injectGlobal`
     left: 6px;
   }
 
-  .bottom-row {
-    margin-bottom: 10rem;
-  }
-
   .main {
     background-color: #406ba0;
     color: #ffffff;
