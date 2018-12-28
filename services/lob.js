@@ -18,7 +18,16 @@ const getLobFormattedAddress = addressObject => {
 	};
 };
 
+//** getBackPostcardTemplate: get postcard back html string
+//@params {str} (required) name of politican being sent the postcard
+//@params {str} (required) name of postcard sender
+//@params {str} (required) message to send
+//@return {str} html template
 const getBackPostcardTemplate = (politician, name, message) => {
+	if (!politician || !name || !message) {
+		throw new Error('Missing required params for postcard message');
+	}
+	
 	return `<html>
 	<head>
 	<meta charset="UTF-8">
