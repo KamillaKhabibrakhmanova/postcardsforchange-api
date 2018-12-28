@@ -51,15 +51,17 @@ export function App(props) {
     <ThemeProvider theme={theme}>
       <AppWrapper>
         <Helmet
-          titleTemplate="%s - React.js Boilerplate"
+          titleTemplate="%s - Postcards For Change"
           defaultTitle="React.js Boilerplate"
           meta={[
             { name: 'description', content: 'A React.js Boilerplate application' },
           ]}
         />
         {React.Children.toArray(props.children)}
+        <Footer />
       </AppWrapper>
     </ThemeProvider>
+
   );
 }
 

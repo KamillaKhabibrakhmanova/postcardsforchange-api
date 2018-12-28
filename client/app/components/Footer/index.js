@@ -1,27 +1,16 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import A from 'components/A';
-import LocaleToggle from 'containers/LocaleToggle';
 import Wrapper from './Wrapper';
-import messages from './messages';
 
 function Footer() {
   return (
     <Wrapper>
       <section>
-        <FormattedMessage {...messages.licenseMessage} />
+        <p>Questions? Email us at <A href="mailto:contact@postcardsforchange.net" target="_blank">contact@postcardsforchange.net</A></p>
       </section>
       <section>
-        <LocaleToggle />
-      </section>
-      <section>
-        <FormattedMessage
-          {...messages.authorMessage}
-          values={{
-            author: <A href="https://twitter.com/mxstbr">Max Stoiber</A>,
-          }}
-        />
+        <p>Made with love by <A href="https://twitter.com/kabibster" target="_blank">Kamilla K</A></p>
       </section>
     </Wrapper>
   );
