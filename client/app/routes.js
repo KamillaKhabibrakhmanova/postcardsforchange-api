@@ -21,23 +21,7 @@ export default function createRoutes(store) {
       path: '/',
       name: 'home',
       getComponent(nextState, cb) {
-        import('containers/Splash')
-        .then(loadModule(cb))
-        .catch(errorLoading);
-      },
-    }, {
-      path: '/features',
-      name: 'features',
-      getComponent(nextState, cb) {
-        import('containers/FeaturePage')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      },
-    }, {
-      path: '/splash',
-      name: 'splash',
-      getComponent(nextState, cb) {
-        import('containers/Splash')
+        import('containers/Issues')
         .then(loadModule(cb))
         .catch(errorLoading);
       },
