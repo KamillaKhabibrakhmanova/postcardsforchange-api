@@ -5,8 +5,10 @@ const braintree = require('braintree');
 const logger = require('../utils/logger').logger();
 const uuid = require('uuid/v4');
 
+const braintreeEnvironment = config.nodeEnv === 'production' ? braintree.Environment.Production : braintree.Environment.Sandbox;
+
 const gateway = braintree.connect({
-  environment: braintree.Environment.Sandbox,
+  environment: braintreeEbvironment,
   merchantId: config.braintreeMerchantId,
   publicKey: config.braintreePublicKey,
   privateKey: config.braintreePrivateKey
@@ -41,7 +43,6 @@ module.exports = {
 
 		return gateway.transaction.sale(saleRequest)
 		.then(function(result){
-			console.log('result', result)
 			if (!result.success) throw new Error(result.message);
 
 			return result.transaction;
