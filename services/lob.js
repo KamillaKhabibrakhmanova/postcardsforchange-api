@@ -2,8 +2,6 @@ const config = require('../config');
 const Bluebird = require('bluebird');
 const _ = require('lodash');
 const Lob = Bluebird.promisifyAll(require('lob')(config.lobApiKey));
-const postcardTemplates = require('../templates/postcardTemplates');
-const Issue = require('../models/issue');
 const logger = require('../utils/logger').logger();
 
 //format address to fit lob requirements
@@ -27,7 +25,7 @@ const getBackPostcardTemplate = (politician, name, message) => {
 	if (!politician || !name || !message) {
 		throw new Error('Missing required params for postcard message');
 	}
-	
+
 	return `<html>
 	<head>
 	<meta charset="UTF-8">
