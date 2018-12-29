@@ -11,6 +11,10 @@
     "client": "node start-client.js",
     "heroku-postbuild": "cd client && npm install && npm run build && cd .."
   },
+  "engines": {
+    "npm": ">=3",
+    "node": "8.1.4"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
