@@ -10,10 +10,6 @@
     "server": "./development.sh",
     "client": "node start-client.js"
   },
-  // "engines": {
-  //   "npm": ">=3",
-  //   "node": "8.1.4"
-  // },
   "author": "",
   "license": "ISC",
   "dependencies": {
