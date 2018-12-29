@@ -25,7 +25,7 @@ const corsOptions = {
       "https://postcards4change-staging.herokuapp.com",
        "http://localhost:3000",
        "https://postcards4change.herokuapp.com",
-       "http://www.postcardsforchange.net"
+       "https://www.postcardsforchange.net"
       ];
     if (whiteList.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
