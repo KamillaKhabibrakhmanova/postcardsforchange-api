@@ -105,15 +105,19 @@ PostcardSchema.statics.sendPostcards = async function (issueId, nonce, user, rep
                 logger.error('Error sending postcard',  {err, representative});
                 postcardErrors.push(representative);
             })
-        });
+        })
     }).then(function(){
         //process a refund if any postcards didn't send
         if (postcardErrors.length) {
+            logger.info('Errors processing postcards', {postcardErrors})
             res.errorMessage = `Failed to send ${postcardErrors.length} postcards`;
             res.unsent = postcardErrors;
 
             return braintree.processRefund(transaction.id, `${postcardErrors.length}.00`)
-        } else return;
+        } else {
+            var postcards = res.postcards;
+            logger.info('Succesfully sent postcrds', {postcards})
+       } return;
     }).then(function(){
         //send email confirmaton - no need to wait for this to be resolved
         if (res.postcards.length) {

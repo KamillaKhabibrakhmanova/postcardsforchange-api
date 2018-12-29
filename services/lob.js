@@ -114,10 +114,6 @@ module.exports = {
 		.then(res => {
 			logger.info('Postcard successfully sent', {res});
 			return res;
-		})
-		.catch(err => {
-			logger.error('Error sending postcard', err);
-			throw new Error(err);
 		});
 	}
 };
