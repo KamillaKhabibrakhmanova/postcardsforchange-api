@@ -119,7 +119,7 @@ module.exports = {
 			front: issue.postcardImage || issue['postcard_image'] 
 		};
 
-		logger.info('Sending postcard', params);
+		logger.info('Sending postcard', {representative, from, issue});
 
 
 
