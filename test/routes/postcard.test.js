@@ -52,7 +52,7 @@ describe('Route: /postcards', function() {
       });   
   });
 
-  it('should return a 500 status code and unsent array if no postcards are sent', function(){
+  it('should return unsent postcards and an errorMessage is postcard sending fails', function(){
     lobStub.rejects(new Error('Error sending postcard'));
 
     return request(app)
@@ -63,7 +63,7 @@ describe('Route: /postcards', function() {
       representatives,
       user
     })
-    .expect(500)
+    .expect(201)
     .then(function(res){
       const result = res.body;
       result.errorMessage = 'Failed to send 1 postcards';
