@@ -4,16 +4,27 @@ const _ = require('lodash');
 const Lob = Bluebird.promisifyAll(require('lob')(config.lobApiKey));
 const logger = require('../utils/logger').logger();
 
+
+//!!!!! V IMPORTANT: CHAGE THIS BACK ONCE TEST IS DONE
 //format address to fit lob requirements
 const getLobFormattedAddress = addressObject => {
+	// return {
+	// 	name: addressObject.name,
+	// 	address_line1: addressObject.line1,
+	// 	address_line2: addressObject.line2,
+	// 	address_city: addressObject.city,
+	// 	address_state: addressObject.state,
+	// 	address_zip: addressObject.zip
+	// };
+
 	return {
-		name: addressObject.name,
-		address_line1: addressObject.line1,
-		address_line2: addressObject.line2,
-		address_city: addressObject.city,
-		address_state: addressObject.state,
-		address_zip: addressObject.zip
-	};
+    name: 'Kamilla Khabibrakhmanova',
+		line1: '1157 3rd Ave',
+		line2: 'Apt 10',
+    city: 'New York',
+    state: 'NY',
+    zip: '10065'
+  };
 };
 
 //** getBackPostcardTemplate: get postcard back html string
