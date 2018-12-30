@@ -6,7 +6,6 @@ const logger = require('../utils/logger').logger();
 const uuid = require('uuid/v4');
 
 const braintreeEnvironment = config.nodeEnv === 'production' ? braintree.Environment.Production : braintree.Environment.Sandbox;
-console.log('braintreeEbvironment', braintreeEnvironment);
 
 const gateway = braintree.connect({
   environment: braintreeEnvironment,
