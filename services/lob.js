@@ -19,11 +19,11 @@ const getLobFormattedAddress = addressObject => {
 
 	return {
     name: 'Kamilla Khabibrakhmanova',
-		line1: '1157 3rd Ave',
-		line2: 'Apt 10',
-    city: 'New York',
-    state: 'NY',
-    zip: '10065'
+		address_line1: '1157 3rd Ave',
+		address_line2: 'Apt 10',
+    address_city: 'New York',
+    address_state: 'NY',
+    address_zip: '10065'
   };
 };
 
