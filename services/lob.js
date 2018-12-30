@@ -110,6 +110,8 @@ module.exports = {
 
 		logger.info('Sending postcard', params);
 
+
+
 		return Lob.postcards.create(params)
 		.then(res => {
 			logger.info('Postcard successfully sent', {res});

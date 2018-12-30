@@ -89,7 +89,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
               user: self.props.user
             })
             .then(function(res){
-              self.setState({ loading: false });
               browserHistory.push(`/confirmation`)
             })
             .catch(function(err){
@@ -205,8 +204,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch, props) {
   return {
     sendPostcards: async data => {
-        const result = await sendPostcards(data);
-        dispatch(result)
+        try {
+          const result = await sendPostcards(data);
+          dispatch(result);
+        } catch (err) {
+          dispatch(err);
+        }
     },
     dispatch
   }

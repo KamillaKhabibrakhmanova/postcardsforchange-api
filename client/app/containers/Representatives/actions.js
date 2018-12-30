@@ -23,11 +23,10 @@ export function sendPostcards(body) {
             payload: data
         }
     })
-    .catch(err => {
-        console.error(err);
+    .catch((err) => {
         return {
             type: SEND_POSTCARDS,
-            payload: { data: null }
+            payload: { data: { postcards: []} }
         }
     })
 }

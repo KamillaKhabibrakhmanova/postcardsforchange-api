@@ -13,8 +13,10 @@ app.post('/', (req, res) => {
     if (!body.representatives) throw new Error('No recipients provided');
 
     return Postcard.sendPostcards(body.issueId, body.nonce, body.user, body.representatives)
-    .then(result =>{
-        if (result.postcards && result.postcards.length) {
+    .then(result => {
+        // is it bad to send 201 for errored postcards?
+        // if not 201 the errored postcards array can't be retrieved
+        if ((result.postcards && result.postcards.length) || result.errorMessage) {
             return res.status(201).send(result);
         }
         else {
@@ -23,7 +25,7 @@ app.post('/', (req, res) => {
     })
     .catch(err => {
         logger.error('err', err)
-        res.status(400).send(err);
+        res.status(500).send(err);
     });
 });
 
