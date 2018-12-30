@@ -40,12 +40,14 @@ function routeReducer(state = routeInitialState, action) {
  * Creates the main reducer with the asynchronously loaded ones
  */
 export default function createReducer(asyncReducers) {
+  const localStorageAddress = localStorage.getItem('userAddress');
+  const userAddress = localStorageAddress ? JSON.parse(localStorageAddress) : { isSubscribed: true };
   return combineReducers({
     route: routeReducer,
     language: languageProviderReducer,
     global: globalReducer,
     ...createForms({
-      address: { isSubscribed: true },
+      address: userAddress,
       selectedReps: {}
     }),
     ...asyncReducers,

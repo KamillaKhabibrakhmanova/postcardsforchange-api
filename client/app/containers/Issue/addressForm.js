@@ -23,11 +23,11 @@ const FormBox = styled.div`
 `;
 
 export class AddressForm extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  
+
   handleSubmit(address) {
    const self = this;
+   localStorage.setItem('userAddress', JSON.stringify(address));
 
-   console.log()
    Promise.resolve(this.props.fetchRepresentatives(address))
    .then(function(data){
        browserHistory.push(`/issues/${self.props.issue._id}/representatives`)
@@ -35,9 +35,6 @@ export class AddressForm extends React.PureComponent { // eslint-disable-line re
   }
   
   render() {
-    const address = {
-        isSubscribed: true
-    };
     const states = STATES
 
     return (
