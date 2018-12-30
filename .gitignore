@@ -6,3 +6,4 @@ logs
 npm-debug.log
 yarn-error.log
 client/v8-compile-cache-0
+client/build
