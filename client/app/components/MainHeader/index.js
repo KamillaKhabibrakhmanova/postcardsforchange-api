@@ -9,12 +9,10 @@ const HeaderBar = styled.div`
   height: 14rem;
 
   .social {
-    float: right
+    float: right;
+    max-width: 50%;
   }
 
-  @media all and (max-width: 850px) { /* screen size until 1000px */
-    height: 7rem;
-  }
   @media all and (max-width: 700px) { /* screen size until 1000px */
     height: 6rem;
   }
@@ -23,6 +21,22 @@ const HeaderBar = styled.div`
   }
   @media all and (max-width: 500px) { /* screen size until 500px */
     height: 4rem;
+  }
+
+  img {
+    max-height: 14rem;
+    max-width: 40%;
+    float: left;
+
+    @media all and (max-width: 700px) { /* screen size until 1000px */
+      max-height: 6rem;
+    }
+    @media all and (max-width: 600px) { /* screen size until 1000px */
+      max-height: 5rem;
+    }
+    @media all and (max-width: 500px) { /* screen size until 500px */
+      max-height: 4rem;
+    }
   }
 `;
 

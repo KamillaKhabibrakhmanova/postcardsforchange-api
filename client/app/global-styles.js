@@ -65,6 +65,10 @@ injectGlobal`
     left: 6px;
   }
 
+  .logo {
+    max-width: 500px;
+  }
+
   .main {
     background-color: #406ba0;
     color: #ffffff;
