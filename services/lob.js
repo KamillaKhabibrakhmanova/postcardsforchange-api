@@ -4,27 +4,16 @@ const _ = require('lodash');
 const Lob = Bluebird.promisifyAll(require('lob')(config.lobApiKey));
 const logger = require('../utils/logger').logger();
 
-
-//!!!!! V IMPORTANT: CHAGE THIS BACK ONCE TEST IS DONE
 //format address to fit lob requirements
 const getLobFormattedAddress = addressObject => {
-	// return {
-	// 	name: addressObject.name,
-	// 	address_line1: addressObject.line1,
-	// 	address_line2: addressObject.line2,
-	// 	address_city: addressObject.city,
-	// 	address_state: addressObject.state,
-	// 	address_zip: addressObject.zip
-	// };
-
 	return {
-    name: 'Kamilla Khabibrakhmanova',
-		address_line1: '1157 3rd Ave',
-		address_line2: 'Apt 10',
-    address_city: 'New York',
-    address_state: 'NY',
-    address_zip: '10065'
-  };
+		name: addressObject.name,
+		address_line1: addressObject.line1,
+		address_line2: addressObject.line2,
+		address_city: addressObject.city,
+		address_state: addressObject.state,
+		address_zip: addressObject.zip
+	};
 };
 
 //** getBackPostcardTemplate: get postcard back html string
@@ -99,7 +88,6 @@ module.exports = {
 	//@params {from} address object with sender name and address: {name, line1, line2, city, state, zip}
 	//@return {obj} lob postcard object
 	sendIssuePostcard: (issue, representative, from) => {
-
 		if (!issue|| !representative || !from) {
 			throw new Error('Missing required parameder');
 		}
@@ -115,15 +103,16 @@ module.exports = {
 			to: representativeAddress,
 			from: fromAddress,
 			description: issue.title,
-			back: getBackPostcardTemplate(representative.name, from.name, issue.message),
 			front: issue.postcardImage || issue['postcard_image'] 
 		};
 
-		logger.info('Sending postcard', {representative, from, issue});
+		logger.info('Sending postcard', {params});
+
+		params.back = getBackPostcardTemplate(representative.name, from.name, issue.message)
 
 		return Lob.postcards.create(params)
 		.then(res => {
-			logger.info('Postcard successfully sent', {res});
+			logger.info('Postcard successfully sent ', {res});
 			return res;
 		});
 	}

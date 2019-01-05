@@ -55,7 +55,6 @@ export class Representatives extends React.PureComponent { // eslint-disable-lin
   }
 
   clientDidCreate(client) {
-    console.log('ENVIONMENT', ENVIRONMENT)
     const self = this;
 
     return Promise.resolve(braintree.paypalCheckout.create({

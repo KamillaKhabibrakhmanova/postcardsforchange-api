@@ -6,7 +6,6 @@
 
 let baseUrl;
 let environment;
-console.log("NODE_ENV", process.env.NODE_ENV)
 
 switch(process.env.NODE_ENV) {
     case 'production':

@@ -15,9 +15,6 @@ describe('Service: Lob (integration)', function() {
     zip: '10010'
   };
 
-  var description = 'Kamilla Is Awesome';
-
-  //!!! V IMPORTANT - re-enable once live testing complete
   it('sends issue postcards', function(){
     return Issue.create({
       title: 'Fake title',
@@ -30,14 +27,14 @@ describe('Service: Lob (integration)', function() {
     }).then(function(info){
       should.exist(info);
       info.carrier.should.eql('USPS');
-      // info.to.address_line1.should.eql(representative.address[0].line1.toUpperCase());
-      // info.from.address_line1.should.eql(from.line1.toUpperCase());
-      // info.to.address_city.should.eql(representative.address[0].city.toUpperCase());
-      // info.from.address_city.should.eql(from.city.toUpperCase());
-      // info.to.address_state.should.eql(representative.address[0].state);
-      // info.from.address_state.should.eql(from.state);
-      // info.to.address_zip.should.eql(representative.address[0].zip);
-      // info.from.address_zip.should.eql(from.zip);
+      info.to.address_line1.should.eql(representative.address[0].line1.toUpperCase());
+      info.from.address_line1.should.eql(from.line1.toUpperCase());
+      info.to.address_city.should.eql(representative.address[0].city.toUpperCase());
+      info.from.address_city.should.eql(from.city.toUpperCase());
+      info.to.address_state.should.eql(representative.address[0].state);
+      info.from.address_state.should.eql(from.state);
+      info.to.address_zip.should.eql(representative.address[0].zip);
+      info.from.address_zip.should.eql(from.zip);
     });
   });
 
