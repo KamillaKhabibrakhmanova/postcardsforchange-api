@@ -1,13 +1,13 @@
-language: node_js
-sudo: false
-node_js:
-- '8.1.4'
+# language: node_js
+# sudo: false
+# node_js:
+# - '8.1.4'
 
-services:
-  - mongodb
+# services:
+#   - mongodb
 
-before_install:
-  - cd clientp && npm install && cd ../..  
+# before_install:
+#   - cd clientp && npm install && cd ../..  
 
-deploy:
-- provider: heroku
+# deploy:
+# - provider: heroku
