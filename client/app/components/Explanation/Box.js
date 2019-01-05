@@ -36,6 +36,9 @@ const Box = styled.div`
     .message {
       font-size: 1.5rem;
     }
+    .title {
+      margin: 0;
+    }
   }
 `;
 

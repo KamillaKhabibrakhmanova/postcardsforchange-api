@@ -4,18 +4,19 @@ import Stamp from './stamp.jpg';
 
 const ExplainComponents = [{
   id: 'choose',
-  title: 'Choose your postcard',
-  text: 'Select an issue that matters to you.',
+  title: 'Select an issue',
+  text: 'Choose your postcard.',
   img: Envelope
 }, {
   id: 'find',
-  title: 'Find your representative',
-  text: 'Choose from your representatives.',
+  title: 'Choose your representatives',
+  text: 'We find matches for your address.',
   img: Map
 }, {
   id: 'send',
-  title: 'Send the message',
-  text: 'Skip the post office. We send the postcard for you!',
+  //?
+  title: 'Make your voice heard',
+  text: 'We send the postcard for you!',
   img: Stamp
 }]
 
